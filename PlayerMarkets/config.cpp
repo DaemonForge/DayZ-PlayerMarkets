@@ -227,13 +227,13 @@ class CfgNonAIVehicles
     class Proxymosin9130 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Shoulder";
+        InventorySlot="Shoulder1";
         model="\DZ\weapons\firearms\mosin9130\mosin9130.p3d";
     };
     class Proxy1911 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Shoulder";
+        InventorySlot="Pistol1";
         model="\DZ\weapons\pistols\1911\1911.p3d";
     };
     class Proxysteak_knife : ProxyAttachment
