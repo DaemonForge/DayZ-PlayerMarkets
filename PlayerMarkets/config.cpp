@@ -55,101 +55,252 @@ class CfgVehicles
 {
 	class Container_Base;
 	class Inventory_Base;
+	class BaseBuildingBase;
 	
 	class PM_MarketKit: Inventory_Base
 	{
 		scope = 2;
-		displayName = "$STR_CfgVehicles_WatchtowerKit0";
-		descriptionShort = "$STR_CfgVehicles_WatchtowerKit1";
-		model = "\DZ\gear\camping\watchtower_kit.p3d";
+		displayName = "Market Stall Kit";
+		descriptionShort = "Market Stall Kit, Place to make a stall";
+		model = "PlayerMarkets\data\MarketStand\MarketStandKit.p3d";
 		rotationFlags = 17;
 		itemSize[] = {1,5};
 		weight = 280;
-		itemBehaviour = 1;
-		attachments[] = {"Rope"};
-		
+		itemBehaviour=1;
 		class AnimationSources
 		{
 			class AnimSourceShown
 			{
-				source = "user";
-				animPeriod = 0.01;
-				initPhase = 0;
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=0;
 			};
 			class AnimSourceHidden
 			{
-				source = "user";
-				animPeriod = 0.01;
-				initPhase = 1;
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=1;
 			};
-			class Inventory: AnimSourceHidden{};
-			class Placing: AnimSourceHidden{};
-		};
-		
-		class AnimEvents
-		{
-			class SoundWeapon
+			class Inventory: AnimSourceShown
 			{
-				class crafting_1
-				{
-					soundSet = "FenceKit_crafting_1_SoundSet";
-					id = 1111;
-				};
-				class crafting_2
-				{
-					soundSet = "FenceKit_crafting_2_SoundSet";
-					id = 1112;
-				};
-				class crafting_3
-				{
-					soundSet = "FenceKit_crafting_3_SoundSet";
-					id = 1113;
-				};
-				class crafting_4
-				{
-					soundSet = "FenceKit_crafting_4_SoundSet";
-					id = 1114;
-				};
-				class crafting_5
-				{
-					soundSet = "FenceKit_crafting_5_SoundSet";
-					id = 1115;
-				};
 			};
-		};
+			class Placing: AnimSourceHidden
+			{
+			};
+		};	
 	};
-	class PM_MarketStand : Inventory_Base {
+	class PM_MaketStandPlacing : PM_MarketKit
+	{
+		displayName="This is a hologram";
+		descriptionShort="Nothing to see here, move along";
+		scope=2;
+		model="PlayerMarkets\data\MarketStand\MarketStandKitHologram.p3d";
+		storageCategory=10;
+		hiddenSelections[]=
+		{
+			"placing"
+		};
+		hiddenSelectionsTextures[]=
+		{
+			"dz\gear\consumables\data\pile_of_planks_co.tga"
+		};
+		hiddenSelectionsMaterials[]=
+		{
+			"dz\gear\camping\data\fence_pile_of_planks.rvmat"
+		};
+		hologramMaterial="tent_medium";
+		hologramMaterialPath="dz\gear\camping\data";
+		alignHologramToTerain=0;
+		slopeTolerance=0.30000001;	
+	}
+	class PM_MarketStand : BaseBuildingBase 
+	{
 		scope = 2;
 		displayName  = "Market Stand";
 		descriptionShort = "A place where players can sell there items";
 		model = "PlayerMarkets\data\MarketStand\MarketStand.p3d";
-		itemSize[] = {10,20};
-		weight = 10000;
-		physLayer = "item_large";
-		class DamageSystem
+		bounding="BSphere";
+		overrideDrawArea="3.0";
+		forceFarBubble="true";
+		handheld="false";
+		lootCategory="Crafted";
+		carveNavmesh=1;
+		weight=10000;
+		itemSize[]={2,3};
+		physLayer="item_large";
+		createProxyPhysicsOnInit="false";
+		rotationFlags=2;
+		createdProxiesOnInit[]=
 		{
-			class GlobalHealth
+			"Deployed"
+		};
+		attachments[]=
+		{
+			"Material_Nails",
+			"Material_WoodenPlanks",
+		};
+		class GUIInventoryAttachmentsProps
+		{
+			class Base
 			{
-				class Health
+				name="$STR_CfgVehicles_Fence_Att_Category_Base";
+				description="";
+				attachmentSlots[]=
 				{
-					hitpoints = 30000;
+					"Material_WoodenLogs"
 				};
+				icon="set:dayz_inventory image:cat_bb_base";
+				selection="wall";
 			};
-			class GlobalArmor
+			class Attachments
 			{
-				class FragGrenade
+				name="$STR_CfgVehicles_Fence_Att_Category_Attachments";
+				description="";
+				attachmentSlots[]=
 				{
-					class Health
+					"Wall_Camonet",
+					"Wall_Barbedwire_1",
+					"Wall_Barbedwire_2",
+					"Att_CombinationLock"
+				};
+				icon="set:dayz_inventory image:cat_bb_attachments";
+				selection="wall";
+			};
+			class Material
+			{
+				name="$STR_CfgVehicles_Fence_Att_Category_Materials";
+				description="";
+				attachmentSlots[]=
+				{
+					"Material_Nails",
+					"Material_WoodenPlanks",
+					"Material_MetalSheets",
+					"Material_MetalWire"
+				};
+				icon="set:dayz_inventory image:cat_bb_material";
+				selection="wall";
+			};
+		};
+		class AnimationSources
+		{
+			class AnimSourceShown
+			{
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=0;
+			};
+			class AnimSourceHidden
+			{
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=1;
+			};
+			class AnimRotate
+			{
+				source="user";
+				animPeriod=0.017999999;
+				initPhase=0;
+			};
+			class Deployed: AnimSourceHidden
+			{
+			};
+			class Base: AnimSourceHidden
+			{
+			};
+			class Wall_Base_Down: AnimSourceHidden
+			{
+			};
+			class Wall_Base_Up: AnimSourceHidden
+			{
+			};
+		};
+		class Construction
+		{
+			class wall
+			{
+				class base
+				{
+					name="Trader Table";
+					is_base=1;
+					id=1;
+					required_parts[]={};
+					conflicted_parts[]={};
+					collision_data[]={};
+					build_action_type=2;
+					dismantle_action_type=2;
+					material_type=1;
+					class Materials
 					{
-						damage = 8.0;
+						class Material1
+						{
+							type="WoodenPlank";
+							slot_name="Material_WoodenPlanks";
+							quantity=1;
+						};
+						class Material2
+						{
+							type="Nail";
+							slot_name="Material_Nails";
+							quantity=1;
+						};
 					};
-					class Blood
+				};
+				class wall_base_down
+				{
+					name="Roof Posts";
+					id=6;
+					required_parts[]=
 					{
-						damage = 8.0;
+						"base"
 					};
-					class Shock
+					conflicted_parts[]={};
+					collision_data[]={};
+					build_action_type=2;
+					dismantle_action_type=2;
+					material_type=2;
+					class Materials
 					{
-						damage = 8.0;
+						class Material1
+						{
+							type="WoodenPlank";
+							slot_name="Material_WoodenPlanks";
+							quantity=1;
+						};
+						class Material2
+						{
+							type="Nail";
+							slot_name="Material_Nails";
+							quantity=1;
+						};
+					};
+				};
+				class wall_base_up
+				{
+					name="Trader Roof";
+					id=9;
+					required_parts[]=
+					{
+						"base"
+					};
+					conflicted_parts[]={};
+					collision_data[]={};
+					build_action_type=2;
+					dismantle_action_type=2;
+					material_type=2;
+					class Materials
+					{
+						class Material1
+						{
+							type="WoodenPlank";
+							slot_name="Material_WoodenPlanks";
+							quantity=1;
+						};
+						class Material2
+						{
+							type="Nail";
+							slot_name="Material_Nails";
+							quantity=1;
+						};
 					};
 				};
 			};

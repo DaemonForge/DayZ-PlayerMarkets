@@ -1,0 +1,119 @@
+class LadsDryingRack extends ItemBase
+{	
+	//Drying Action for foods ya yeet	Thanks to InclementDab for the scripting help.
+	private bool m_IsLocked = false;
+	
+	const int FOOD_DRYING_TIME = 300; //This is in seconds, 10 is ten seconds, 900 is 15 minutes. 
+	
+	bool IsLocked()
+	{
+		return m_IsLocked;
+	}	
+	
+	override void EEItemAttached(EntityAI item, string slot_name)
+	{
+		super.EEItemAttached(item,slot_name);
+
+		if (GetGame().IsServer())
+		{
+			DryingRackInPlace(item);
+			Print("Meat Attached");
+			
+		}
+	}
+
+	void Lock(float actiontime)
+	{	
+		m_IsLocked = true;
+		Print("is Locked");
+	}
+	
+	void Unlock(ItemBase item)
+	{
+		m_IsLocked = false;	
+		Edible_Base food_item = Edible_Base.Cast( item );
+		ItemBase stick = ItemBase.Cast( item );
+			
+		
+		Edible_Base item_on_stick = Edible_Base.Cast( stick.GetAttachmentByType( Edible_Base ) );
+
+		if(item_on_stick)
+    	{
+    	  item_on_stick.ChangeFoodStage( FoodStageType.DRIED );
+		  item_on_stick.RemoveAllAgents();
+		  Print("Meat Changed Food stage");
+    	}
+		Print("is unlocked");
+	}
+
+	void DryingRackInPlace(ItemBase item)
+	{		
+		m_IsLocked = false;	
+		Edible_Base food_item = Edible_Base.Cast(item);
+
+		if (food_item) 
+		{
+			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DryFoodDelayed, FOOD_DRYING_TIME * 1000, false, food_item);
+			Print("Drying Rack time triggered");
+			Print(FOOD_DRYING_TIME);
+    	}
+		Print("dryingrackinpalce void triggered");
+	}
+	
+	void DryFoodDelayed(Edible_Base food)
+    {
+        if (food && food.GetHierarchyParent() == this) 
+		{
+            food.ChangeFoodStage(FoodStageType.DRIED);
+			food.RemoveAllAgents();
+        }
+		Print("food delay");
+    }
+	
+	override void EEInit()
+	{
+		super.EEInit();
+	}
+	
+	override void OnItemLocationChanged( EntityAI old_owner, EntityAI new_owner ) 
+	{
+		super.OnItemLocationChanged( old_owner, new_owner );
+	}	
+	
+	override bool CanReceiveAttachment( EntityAI attachment, int slotId )
+	{
+		if ( GetHealthLevel() == GameConstants.STATE_RUINED )
+			return false;
+		
+		return super.CanReceiveAttachment(attachment, slotId);
+	}
+	
+	override bool CanLoadAttachment( EntityAI attachment )
+	{
+		if ( GetHealthLevel() == GameConstants.STATE_RUINED )
+			return false;
+		
+		return super.CanLoadAttachment(attachment);
+	}
+	
+	override bool CanPutInCargo( EntityAI parent )
+	{
+		return false;
+	}
+	
+	override bool CanPutIntoHands(EntityAI parent)
+	{
+		return false;
+	}
+	
+	void SpawnBundle(vector position)
+	{
+		GetGame().CreateObject("DryingRackKit", position, false);
+	}
+	
+	override void SetActions()
+	{
+		super.SetActions();
+		AddAction(ActionPackDryingRackBundle);
+	}
+}
