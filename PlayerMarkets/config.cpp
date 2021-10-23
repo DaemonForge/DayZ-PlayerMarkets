@@ -139,6 +139,401 @@ class CfgVehicles
 			"Material_Nails",
 			"Material_WoodenPlanks",
 		};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints=100;
+					healthLevels[]=
+					{
+						
+						{
+							1.0,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.69999999,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.5,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.30000001,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.0,
+							
+							{
+								""
+							}
+						}
+					};
+				};
+			};
+			class GlobalArmor
+			{
+				class FragGrenade
+				{
+					class Health
+					{
+						damage=0;
+					};
+					class Blood
+					{
+						damage=0;
+					};
+					class Shock
+					{
+						damage=0;
+					};
+				};
+			};
+			class DamageZones
+			{
+				class Body
+				{
+					class Health
+					{
+						hitpoints=100;
+						transferToGlobalCoef=0;
+						healthLevels[]=
+						{
+							
+							{
+								1.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.69999999,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.5,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_damage.rvmat"
+								}
+							},
+							
+							{
+								0.30000001,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_damage.rvmat"
+								}
+							},
+							
+							{
+								0.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_destruct.rvmat"
+								}
+							}
+						};
+					};
+					class ArmorType
+					{
+						class Projectile
+						{
+							class Health
+							{
+								damage=0;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class Melee
+						{
+							class Health
+							{
+								damage=0;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class FragGrenade
+						{
+							class Health
+							{
+								damage=0;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+					};
+					componentNames[]=
+					{
+						"body"
+					};
+					fatalInjuryCoef=-1;
+				};
+				class Wall_Base_Down
+				{
+					class Health
+					{
+						hitpoints=200;
+						transferToGlobalCoef=0;
+						healthLevels[]=
+						{
+							
+							{
+								1.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.69999999,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
+								}
+							},
+							
+							{
+								0.5,
+								
+								{
+									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+								}
+							},
+							
+							{
+								0.30000001,
+								
+								{
+									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+								}
+							},
+							
+							{
+								0.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
+								}
+							}
+						};
+					};
+					displayName="Boards";
+					class ArmorType
+					{
+						class Projectile
+						{
+							class Health
+							{
+								damage=1;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class Melee
+						{
+							class Health
+							{
+								damage=0.64999998;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class FragGrenade
+						{
+							class Health
+							{
+								damage=50;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+					};
+					componentNames[]=
+					{
+						"wall_base_down"
+					};
+					fatalInjuryCoef=-1;
+				};
+				class Wall_Base_Up: Wall_Base_Down
+				{
+					displayName="Upper Boards";
+					componentNames[]=
+					{
+						"wall_base_up"
+					};
+				};
+				class wall_wood_up
+				{
+					class Health
+					{
+						hitpoints=50;
+						transferToGlobalCoef=0;
+						healthLevels[]=
+						{
+							
+							{
+								1.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.69999999,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
+								}
+							},
+							
+							{
+								0.5,
+								
+								{
+									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+								}
+							},
+							
+							{
+								0.30000001,
+								
+								{
+									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+								}
+							},
+							
+							{
+								0.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
+								}
+							}
+						};
+					};
+					class ArmorType
+					{
+						class Projectile
+						{
+							class Health
+							{
+								damage=1;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class Melee
+						{
+							class Health
+							{
+								damage=0.64999998;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class FragGrenade
+						{
+							class Health
+							{
+								damage=50;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+					};
+					displayName="Upper Boards";
+					componentNames[]=
+					{
+						"wall_wood_up"
+					};
+				};
+			};
+		};
 		class GUIInventoryAttachmentsProps
 		{
 			class Base
@@ -248,7 +643,7 @@ class CfgVehicles
 				class wall_base_down
 				{
 					name="Roof Posts";
-					id=6;
+					id=2;
 					required_parts[]=
 					{
 						"base"
@@ -277,7 +672,7 @@ class CfgVehicles
 				class wall_base_up
 				{
 					name="Trader Roof";
-					id=9;
+					id=3;
 					required_parts[]=
 					{
 						"base"

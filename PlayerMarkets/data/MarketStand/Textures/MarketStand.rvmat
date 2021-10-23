@@ -8,7 +8,7 @@ PixelShaderID = "Super";
 VertexShaderID = "Super";
 class Stage1
 {
-	texture = "PlayerMarkets\data\MarketStand\PBR_Tent2_Normal.paa";
+	texture = "PlayerMarkets\data\MarketStand\Textures\PBR_Tent2_Normal.paa";
 	uvSource = "tex";
 	class uvTransform
 	{
