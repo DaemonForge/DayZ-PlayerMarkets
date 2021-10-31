@@ -141,7 +141,7 @@ class PM_MarketStand extends BaseBuildingBase
 	
 	override string GetConstructionKitType()
 	{
-		return "WindowBarricadeKit";
+		return "PM_MarketKit";
 	}
 	
 	override bool CanDisplayAttachmentSlot( string slot_name )
@@ -307,7 +307,7 @@ class PM_MarketStand extends BaseBuildingBase
 
 		if ( !HasProperDistance( "center", player ) && !HasProperDistance( "center2", player ) && !HasProperDistance( "center3", player ) )
 		{
-			return false;
+			return true;
 		}
 		
 		return true;
@@ -318,7 +318,7 @@ class PM_MarketStand extends BaseBuildingBase
 		{
 			vector selection_pos = ModelToWorld( GetMemoryPointPos( selection ) );
 			float distance = vector.Distance( selection_pos, player.GetPosition() );
-			if ( distance >= 1.4 )
+			if ( distance >= 0.4 )
 			{
 				return false;
 			}
@@ -338,6 +338,11 @@ class PM_MarketStand extends BaseBuildingBase
 			}
 		}
 		return true;
+	}
+	override void SetActions()
+	{
+		super.SetActions();
+		AddAction(ActionFoldBaseBuildingObject);
 	}
 }
 class PM_MarketKit extends ItemBase

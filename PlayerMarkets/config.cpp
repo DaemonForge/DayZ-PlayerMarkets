@@ -138,6 +138,15 @@ class CfgVehicles
 		{
 			"Material_Nails",
 			"Material_WoodenPlanks",
+			"Merchant_SlotLarge1",
+			"Merchant_SlotLarge2",
+			"Merchant_SlotLarge3",
+			"Merchant_SlotLarge4",
+			"Merchant_SlotSmall1",
+			"Merchant_SlotSmall2",
+			"Merchant_SlotSmall3",
+			"Merchant_SlotSmall4",
+			"Merchant_SlotSmall5"
 		};
 		class DamageSystem
 		{
@@ -215,6 +224,7 @@ class CfgVehicles
 				{
 					class Health
 					{
+						displayName="Table";
 						hitpoints=100;
 						transferToGlobalCoef=0;
 						healthLevels[]=
@@ -319,6 +329,7 @@ class CfgVehicles
 				{
 					class Health
 					{
+						displayName="Posts";
 						hitpoints=200;
 						transferToGlobalCoef=0;
 						healthLevels[]=
@@ -365,7 +376,6 @@ class CfgVehicles
 							}
 						};
 					};
-					displayName="Boards";
 					class ArmorType
 					{
 						class Projectile
@@ -422,145 +432,41 @@ class CfgVehicles
 				};
 				class Wall_Base_Up: Wall_Base_Down
 				{
-					displayName="Upper Boards";
+					displayName="Roof";
 					componentNames[]=
 					{
 						"wall_base_up"
-					};
-				};
-				class wall_wood_up
-				{
-					class Health
-					{
-						hitpoints=50;
-						transferToGlobalCoef=0;
-						healthLevels[]=
-						{
-							
-							{
-								1.0,
-								
-								{
-									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
-								}
-							},
-							
-							{
-								0.69999999,
-								
-								{
-									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
-								}
-							},
-							
-							{
-								0.5,
-								
-								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
-								}
-							},
-							
-							{
-								0.30000001,
-								
-								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
-								}
-							},
-							
-							{
-								0.0,
-								
-								{
-									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
-								}
-							}
-						};
-					};
-					class ArmorType
-					{
-						class Projectile
-						{
-							class Health
-							{
-								damage=1;
-							};
-							class Blood
-							{
-								damage=0;
-							};
-							class Shock
-							{
-								damage=0;
-							};
-						};
-						class Melee
-						{
-							class Health
-							{
-								damage=0.64999998;
-							};
-							class Blood
-							{
-								damage=0;
-							};
-							class Shock
-							{
-								damage=0;
-							};
-						};
-						class FragGrenade
-						{
-							class Health
-							{
-								damage=50;
-							};
-							class Blood
-							{
-								damage=0;
-							};
-							class Shock
-							{
-								damage=0;
-							};
-						};
-					};
-					displayName="Upper Boards";
-					componentNames[]=
-					{
-						"wall_wood_up"
 					};
 				};
 			};
 		};
 		class GUIInventoryAttachmentsProps
 		{
-			class Base
-			{
-				name="$STR_CfgVehicles_Fence_Att_Category_Base";
-				description="";
-				attachmentSlots[]=
-				{
-					"Material_WoodenLogs"
-				};
-				icon="set:dayz_inventory image:cat_bb_base";
-				selection="wall";
-			};
-			class Attachments
-			{
-				name="$STR_CfgVehicles_Fence_Att_Category_Attachments";
-				description="";
-				attachmentSlots[]=
-				{
-					"Wall_Camonet",
-					"Wall_Barbedwire_1",
-					"Wall_Barbedwire_2",
-					"Att_CombinationLock"
-				};
-				icon="set:dayz_inventory image:cat_bb_attachments";
-				selection="wall";
-			};
+			//class Base
+			//{
+			//	name="$STR_CfgVehicles_Fence_Att_Category_Base";
+			//	description="";
+			//	attachmentSlots[]=
+			//	{
+			//		"Material_WoodenLogs"
+			//	};
+			//	icon="set:dayz_inventory image:cat_bb_base";
+			//	selection="wall";
+			//};
+			//class Attachments
+			//{
+			//	name="$STR_CfgVehicles_Fence_Att_Category_Attachments";
+			//	description="";
+			//	attachmentSlots[]=
+			//	{
+			//		"Wall_Camonet",
+			//		"Wall_Barbedwire_1",
+			//		"Wall_Barbedwire_2",
+			//		"Att_CombinationLock"
+			//	};
+			//	icon="set:dayz_inventory image:cat_bb_attachments";
+			//	selection="wall";
+			//};
 			class Material
 			{
 				name="$STR_CfgVehicles_Fence_Att_Category_Materials";
@@ -568,9 +474,7 @@ class CfgVehicles
 				attachmentSlots[]=
 				{
 					"Material_Nails",
-					"Material_WoodenPlanks",
-					"Material_MetalSheets",
-					"Material_MetalWire"
+					"Material_WoodenPlanks"
 				};
 				icon="set:dayz_inventory image:cat_bb_material";
 				selection="wall";
@@ -675,7 +579,7 @@ class CfgVehicles
 					id=3;
 					required_parts[]=
 					{
-						"base"
+						"wall_base_down"
 					};
 					conflicted_parts[]={};
 					collision_data[]={};
@@ -706,7 +610,6 @@ class CfgVehicles
 			openable = 0;
 			allowOwnedCargoManipulation = 1;
 		};
-		attachments[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotSmall1","Merchant_SlotSmall2","Merchant_SlotSmall3","Merchant_SlotSmall4","Merchant_SlotSmall5"};
 	};
 	class PM_Merchant_Base: Inventory_Base
 	{
