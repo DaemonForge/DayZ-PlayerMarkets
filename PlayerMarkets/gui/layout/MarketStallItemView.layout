@@ -1,0 +1,200 @@
+ImageWidgetClass rootFrame {
+ position 0 0
+ size 760 840
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ image0 "PlayerMarkets\gui\images\parchmentV.edds"
+ mode blend
+ "src alpha" 1
+ "no wrap" 1
+ stretch 1
+ "flip u" 1
+ {
+  FrameWidgetClass ItemPreviewFrame {
+   ignorepointer 1
+   position 0 100
+   size 640 400
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    ItemPreviewWidgetClass ItemPreveiw {
+     ignorepointer 0
+     position 0 0
+     size 0 0
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+    }
+   }
+  }
+  TextWidgetClass ItemName {
+   ignorepointer 1
+   color 0 0 0 1
+   position 0 15
+   size 0.9 82
+   halign center_ref
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "Item Name"
+   "exact text" 1
+   "size to text h" 0
+   "size to text v" 0
+   "text halign" center
+   "text valign" center
+  }
+  MultilineTextWidgetClass Description {
+   ignorepointer 1
+   color 0 0 0 1
+   position 0 580
+   size 0.84 156
+   halign center_ref
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "This is the item description, and potential a written description by the player"
+   font "gui/fonts/Metron-Italic16"
+   "exact text" 1
+   wrap 1
+   "condense whitespace" 1
+  }
+  GridSpacerWidgetClass ItemDetails {
+   ignorepointer 1
+   position 0 515
+   size 0.79 48
+   halign center_ref
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   Padding 3
+   "Size To Content H" 1
+   content_halign center
+   content_valign center
+   Columns 8
+   Rows 1
+   {
+    TextWidgetClass DamageState {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass Quanity {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass LiquidType {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass Weight {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+   }
+  }
+  ButtonWidgetClass Buy {
+   visible 1
+   position 24 20
+   size 200 64
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    TextWidgetClass Buy_Label {
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     text "Buy"
+     "exact text" 0
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  ButtonWidgetClass Cancel {
+   visible 1
+   position 232 20
+   size 200 64
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    TextWidgetClass Cancel_Label {
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     text "Cancel"
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  TextWidgetClass Price {
+   ignorepointer 1
+   color 0 0 0 1
+   position -216 20
+   size 264 64
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   text "$5000"
+   "text halign" center
+   "text valign" center
+  }
+ }
+}
