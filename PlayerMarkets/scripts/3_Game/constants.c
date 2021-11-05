@@ -1,0 +1,7 @@
+static const int PLAYER_MARKET_MENU = 2101891460;
+
+static const int PLAYER_MARKET_RPC1 = 2101891461;
+static const int PLAYER_MARKET_RPC2 = 2101891462;
+static const int PLAYER_MARKET_RPC3 = 2101891463;
+static const int PLAYER_MARKET_RPC4 = 2101891464;
+static const int PLAYER_MARKET_RPC5 = 2101891465;

@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{7F44B0DC47F71CC6}PlayerMarkets/gui/images/parchmentV.png"
+ Author "desktop-tdpoqud"
+ ChangeDate -1747621066
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "parchmentV.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

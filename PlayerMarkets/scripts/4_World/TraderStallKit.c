@@ -1,6 +1,50 @@
-class PM_MarketStand extends BaseBuildingBase
-{
-		int m_CurtainStage = -1;
+class PM_MarketStand extends BaseBuildingBase {
+	
+	protected string m_OwnerGUID = "";
+	protected string m_StandName = "";
+	
+	protected autoptr TStringIntMap m_AuthorizedSellers;
+	
+	protected autoptr TStringMap m_Notes;
+	
+	protected autoptr array<autoptr PlayerMarketSoloItemDetails> m_SoloItemsArray;
+	protected autoptr array<autoptr PlayerMarketBulkItemDetails> m_BulkItemsArray;
+	protected autoptr TStringSet m_Visitors;
+	protected int m_Vists;
+	
+	
+	string GetStandName(){
+		return m_StandName;
+	}
+	
+	void SetStandName(string name){
+		m_StandName = name;
+	}
+	
+	array<autoptr PlayerMarketSoloItemDetails> GetSoloItemsArray(){
+		return m_SoloItemsArray;
+	}
+	
+	array<autoptr PlayerMarketBulkItemDetails> GetBulkItemsArray(){
+		return m_BulkItemsArray;
+	}
+	
+	void AddVisitor(string player){
+		if (!m_Visitors){
+			m_Visitors = new TStringSet;
+		}
+		m_Visitors.Insert(player);
+		m_Vists++;
+	}
+	
+	void AddAuthorizedSeller(string seller, int perm){
+		if (!m_AuthorizedSellers){
+			m_AuthorizedSellers = new TStringIntMap;
+		}
+		m_AuthorizedSellers.Insert(seller, perm);
+	}
+	
+	int m_CurtainStage = -1;
 	const float MAX_FLOOR_VERTICAL_DISTANCE 		= 0.5;
 	
 	
@@ -10,10 +54,34 @@ class PM_MarketStand extends BaseBuildingBase
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
 	{
-		if ( !super.OnStoreLoad( ctx, version ) )
+		if ( !super.OnStoreLoad( ctx, version ) ) {
 			return false;
-		if (!ctx.Read(m_CurtainStage )) 
-		{
+		}
+		if (!ctx.Read(m_CurtainStage )) {
+			return false;
+		}
+		if (!ctx.Read( m_OwnerGUID )) {
+			return false;
+		}
+		if (!ctx.Read( m_StandName )) {
+			return false;
+		}
+		if (!ctx.Read( m_Notes )) {
+			return false;
+		}
+		if (!ctx.Read( m_AuthorizedSellers )) {
+			return false;
+		}
+		if (!ctx.Read( m_SoloItemsArray )) {
+			return false;
+		}
+		if (!ctx.Read( m_BulkItemsArray )) {
+			return false;
+		}
+		if (!ctx.Read( m_Visitors )) {
+			return false;
+		}
+		if (!ctx.Read( m_Vists )) {
 			return false;
 		}
 		return true;
@@ -22,13 +90,21 @@ class PM_MarketStand extends BaseBuildingBase
 	override void OnStoreSave(ParamsWriteContext ctx)
 	{
 		super.OnStoreSave(ctx);
-		ctx.Write(m_CurtainStage );
+		ctx.Write( m_CurtainStage );
+		ctx.Write( m_OwnerGUID );
+		ctx.Write( m_StandName );
+		ctx.Write( m_Notes );
+		ctx.Write( m_AuthorizedSellers );
+		ctx.Write( m_SoloItemsArray );
+		ctx.Write( m_BulkItemsArray );
+		ctx.Write( m_Visitors );
+		ctx.Write( m_Vists );
 	}
 	
 	override void AfterStoreLoad()
 	{    
 		super.AfterStoreLoad();
-		m_CurtainStage;
+		
 		UpdateVisuals();
 	}
 	
@@ -38,7 +114,7 @@ class PM_MarketStand extends BaseBuildingBase
 		ShowSimpleSelection("Open_Curtain", 0);
 		ShowSimpleSelection("Closed_Curtain", 0);
 		
-		RegisterNetSyncVariableInt("m_CurtainStage")
+		RegisterNetSyncVariableInt("m_CurtainStage");
 	}
 	
 	void CloseCurtain()
@@ -73,11 +149,11 @@ class PM_MarketStand extends BaseBuildingBase
 		super.EEItemAttached(item,slot_name);
 		if ( item.IsKindOf("WindowBarricadeKit") && slot_name == "NDCurtain_Open") // any attachment but coal
 		{
-			OpenCurtain()
+			OpenCurtain();
 		}
 		else if ( item.IsKindOf("WindowBarricadeKit") && slot_name == "NDCurtain_Closed") // any attachment but coal
 		{
-			CloseCurtain()
+			CloseCurtain();
 		};
 	};
 	
