@@ -7,8 +7,7 @@ class PM_MarketStand extends BaseBuildingBase {
 	
 	protected autoptr TStringMap m_Notes;
 	
-	protected autoptr array<autoptr PlayerMarketSoloItemDetails> m_SoloItemsArray;
-	protected autoptr array<autoptr PlayerMarketBulkItemDetails> m_BulkItemsArray;
+	protected autoptr array<autoptr PlayerMarketItemDetails> m_ItemsArray;
 	protected autoptr TStringSet m_Visitors;
 	protected int m_Vists;
 	
@@ -21,12 +20,16 @@ class PM_MarketStand extends BaseBuildingBase {
 		m_StandName = name;
 	}
 	
-	array<autoptr PlayerMarketSoloItemDetails> GetSoloItemsArray(){
-		return m_SoloItemsArray;
+	array<autoptr PlayerMarketItemDetails> GetItemsArray(){
+		return m_ItemsArray;
 	}
 	
-	array<autoptr PlayerMarketBulkItemDetails> GetBulkItemsArray(){
-		return m_BulkItemsArray;
+	bool AddItemForSale(EntityAI item, int price, PlayerBase player){
+		if (!m_ItemsArray){
+			m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
+		}
+		m_ItemsArray.Insert(new PlayerMarketItemDetails(EntityAI.Cast(item),price, this));
+		return true;
 	}
 	
 	void AddVisitor(string player){
@@ -57,9 +60,6 @@ class PM_MarketStand extends BaseBuildingBase {
 		if ( !super.OnStoreLoad( ctx, version ) ) {
 			return false;
 		}
-		if (!ctx.Read(m_CurtainStage )) {
-			return false;
-		}
 		if (!ctx.Read( m_OwnerGUID )) {
 			return false;
 		}
@@ -72,10 +72,7 @@ class PM_MarketStand extends BaseBuildingBase {
 		if (!ctx.Read( m_AuthorizedSellers )) {
 			return false;
 		}
-		if (!ctx.Read( m_SoloItemsArray )) {
-			return false;
-		}
-		if (!ctx.Read( m_BulkItemsArray )) {
+		if (!ctx.Read( m_ItemsArray )) {
 			return false;
 		}
 		if (!ctx.Read( m_Visitors )) {
@@ -90,13 +87,11 @@ class PM_MarketStand extends BaseBuildingBase {
 	override void OnStoreSave(ParamsWriteContext ctx)
 	{
 		super.OnStoreSave(ctx);
-		ctx.Write( m_CurtainStage );
 		ctx.Write( m_OwnerGUID );
 		ctx.Write( m_StandName );
 		ctx.Write( m_Notes );
 		ctx.Write( m_AuthorizedSellers );
-		ctx.Write( m_SoloItemsArray );
-		ctx.Write( m_BulkItemsArray );
+		ctx.Write( m_ItemsArray );
 		ctx.Write( m_Visitors );
 		ctx.Write( m_Vists );
 	}

@@ -5,7 +5,7 @@ modded class MissionBase extends MissionBaseWorld
         menu = super.CreateScriptedMenu(id);
         if (!menu) {
             switch (id) {
-                case PLAYER_MARKET_MENU:
+                case PLAYER_MARKET_MENU_BUY:
                     menu = new MarketStallMenu;
                     break;
             }
