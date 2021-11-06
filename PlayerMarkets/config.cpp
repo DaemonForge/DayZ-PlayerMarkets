@@ -89,6 +89,38 @@ class CfgVehicles
 			};
 		};	
 	};
+	class PM_MarketV2Kit: Inventory_Base
+	{
+		scope = 2;
+		displayName = "Market Stall V2 Kit";
+		descriptionShort = "Market Stall V2 Kit, Place to make a stall";
+		model = "PlayerMarkets\data\MarketStand\MarketStandKit.p3d";
+		rotationFlags = 17;
+		itemSize[] = {1,5};
+		weight = 280;
+		itemBehaviour=1;
+		class AnimationSources
+		{
+			class AnimSourceShown
+			{
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=0;
+			};
+			class AnimSourceHidden
+			{
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=1;
+			};
+			class Inventory: AnimSourceShown
+			{
+			};
+			class Placing: AnimSourceHidden
+			{
+			};
+		};	
+	};
 	class PM_MaketStandPlacing : PM_MarketKit
 	{
 		displayName="This is a hologram";
@@ -580,6 +612,509 @@ class CfgVehicles
 					required_parts[]=
 					{
 						"wall_base_down"
+					};
+					conflicted_parts[]={};
+					collision_data[]={};
+					build_action_type=2;
+					dismantle_action_type=2;
+					material_type=2;
+					class Materials
+					{
+						class Material1
+						{
+							type="WoodenPlank";
+							slot_name="Material_WoodenPlanks";
+							quantity=1;
+						};
+						class Material2
+						{
+							type="Nail";
+							slot_name="Material_Nails";
+							quantity=1;
+						};
+					};
+				};
+			};
+		};
+		class Cargo
+		{
+			itemsCargoSize[] = {10,12};
+			openable = 0;
+			allowOwnedCargoManipulation = 1;
+		};
+	};
+	class PM_MarketStandV2 : BaseBuildingBase 
+	{
+		scope = 2;
+		displayName  = "Market Stand V2";
+		descriptionShort = "A place where players can sell there items";
+		model = "PlayerMarkets\data\MarketStand\MarketStandV2.p3d";
+		bounding="BSphere";
+		overrideDrawArea="3.0";
+		forceFarBubble="true";
+		handheld="false";
+		lootCategory="Crafted";
+		carveNavmesh=1;
+		weight=10000;
+		itemSize[]={2,3};
+		physLayer="item_large";
+		createProxyPhysicsOnInit="false";
+		rotationFlags=2;
+		createdProxiesOnInit[]=
+		{
+			"Deployed"
+		};
+		attachments[]=
+		{
+			"Material_Nails",
+			"Material_WoodenPlanks",
+			"Merchant_SlotLarge1",
+			"Merchant_SlotLarge2",
+			"Merchant_SlotLarge3",
+			"Merchant_SlotLarge4",
+			"Merchant_SlotSmall1",
+			"Merchant_SlotSmall2",
+			"Merchant_SlotSmall3",
+			"Merchant_SlotSmall4",
+			"Merchant_SlotSmall5"
+		};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints=100;
+					healthLevels[]=
+					{
+						
+						{
+							1.0,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.69999999,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.5,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.30000001,
+							
+							{
+								""
+							}
+						},
+						
+						{
+							0.0,
+							
+							{
+								""
+							}
+						}
+					};
+				};
+			};
+			class GlobalArmor
+			{
+				class FragGrenade
+				{
+					class Health
+					{
+						damage=0;
+					};
+					class Blood
+					{
+						damage=0;
+					};
+					class Shock
+					{
+						damage=0;
+					};
+				};
+			};
+			class DamageZones
+			{
+				class base
+				{
+					class Health
+					{
+						displayName="Table";
+						hitpoints=100;
+						transferToGlobalCoef=0;
+						healthLevels[]=
+						{
+							
+							{
+								1.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.69999999,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.5,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_damage.rvmat"
+								}
+							},
+							
+							{
+								0.30000001,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_damage.rvmat"
+								}
+							},
+							
+							{
+								0.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_destruct.rvmat"
+								}
+							}
+						};
+					};
+					class ArmorType
+					{
+						class Projectile
+						{
+							class Health
+							{
+								damage=0;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class Melee
+						{
+							class Health
+							{
+								damage=0;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class FragGrenade
+						{
+							class Health
+							{
+								damage=0;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+					};
+					componentNames[]=
+					{
+						"base"
+					};
+					fatalInjuryCoef=-1;
+				};
+				class Posts
+				{
+					class Health
+					{
+						displayName="Posts";
+						hitpoints=200;
+						transferToGlobalCoef=0;
+						healthLevels[]=
+						{
+							
+							{
+								1.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks.rvmat"
+								}
+							},
+							
+							{
+								0.69999999,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
+								}
+							},
+							
+							{
+								0.5,
+								
+								{
+									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+								}
+							},
+							
+							{
+								0.30000001,
+								
+								{
+									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+								}
+							},
+							
+							{
+								0.0,
+								
+								{
+									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
+								}
+							}
+						};
+					};
+					class ArmorType
+					{
+						class Projectile
+						{
+							class Health
+							{
+								damage=1;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class Melee
+						{
+							class Health
+							{
+								damage=0.64999998;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+						class FragGrenade
+						{
+							class Health
+							{
+								damage=50;
+							};
+							class Blood
+							{
+								damage=0;
+							};
+							class Shock
+							{
+								damage=0;
+							};
+						};
+					};
+					componentNames[]=
+					{
+						"posts"
+					};
+					fatalInjuryCoef=-1;
+				};
+				class Roof: Posts
+				{
+					displayName="Roof";
+					componentNames[]=
+					{
+						"roof"
+					};
+				};
+			};
+		};
+		class GUIInventoryAttachmentsProps
+		{
+			//class Base
+			//{
+			//	name="$STR_CfgVehicles_Fence_Att_Category_Base";
+			//	description="";
+			//	attachmentSlots[]=
+			//	{
+			//		"Material_WoodenLogs"
+			//	};
+			//	icon="set:dayz_inventory image:cat_bb_base";
+			//	selection="wall";
+			//};
+			class Attachments
+			{
+				name="Merchant Slots";
+				description="";
+				attachmentSlots[]=
+				{
+					"Merchant_SlotLarge1",
+					"Merchant_SlotLarge2",
+					"Merchant_SlotLarge3",
+					"Merchant_SlotLarge4",
+					"Merchant_SlotSmall1",
+					"Merchant_SlotSmall2",
+					"Merchant_SlotSmall3",
+					"Merchant_SlotSmall4",
+					"Merchant_SlotSmall5"
+				};
+				icon="set:dayz_inventory image:cat_bb_attachments";
+				selection="wall";
+			};
+			class Material
+			{
+				name="$STR_CfgVehicles_Fence_Att_Category_Materials";
+				description="";
+				attachmentSlots[]=
+				{
+					"Material_Nails",
+					"Material_WoodenPlanks"
+				};
+				icon="set:dayz_inventory image:cat_bb_material";
+				selection="wall";
+			};
+		};
+		class AnimationSources
+		{
+			class AnimSourceShown
+			{
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=0;
+			};
+			class AnimSourceHidden
+			{
+				source="user";
+				animPeriod=0.0099999998;
+				initPhase=1;
+			};
+			class AnimRotate
+			{
+				source="user";
+				animPeriod=0.017999999;
+				initPhase=0;
+			};
+			class Deployed: AnimSourceHidden
+			{
+			};
+			class Base: AnimSourceHidden
+			{
+			};
+			class Posts: AnimSourceHidden
+			{
+			};
+			class Roof: AnimSourceHidden
+			{
+			};
+		};
+		class Construction
+		{
+			class wall
+			{
+				class Base 
+				{
+					name="Trader Table";
+					is_base=1;
+					id=1;
+					required_parts[]={};
+					conflicted_parts[]={};
+					collision_data[]={};
+					build_action_type=2;
+					dismantle_action_type=2;
+					material_type=1;
+					class Materials
+					{
+						class Material1
+						{
+							type="WoodenPlank";
+							slot_name="Material_WoodenPlanks";
+							quantity=1;
+						};
+						class Material2
+						{
+							type="Nail";
+							slot_name="Material_Nails";
+							quantity=1;
+						};
+					};
+				};
+				class Posts
+				{
+					name="Roof Posts";
+					id=2;
+					required_parts[]=
+					{
+						"base"
+					};
+					conflicted_parts[]={};
+					collision_data[]={};
+					build_action_type=2;
+					dismantle_action_type=2;
+					material_type=2;
+					class Materials
+					{
+						class Material1
+						{
+							type="WoodenPlank";
+							slot_name="Material_WoodenPlanks";
+							quantity=1;
+						};
+						class Material2
+						{
+							type="Nail";
+							slot_name="Material_Nails";
+							quantity=1;
+						};
+					};
+				};
+				class Roof
+				{
+					name="Trader Roof";
+					id=3;
+					required_parts[]=
+					{
+						"Posts"
 					};
 					conflicted_parts[]={};
 					collision_data[]={};
