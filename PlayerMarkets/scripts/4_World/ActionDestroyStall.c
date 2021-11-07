@@ -46,7 +46,7 @@ class ActionDestroyPM_MarketPart: ActionContinuousBase
 	override bool ActionCondition( PlayerBase player, ActionTarget target, ItemBase item )
 	{	
 		Object target_object = target.GetObject();
-		PM_MarketStand base_building = PM_MarketStand.Cast( target_object );
+		MarketStandBase base_building = MarketStandBase.Cast( target_object );
 		if ( base_building )
 		{
 			if (player.m_BrokenLegState == eBrokenLegs.BROKEN_LEGS)
@@ -66,7 +66,7 @@ class ActionDestroyPM_MarketPart: ActionContinuousBase
 	
 	override void OnFinishProgressServer( ActionData action_data )
 	{	
-		PM_MarketStand base_building = PM_MarketStand.Cast( action_data.m_Target.GetObject() );
+		MarketStandBase base_building = MarketStandBase.Cast( action_data.m_Target.GetObject() );
 		Construction construction = base_building.GetConstruction();
 		ConstructionActionData construction_action_data = action_data.m_Player.GetConstructionActionData();
 		ConstructionPart construction_part = construction_action_data.GetTargetPart();
@@ -95,7 +95,7 @@ class ActionDestroyPM_MarketPart: ActionContinuousBase
 				BaseBuildingBase base_building = BaseBuildingBase.Cast( target_object );
 				Construction construction = base_building.GetConstruction();		
 				ConstructionPart construction_part = construction.GetConstructionPartToDestroy( part_name );
-				PM_MarketStand NDBase = PM_MarketStand.Cast( target.GetObject() );
+				MarketStandBase NDBase = MarketStandBase.Cast( target.GetObject() );
 				
 				if ( construction_part )
 				{

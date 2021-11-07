@@ -1,5 +1,13 @@
-class PM_MarketStand extends BaseBuildingBase 
-{
+class MarketStandBase extends BaseBuildingBase  {
+	
+	const float MAX_FLOOR_VERTICAL_DISTANCE 		= 0.5;
+	
+	
+	const float MIN_ACTION_DETECTION_ANGLE_RAD 		= 0.35;		//0.35 RAD = 20 DEG
+	const float MAX_ACTION_DETECTION_DISTANCE 		= 2.0;		//meters
+	const float MAX_ACTION_DETECTION_ANGLE_RAD 		= 1.3;		//1.3 RAD = ~75 DEG
+	
+	
 	
 	protected string m_OwnerGUID = "";
 	protected string m_StandName = "";
@@ -11,8 +19,6 @@ class PM_MarketStand extends BaseBuildingBase
 	protected autoptr array<autoptr PlayerMarketItemDetails> m_ItemsArray;
 	protected autoptr TStringSet m_Visitors;
 	protected int m_Vists;
-	
-	
 	string GetStandName(){
 		return m_StandName;
 	}
@@ -20,6 +26,7 @@ class PM_MarketStand extends BaseBuildingBase
 	void SetStandName(string name){
 		m_StandName = name;
 	}
+	
 	
 	array<autoptr PlayerMarketItemDetails> GetItemsArray(){
 		return m_ItemsArray;
@@ -48,13 +55,9 @@ class PM_MarketStand extends BaseBuildingBase
 		m_AuthorizedSellers.Insert(seller, perm);
 	}
 	
-	int m_CurtainStage = -1;
-	const float MAX_FLOOR_VERTICAL_DISTANCE 		= 0.5;
 	
 	
-	const float MIN_ACTION_DETECTION_ANGLE_RAD 		= 0.35;		//0.35 RAD = 20 DEG
-	const float MAX_ACTION_DETECTION_DISTANCE 		= 2.0;		//meters
-	const float MAX_ACTION_DETECTION_ANGLE_RAD 		= 1.3;		//1.3 RAD = ~75 DEG
+	
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
 	{
@@ -104,76 +107,6 @@ class PM_MarketStand extends BaseBuildingBase
 		UpdateVisuals();
 	}
 	
-	void ND_WindowBarricade()
-	{
-		
-		ShowSimpleSelection("Open_Curtain", 0);
-		ShowSimpleSelection("Closed_Curtain", 0);
-		
-		RegisterNetSyncVariableInt("m_CurtainStage");
-	}
-	
-	void CloseCurtain()
-	{
-		ShowSimpleSelection("Open_Curtain", 0);
-		ShowSimpleSelection("Closed_Curtain", 1);
-		
-		m_CurtainStage = 0;
-	}
-	void OpenCurtain()
-	{
-		ShowSimpleSelection("Open_Curtain", 1);
-		ShowSimpleSelection("Closed_Curtain", 0);
-		
-		m_CurtainStage = 1;
-	}
-	string GetCurtainStage()
-	{
-        if (m_CurtainStage == 0)
-		{
-          return "Close Curtain";
-        }
-		if (m_CurtainStage == 1)
-		{
-          return "Open Curtain";
-        }
-		return "";
-    };
-	
-	override void EEItemAttached(EntityAI item, string slot_name)
-	{
-		super.EEItemAttached(item,slot_name);
-		if ( item.IsKindOf("WindowBarricadeKit") && slot_name == "NDCurtain_Open") // any attachment but coal
-		{
-			OpenCurtain();
-		}
-		else if ( item.IsKindOf("WindowBarricadeKit") && slot_name == "NDCurtain_Closed") // any attachment but coal
-		{
-			CloseCurtain();
-		};
-	};
-	
-	override void EEItemDetached(EntityAI item, string slot_name)
-	{
-		super.EEItemDetached(item, slot_name);
-		
-
-		if ( item.IsKindOf("WindowBarricadeKit")) // any attachment but coal
-		{
-			ShowSimpleSelection("Open_Curtain", 0);
-			ShowSimpleSelection("Closed_Curtain", 0);
-		};
-
-	};
-	
-	void ShowSimpleSelection(string selectionName, bool hide = false)
-    {
-        TStringArray selectionNames = new TStringArray;
-        ConfigGetTextArray("simpleHiddenSelections",selectionNames);
-        int selectionId = selectionNames.Find(selectionName);
-        SetSimpleHiddenSelectionState(selectionId, hide);
-    };
-	
 	
 	ItemBase FoldBaseBuildingObject()
 	{
@@ -181,6 +114,9 @@ class PM_MarketStand extends BaseBuildingBase
 		DestroyConstruction();
 		return item;
 	}
+	
+	
+	
 	override int GetMeleeTargetType()
 	{
 		return EMeleeTargetType.NONALIGNABLE;
@@ -321,7 +257,8 @@ class PM_MarketStand extends BaseBuildingBase
 		//update visuals (server)
 		UpdateVisuals();
 	}
-		//--- ACTION CONDITIONS
+	
+	//--- ACTION CONDITIONS
 	//returns dot product of player->construction direction based on existing/non-existing reference point
 	override bool IsFacingPlayer( PlayerBase player, string selection )
 	{
@@ -411,104 +348,30 @@ class PM_MarketStand extends BaseBuildingBase
 		}
 		return true;
 	}
+	
+	override void EEItemAttached(EntityAI item, string slot_name)
+	{
+		super.EEItemAttached(item,slot_name);
+	};
+	
+	override void EEItemDetached(EntityAI item, string slot_name)
+	{
+		super.EEItemDetached(item, slot_name);
+
+	};
+	
+	void ShowSimpleSelection(string selectionName, bool hide = false)
+    {
+        TStringArray selectionNames = new TStringArray;
+        ConfigGetTextArray("simpleHiddenSelections",selectionNames);
+        int selectionId = selectionNames.Find(selectionName);
+        SetSimpleHiddenSelectionState(selectionId, hide);
+    };
+	
 	override void SetActions()
 	{
 		super.SetActions();
 		AddAction(ActionFoldBaseBuildingObject);
 	}
 }
-class PM_MarketStandV2 extends PM_MarketStand
-{
-	override string GetConstructionKitType()
-	{
-		return "PM_MarketV2Kit";
-	}
-}
-class PM_MarketKit extends ItemBase
-{
-	
-	//================================================================
-	// ADVANCED PLACEMENT
-	//================================================================	
-	
-	override void OnPlacementComplete( Man player, vector position = "0 0 0", vector orientation = "0 0 0"  )
-	{
-		super.OnPlacementComplete( player, position, orientation );
-		
-		if ( GetGame().IsServer() )
-		{
-			PlayerBase player_base = PlayerBase.Cast( player );
 
-			PM_MarketStand MarketStall = PM_MarketStand.Cast( GetGame().CreateObjectEx( "PM_MarketStand", GetPosition(), ECE_PLACE_ON_SURFACE ) );
-			
-			MarketStall.SetPosition( position);
-			MarketStall.SetOrientation( orientation );
-			
-			//make the kit invisible, so it can be destroyed from deploy UA when action ends
-			HideAllSelections();
-			
-			this.Delete();
-			SetIsDeploySound( true );
-		}	
-	}
-	
-	override string GetPlaceSoundset()
-	{
-		return "seachest_drop_SoundSet";
-	}
-	
-	override bool IsDeployable()
-	{
-		return true;
-	}
-	override void SetActions()
-	{
-		super.SetActions();
-		AddAction(ActionTogglePlaceObject);
-		AddAction(ActionDeployObject);
-	}
-};
-class PM_MarketV2Kit extends ItemBase
-{
-	
-	//================================================================
-	// ADVANCED PLACEMENT
-	//================================================================	
-	
-	override void OnPlacementComplete( Man player, vector position = "0 0 0", vector orientation = "0 0 0"  )
-	{
-		super.OnPlacementComplete( player, position, orientation );
-		
-		if ( GetGame().IsServer() )
-		{
-			PlayerBase player_base = PlayerBase.Cast( player );
-
-			PM_MarketStand MarketStall = PM_MarketStand.Cast( GetGame().CreateObjectEx( "PM_MarketStandV2", GetPosition(), ECE_PLACE_ON_SURFACE ) );
-			
-			MarketStall.SetPosition( position);
-			MarketStall.SetOrientation( orientation );
-			
-			//make the kit invisible, so it can be destroyed from deploy UA when action ends
-			HideAllSelections();
-			
-			this.Delete();
-			SetIsDeploySound( true );
-		}	
-	}
-	
-	override string GetPlaceSoundset()
-	{
-		return "seachest_drop_SoundSet";
-	}
-	
-	override bool IsDeployable()
-	{
-		return true;
-	}
-	override void SetActions()
-	{
-		super.SetActions();
-		AddAction(ActionTogglePlaceObject);
-		AddAction(ActionDeployObject);
-	}
-};

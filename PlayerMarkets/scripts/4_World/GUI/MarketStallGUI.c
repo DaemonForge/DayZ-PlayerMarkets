@@ -6,7 +6,7 @@ class MarketStallMenu extends UIScriptedMenu {
 	
 	protected autoptr array<autoptr MarketStallItemWidget> m_ItemWidgets;
 	
-	protected PM_MarketStand m_Stand;
+	protected MarketStandBase m_Stand;
 	
 	override Widget Init()
     {
@@ -18,7 +18,7 @@ class MarketStallMenu extends UIScriptedMenu {
 		return layoutRoot;
 	}
 	
-	void SetStall(PM_MarketStand stand){
+	void SetStall(MarketStandBase stand){
 		Class.CastTo(m_Stand, stand);
 		m_ShopTitle.SetText(m_Stand.GetStandName());
 		if (!m_ItemWidgets){m_ItemWidgets = new array<autoptr MarketStallItemWidget>;}

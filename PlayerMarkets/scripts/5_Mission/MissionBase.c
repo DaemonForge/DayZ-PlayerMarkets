@@ -8,6 +8,9 @@ modded class MissionBase extends MissionBaseWorld
                 case PLAYER_MARKET_MENU_BUY:
                     menu = new MarketStallMenu;
                     break;
+                case PLAYER_MARKET_MENU_SELL:
+                    menu = new MarketStallMenu;
+                    break;
             }
             if (menu) {
                 menu.SetID(id);
