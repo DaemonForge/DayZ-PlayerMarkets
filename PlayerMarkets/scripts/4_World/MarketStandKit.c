@@ -6,7 +6,7 @@ class PM_MarketKit extends PM_MarketKitBase
 	}
 };
 class PM_MarketV2Kit extends PM_MarketKitBase
-{
+{	
 	override string GetMarketStandClass(){
 		return "PM_MarketStandV2";
 	}
@@ -31,7 +31,7 @@ class PM_MarketKitBase extends ItemBase
 		{
 			PlayerBase player_base = PlayerBase.Cast( player );
 
-			PM_MarketStand MarketStall = PM_MarketStand.Cast( GetGame().CreateObjectEx(GetMarketStandClass(), GetPosition(), ECE_PLACE_ON_SURFACE ) );
+			ItemBase MarketStall = ItemBase.Cast( GetGame().CreateObjectEx(GetMarketStandClass(), GetPosition(), ECE_PLACE_ON_SURFACE ) );
 			
 			MarketStall.SetPosition( position);
 			MarketStall.SetOrientation( orientation );

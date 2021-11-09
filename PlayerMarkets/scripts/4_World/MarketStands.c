@@ -12,4 +12,19 @@ class PM_MarketStandV2 extends MarketStandBase
 	{
 		return "PM_MarketV2Kit";
 	}
+	
+	override bool HasProperDistance( string selection, PlayerBase player )
+	{
+		if ( MemoryPointExists( selection ) )
+		{
+			vector selection_pos = ModelToWorld( GetMemoryPointPos( selection ) );
+			float distance = vector.Distance( selection_pos, player.GetPosition() );
+			if ( distance >= 0.1 )
+			{
+				return true;
+			}
+		}
+			
+		return true;
+	}
 }

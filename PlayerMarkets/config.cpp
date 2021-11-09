@@ -56,6 +56,7 @@ class CfgVehicles
 	class Container_Base;
 	class Inventory_Base;
 	class BaseBuildingBase;
+	class MarketStandBase: BaseBuildingBase {}
 	
 	class PM_MarketKit: Inventory_Base
 	{
@@ -145,7 +146,7 @@ class CfgVehicles
 		alignHologramToTerain=0;
 		slopeTolerance=0.30000001;	
 	}
-	class PM_MarketStand : BaseBuildingBase 
+	class PM_MarketStand : MarketStandBase 
 	{
 		scope = 2;
 		displayName  = "Market Stand";
@@ -643,7 +644,7 @@ class CfgVehicles
 			allowOwnedCargoManipulation = 1;
 		};
 	};
-	class PM_MarketStandV2 : BaseBuildingBase 
+	class PM_MarketStandV2 : MarketStandBase 
 	{
 		scope = 2;
 		displayName  = "Market Stand V2";
@@ -750,7 +751,7 @@ class CfgVehicles
 			};
 			class DamageZones
 			{
-				class base
+				class Base
 				{
 					class Health
 					{
@@ -1052,7 +1053,7 @@ class CfgVehicles
 		{
 			class wall
 			{
-				class Base 
+				class base
 				{
 					name="Trader Table";
 					is_base=1;
@@ -1079,7 +1080,7 @@ class CfgVehicles
 						};
 					};
 				};
-				class Posts
+				class posts
 				{
 					name="Roof Posts";
 					id=2;
@@ -1108,13 +1109,13 @@ class CfgVehicles
 						};
 					};
 				};
-				class Roof
+				class roof
 				{
 					name="Trader Roof";
 					id=3;
 					required_parts[]=
 					{
-						"Posts"
+						"posts"
 					};
 					conflicted_parts[]={};
 					collision_data[]={};

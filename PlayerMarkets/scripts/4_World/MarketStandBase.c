@@ -316,7 +316,7 @@ class MarketStandBase extends BaseBuildingBase  {
 
 		if ( !HasProperDistance( "center", player ) && !HasProperDistance( "center2", player ) && !HasProperDistance( "center3", player ) )
 		{
-			return true;
+			return false;
 		}
 		
 		return true;
@@ -327,7 +327,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		{
 			vector selection_pos = ModelToWorld( GetMemoryPointPos( selection ) );
 			float distance = vector.Distance( selection_pos, player.GetPosition() );
-			if ( distance >= 0.4 )
+			if ( distance >= 0.9 )
 			{
 				return false;
 			}
