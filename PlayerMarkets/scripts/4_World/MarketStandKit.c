@@ -11,6 +11,13 @@ class PM_MarketV2Kit extends PM_MarketKitBase
 		return "PM_MarketStandV2";
 	}
 };
+class PM_MarketTableKit extends PM_MarketKitBase
+{
+	override string GetMarketStandClass()
+	{
+		return "PM_TraderTable";
+	}
+}
 
 class PM_MarketKitBase extends ItemBase
 {

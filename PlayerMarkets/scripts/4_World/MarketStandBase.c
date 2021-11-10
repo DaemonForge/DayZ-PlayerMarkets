@@ -327,7 +327,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		{
 			vector selection_pos = ModelToWorld( GetMemoryPointPos( selection ) );
 			float distance = vector.Distance( selection_pos, player.GetPosition() );
-			if ( distance >= 0.9 )
+			if ( distance >= 0.4 )
 			{
 				return false;
 			}
