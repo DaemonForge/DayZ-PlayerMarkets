@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{B44C359F2050EA4F}PlayerMarkets/gui/fonts/Pangolin32.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate -1501320316
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "Pangolin32.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

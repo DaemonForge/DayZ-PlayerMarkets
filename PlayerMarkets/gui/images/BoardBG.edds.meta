@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{85E0BB050C5C335E}PlayerMarkets/gui/images/BoardBG.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate -1665455228
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "BoardBG.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

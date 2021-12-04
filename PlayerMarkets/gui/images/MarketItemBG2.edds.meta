@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{5732DBAB4E93134E}PlayerMarkets/gui/images/MarketItemBG2.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate -1467782268
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "MarketItemBG2.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

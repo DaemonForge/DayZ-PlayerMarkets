@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{9E0AD449BABCE001}PlayerMarkets/gui/fonts/StalinistOne68.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate 110832516
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "StalinistOne68.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}
