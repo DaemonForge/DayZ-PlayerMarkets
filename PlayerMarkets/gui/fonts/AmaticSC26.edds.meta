@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{405D01458B144E97}PlayerMarkets/gui/fonts/AmaticSC26.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate -970675326
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "AmaticSC26.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

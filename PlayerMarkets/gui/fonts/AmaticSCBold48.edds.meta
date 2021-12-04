@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{BC5EBB7F383702EE}PlayerMarkets/gui/fonts/AmaticSCBold48.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate -1407407230
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "AmaticSCBold48.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}
