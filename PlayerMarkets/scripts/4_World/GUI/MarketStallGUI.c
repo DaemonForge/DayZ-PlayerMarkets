@@ -21,11 +21,13 @@ class MarketStallMenu extends UIScriptedMenu {
 	void SetStall(MarketStandBase stand){
 		Class.CastTo(m_Stand, stand);
 		m_ShopTitle.SetText(m_Stand.GetStandName());
-		if (!m_ItemWidgets){m_ItemWidgets = new array<autoptr MarketStallItemWidget>;}
-		autoptr array<autoptr PlayerMarketItemDetails> itemsArray = m_Stand.GetItemsArray();
+		m_ItemWidgets = new array<autoptr MarketStallItemWidget>;
+		array<autoptr PlayerMarketItemDetails> itemsArray = m_Stand.GetItemsArray();
 		if (itemsArray && itemsArray.Count() > 0){
 			for (int i = 0; i < itemsArray.Count(); i++){
-				m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
+				if (itemsArray.Get(i).GetItem() && itemsArray.Get(i).GetItem().GetHierarchyRoot() == stand){
+					m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
+				}
 			}
 		
 		}
@@ -38,6 +40,10 @@ class MarketStallMenu extends UIScriptedMenu {
 		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) ) {
 			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
 		}		
+	}
+	
+	MarketStandBase GetStand(){
+		return m_Stand;
 	}
 	
 }

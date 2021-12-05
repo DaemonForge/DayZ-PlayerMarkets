@@ -19,6 +19,20 @@ class MarketStandBase extends BaseBuildingBase  {
 	protected autoptr array<autoptr PlayerMarketItemDetails> m_ItemsArray;
 	protected autoptr TStringSet m_Visitors;
 	protected int m_Vists;
+	
+	
+	
+	/*
+	--------------------------------------------------------------------------------------------	
+	
+	
+	MARKET
+	
+	--------------------------------------------------------------------------------------------	
+	*/	
+	
+	
+	
 	string GetStandName(){
 		return m_StandName;
 	}
@@ -56,6 +70,16 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	
+	
+	
+	/*
+	--------------------------------------------------------------------------------------------	
+	
+	
+	DAYZ STORE
+	
+	--------------------------------------------------------------------------------------------	
+	*/	
 	
 	
 	
@@ -106,6 +130,19 @@ class MarketStandBase extends BaseBuildingBase  {
 		
 		UpdateVisuals();
 	}
+	
+	
+	
+	/*
+	--------------------------------------------------------------------------------------------	
+	
+	
+	BASEBUILDING
+	
+	--------------------------------------------------------------------------------------------	
+	*/	
+	
+	
 	
 	
 	ItemBase FoldBaseBuildingObject()

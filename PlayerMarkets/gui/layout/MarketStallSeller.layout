@@ -1,0 +1,186 @@
+FrameWidgetClass rootFrame {
+ position 0 0
+ size 1650 800
+ halign center_ref
+ valign center_ref
+ hexactpos 0
+ vexactpos 0
+ hexactsize 1
+ vexactsize 1
+ {
+  ImageWidgetClass BG {
+   ignorepointer 1
+   color 1 0.7922 0.6078 1
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   image0 "PlayerMarkets/gui/images/BoardBG.edds"
+   mode blend
+   "src alpha" 1
+   "no wrap" 1
+   stretch 1
+  }
+  FrameWidgetClass Inventory {
+   ignorepointer 1
+   position 70 0
+   size 0.46 0.88
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+    FrameWidgetClass InventoryFrame {
+     ignorepointer 1
+     size 1 640
+     halign center_ref
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     {
+      ScrollWidgetClass InventoryScroll {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        GridSpacerWidgetClass InventoryGrid {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         halign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         Padding 4
+         Margin 4
+         "Size To Content V" 1
+         Columns 2
+         Rows 100
+        }
+       }
+      }
+     }
+    }
+    TextWidgetClass IventoryTitle {
+     ignorepointer 1
+     size 1 68
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Inventory"
+     font "PlayerMarkets/gui/fonts/Pangolin"
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  FrameWidgetClass Stall {
+   ignorepointer 1
+   position 120 0
+   size 0.42 0.88
+   halign right_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+    FrameWidgetClass StallItemsFrame {
+     ignorepointer 1
+     position 0 0
+     size 1 640
+     halign center_ref
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     {
+      ScrollWidgetClass StallItemsScroll {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        GridSpacerWidgetClass StallItemsGrid {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         halign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         "Size To Content V" 1
+         Columns 1
+         Rows 100
+        }
+       }
+      }
+     }
+    }
+    TextWidgetClass StallItemsTitle {
+     ignorepointer 1
+     size 1 68
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Items For Sale"
+     font "PlayerMarkets/gui/fonts/Pangolin"
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  FrameWidgetClass TitleFrame {
+   ignorepointer 1
+   position 0 0
+   size 0.85 0.115
+   halign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+    TextWidgetClass Title {
+     ignorepointer 1
+     position 0 0
+     size 1 0.95
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style Normal
+     text "Market Stand"
+     font "PlayerMarkets/gui/fonts/StalinistOne"
+     "exact text" 0
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+ }
+}

@@ -20,6 +20,19 @@ class PlayerMarketItemDetailsBase extends Managed {
 	
 	protected int m_QuanitySold = 0;
 	
+	
+	int GetPrice(){
+		return m_Price;
+	}
+	
+	void SetPrice(int price){
+		m_Price = price;
+	}
+	
+	string GetLister(){
+		return m_ListerGUID;
+	}
+	
 	EntityAI GetItem(){
 		return NULL;
 	}

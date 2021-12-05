@@ -1,13 +1,13 @@
 ImageWidgetClass rootFrame {
  position 0 0
- size 760 840
+ size 760 900
  halign center_ref
  valign center_ref
  hexactpos 1
  vexactpos 1
  hexactsize 1
  vexactsize 1
- image0 "PlayerMarkets\gui\images\parchmentV.edds"
+ image0 "PlayerMarkets\gui\images\ItemInfoBG.edds"
  mode blend
  "src alpha" 1
  "no wrap" 1
@@ -40,14 +40,15 @@ ImageWidgetClass rootFrame {
   TextWidgetClass ItemName {
    ignorepointer 1
    color 0 0 0 1
-   position 0 15
-   size 0.9 82
+   position 0 18
+   size 0.8 76
    halign center_ref
    hexactpos 0
    vexactpos 1
    hexactsize 0
    vexactsize 1
    text "Item Name"
+   font "PlayerMarkets/gui/fonts/Pangolin"
    "exact text" 1
    "size to text h" 0
    "size to text v" 0
@@ -58,14 +59,14 @@ ImageWidgetClass rootFrame {
    ignorepointer 1
    color 0 0 0 1
    position 0 580
-   size 0.84 156
+   size 0.75 165
    halign center_ref
    hexactpos 0
    vexactpos 1
    hexactsize 0
    vexactsize 1
-   text "This is the item description, and potential a written description by the player"
-   font "gui/fonts/Metron-Italic16"
+   text "This is the item description, and potential a written description by the player And now lets see what happens with a longer text"
+   font "PlayerMarkets/gui/fonts/AmaticSCBold"
    "exact text" 1
    wrap 1
    "condense whitespace" 1
@@ -126,7 +127,7 @@ ImageWidgetClass rootFrame {
   }
   ButtonWidgetClass Buy {
    visible 1
-   position 24 20
+   position 24 50
    size 200 64
    halign center_ref
    valign bottom_ref
@@ -146,7 +147,8 @@ ImageWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     text "Buy"
+     text "BUY"
+     font "PlayerMarkets/gui/fonts/Pangolin"
      "exact text" 0
      "text halign" center
      "text valign" center
@@ -155,7 +157,7 @@ ImageWidgetClass rootFrame {
   }
   ButtonWidgetClass Cancel {
    visible 1
-   position 232 20
+   position 232 50
    size 200 64
    halign center_ref
    valign bottom_ref
@@ -176,6 +178,7 @@ ImageWidgetClass rootFrame {
      hexactsize 0
      vexactsize 0
      text "Cancel"
+     font "PlayerMarkets/gui/fonts/AmaticSCBold"
      "text halign" center
      "text valign" center
     }
@@ -184,7 +187,7 @@ ImageWidgetClass rootFrame {
   TextWidgetClass Price {
    ignorepointer 1
    color 0 0 0 1
-   position -216 20
+   position -216 50
    size 264 64
    halign center_ref
    valign bottom_ref
@@ -193,6 +196,7 @@ ImageWidgetClass rootFrame {
    hexactsize 1
    vexactsize 1
    text "$5000"
+   font "PlayerMarkets/gui/fonts/AmaticSCBold"
    "text halign" center
    "text valign" center
   }

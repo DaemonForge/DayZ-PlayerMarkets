@@ -1,31 +1,47 @@
-PanelWidgetClass ItemRoot {
+FrameWidgetClass ItemRoot {
  ignorepointer 0
- color 0.8157 0.7725 0.7294 1
- size 1 116
+ color 1 1 1 0
+ size 1 164
  halign center_ref
  hexactpos 1
  vexactpos 1
  hexactsize 0
  vexactsize 1
- style DayZDefaultPanel
  {
+  ImageWidgetClass BG {
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   image0 "PlayerMarkets/gui/images/MarketItemBG.edds"
+   mode blend
+   "src alpha" 1
+   "no wrap" 1
+   stretch 1
+  }
   TextWidgetClass ItemName {
    ignorepointer 1
    color 0 0 0 1
-   position 142 8
-   size 0.7 42
+   position 180 32
+   size 0.6 42
    hexactpos 1
    vexactpos 1
    hexactsize 0
    vexactsize 1
    text "Item Name"
+   font "PlayerMarkets/gui/fonts/Pangolin"
    "text color" 0 0 0 1
    "text valign" center
   }
   FrameWidgetClass ItemPreviewFrame {
    ignorepointer 1
    position 12 0
-   size 122 100
+   size 164 118
    valign center_ref
    hexactpos 1
    vexactpos 1
@@ -47,8 +63,8 @@ PanelWidgetClass ItemRoot {
   }
   FrameWidgetClass DetailsFrame {
    ignorepointer 1
-   position 144 0
-   size 0.7 44
+   position 180 18
+   size 0.6 44
    valign bottom_ref
    hexactpos 1
    vexactpos 1
@@ -57,14 +73,14 @@ PanelWidgetClass ItemRoot {
    {
     GridSpacerWidgetClass ItemDetails {
      ignorepointer 1
-     size 1 42
+     size 1 46
      valign center_ref
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 1
-     Padding 3
-     Margin 3
+     Padding 10
+     Margin 0
      "Size To Content H" 1
      Columns 80
      Rows 1
@@ -79,12 +95,14 @@ PanelWidgetClass ItemRoot {
        hexactsize 1
        vexactsize 1
        text "$5000"
+       font "PlayerMarkets/gui/fonts/AmaticSCBold"
        "size to text h" 1
        "size to text v" 0
        "text halign" center
        "text valign" center
       }
       TextWidgetClass Quanity {
+       visible 0
        ignorepointer 1
        color 0 0 0 1
        position 0 0
@@ -94,6 +112,7 @@ PanelWidgetClass ItemRoot {
        hexactsize 1
        vexactsize 0
        text "Quanity"
+       font "PlayerMarkets/gui/fonts/AmaticSCBold"
        "text color" 0 0 0 1
        "size to text h" 1
        "text halign" center
@@ -101,7 +120,7 @@ PanelWidgetClass ItemRoot {
       }
       TextWidgetClass State {
        ignorepointer 1
-       color 0 0 0 1
+       color 0 0.502 0.1255 1
        position 0 0
        size 100 1
        hexactpos 1
@@ -112,7 +131,7 @@ PanelWidgetClass ItemRoot {
        font "gui/fonts/AmorSerifPro16"
        "text color" 0 0 0 1
        "exact text" 0
-       "size to text h" 0
+       "size to text h" 1
        "size to text v" 0
        "text halign" center
        "text valign" center
