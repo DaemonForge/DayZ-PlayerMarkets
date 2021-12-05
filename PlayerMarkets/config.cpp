@@ -186,6 +186,7 @@ class CfgVehicles
 			"Merchant_SlotSmall3",
 			"Merchant_SlotSmall4",
 			"Merchant_SlotSmall5"
+			"Merchant_Storage"
 		};
 		class DamageSystem
 		{
@@ -506,7 +507,8 @@ class CfgVehicles
 					"Merchant_SlotSmall2",
 					"Merchant_SlotSmall3",
 					"Merchant_SlotSmall4",
-					"Merchant_SlotSmall5"
+					"Merchant_SlotSmall5",
+					"Merchant_Storage"
 				};
 				icon="";
 				selection="";
@@ -688,7 +690,8 @@ class CfgVehicles
 			"Merchant_SlotSmall2",
 			"Merchant_SlotSmall3",
 			"Merchant_SlotSmall4",
-			"Merchant_SlotSmall5"
+			"Merchant_SlotSmall5",
+			"Merchant_Storage"
 		};
 		class DamageSystem
 		{
@@ -1009,7 +1012,8 @@ class CfgVehicles
 					"Merchant_SlotSmall2",
 					"Merchant_SlotSmall3",
 					"Merchant_SlotSmall4",
-					"Merchant_SlotSmall5"
+					"Merchant_SlotSmall5",
+					"Merchant_Storage"
 				};
 				icon="set:dayz_inventory image:cat_bb_attachments";
 				selection="wall";
@@ -1600,7 +1604,7 @@ class CfgVehicles
 		weight = 280;
 		itemBehaviour = 1;
 		attachments[] = { "Shoulder" };
-		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotSmall1","Merchant_SlotSmall2","Merchant_SlotSmall3","Merchant_SlotSmall4","Merchant_SlotSmall5","Merchant_SlotSmall6" };
+		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotSmall1","Merchant_SlotSmall2","Merchant_SlotSmall3","Merchant_SlotSmall4","Merchant_SlotSmall5","Merchant_SlotSmall6","Merchant_SlotSmall7" };
 	};
 	class PM_Merchant_Guns: PM_Merchant_Base
 	{
@@ -1617,6 +1621,7 @@ class CfgVehicles
 		descriptionShort = "A kit to place a player market";
 		model = "PlayerMarkets\data\SlotItems\PistolSlot.p3d";
 		attachments[] = { "Pistol1" };
+
 	};
 	class PM_Merchant_Knife: PM_Merchant_Base
 	{
@@ -1634,6 +1639,22 @@ class CfgVehicles
 		model = "PlayerMarkets\data\SlotItems\HeadgearSlot.p3d";
 		attachments[] = { "Headgear" };
 	};
+	class PM_MarketStorage : Container_Base 
+	{
+		scope = 2;
+		displayName = "Market Storage(DEBUG)";
+		model = "\DZ\gear\containers\ChristmasBox1.p3d";
+		descriptionShort = "This item is only meant to be created on to a market stand";
+		itemSize[] = {10,10};
+		weight = 999999;
+		inventorySlot[] = {"Merchant_Storage" };
+		class Cargo
+		{
+			itemsCargoSize[] = {10,100};
+			openable = 0;
+			allowOwnedCargoManipulation = 1;
+		};
+	}
 };
 class CfgWeapons
 {
@@ -1762,6 +1783,12 @@ class CfgNonAIVehicles
 };
 class CfgSlots
 {
+	class Slot_MarketStorage
+	{
+		name = "MarketStorage";
+		displayName = "MarketStorage";
+		ghostIcon = "book";
+	};
 	
 	class Slot_Pistol1
 	{
