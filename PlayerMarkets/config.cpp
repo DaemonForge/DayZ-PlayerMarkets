@@ -185,7 +185,7 @@ class CfgVehicles
 			"Merchant_SlotSmall2",
 			"Merchant_SlotSmall3",
 			"Merchant_SlotSmall4",
-			"Merchant_SlotSmall5"
+			"Merchant_SlotSmall5",
 			"Merchant_Storage"
 		};
 		class DamageSystem
