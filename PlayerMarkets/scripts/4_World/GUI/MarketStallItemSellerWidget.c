@@ -1,35 +1,39 @@
-class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
+class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 	protected const string ITEM_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketItem.layout";
 	protected autoptr PlayerMarketItemDetails m_ItemDetails;
 	
-	protected autoptr MarketStallMenu m_parent;
+	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;
 	
 	protected ItemPreviewWidget m_ItemPreview;
-	protected TextWidget m_ItemName;
-	protected TextWidget m_Cost;
+	protected TextWidget m_DisplayName;
 	protected TextWidget m_Quanity;
 	protected TextWidget m_State;
 	
+	protected ButtonWidget m_Edit;
+	protected ButtonWidget m_Delist;
 	
-	void MarketStallItemWidget(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
+	
+	void MarketStallItemSellerWidget(Widget parent, PlayerMarketItemDetails details, MarketStallSellerMenu menu ){
 		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
-		m_parent = MarketStallMenu.Cast(menu);
+		m_parent = MarketStallSellerMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
 		
 		m_ItemPreview = ItemPreviewWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemPreview"));
-		m_ItemName = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemName"));
-		m_Cost = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Cost"));
+		m_DisplayName = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("DisplayName"));
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_State = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("State"));
 		
+		m_Edit = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Edit"));
+		m_Delist = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Delist"));
 		
 		
-		m_Cost.SetText("$" + MakeNiceString(m_ItemDetails.GetPrice()));
+		
+		
 		
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4
 		EntityAI item = m_ItemDetails.GetItem();
-		m_ItemName.SetText(item.GetDisplayName());
+		m_DisplayName.SetText(item.GetDisplayName());
 		int healthLevel = item.GetHealthLevel("");
 		switch  (healthLevel) {
 			case GameConstants.STATE_RUINED:
@@ -60,7 +64,6 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		m_Quanity.Show(false);
 		UpdateQuanity(item);
 		UpdateItemPreviw(item);
-		
 		
 		m_LayoutRoot.SetHandler(this);
 	}

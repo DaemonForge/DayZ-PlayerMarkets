@@ -162,7 +162,7 @@ FrameWidgetClass rootFrame {
        text "Quanity"
        font "PlayerMarkets/gui/fonts/AmaticSCBold"
       }
-      TextWidgetClass ItemState {
+      TextWidgetClass State {
        ignorepointer 1
        color 0 0 0 1
        position 10 10

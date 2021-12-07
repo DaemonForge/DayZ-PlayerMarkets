@@ -1,10 +1,10 @@
-class MarketStallMenu extends UIScriptedMenu {
+class MarketStallSellerMenu extends UIScriptedMenu {
 	
 	protected const string ROOT_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStall.layout";
 	protected TextWidget m_ShopTitle;
 	protected GridSpacerWidget m_ItemGrid;
 	
-	protected autoptr array<autoptr MarketStallItemWidget> m_ItemWidgets;
+	protected autoptr array<autoptr MarketStallItemSellerWidget> m_ItemWidgets;
 	
 	protected MarketStandBase m_Stand;
 	
@@ -21,12 +21,12 @@ class MarketStallMenu extends UIScriptedMenu {
 	void SetStall(MarketStandBase stand){
 		Class.CastTo(m_Stand, stand);
 		m_ShopTitle.SetText(m_Stand.GetStandName());
-		m_ItemWidgets = new array<autoptr MarketStallItemWidget>;
+		m_ItemWidgets = new array<autoptr MarketStallItemSellerWidget>;
 		array<autoptr PlayerMarketItemDetails> itemsArray = m_Stand.GetItemsArray();
 		if (itemsArray && itemsArray.Count() > 0){
 			for (int i = 0; i < itemsArray.Count(); i++){
 				if (itemsArray.Get(i).GetItem() && itemsArray.Get(i).GetItem().GetHierarchyRoot() == stand){
-					m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
+					m_ItemWidgets.Insert(new MarketStallItemSellerWidget(m_ItemGrid, itemsArray.Get(i),this));
 				}
 			}
 		
@@ -37,12 +37,12 @@ class MarketStallMenu extends UIScriptedMenu {
 	override void Update( float timeslice )
 	{
 		super.Update( timeslice );
-		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !InspectIsOpen()) {
-			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
+		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !EditIsOpen()) {
+			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_SELL);
 		}		
 	}
 	
-	bool InspectIsOpen(){
+	bool EditIsOpen(){
 		return false;
 	}
 	

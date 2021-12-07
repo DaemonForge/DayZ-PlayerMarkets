@@ -28,8 +28,8 @@ FrameWidgetClass rootFrame {
   }
   FrameWidgetClass ItemsListed {
    ignorepointer 1
-   position 0 15
-   size 0.85 0.8
+   position 0 0
+   size 0.85 0.85
    halign center_ref
    valign bottom_ref
    hexactpos 1

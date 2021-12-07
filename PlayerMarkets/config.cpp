@@ -1191,7 +1191,8 @@ class CfgVehicles
 			"Merchant_SlotSmall2",
 			"Merchant_SlotSmall3",
 			"Merchant_SlotSmall4",
-			"Merchant_SlotSmall5"
+			"Merchant_SlotSmall5",
+			"Merchant_Storage"
 		};
 		class DamageSystem
 		{
@@ -1504,7 +1505,8 @@ class CfgVehicles
 					"Merchant_SlotSmall2",
 					"Merchant_SlotSmall3",
 					"Merchant_SlotSmall4",
-					"Merchant_SlotSmall5"
+					"Merchant_SlotSmall5",
+					"Merchant_Storage"
 				};
 				icon="";
 				selection="";
@@ -1638,10 +1640,10 @@ class CfgVehicles
 	class PM_MarketStorage : Container_Base 
 	{
 		scope = 2;
-		displayName = "Market Storage(DEBUG)";
+		displayName = "(DEBUG)Market Storage";
 		model = "\DZ\gear\containers\ChristmasBox1.p3d";
 		descriptionShort = "This item is only meant to be created on to a market stand";
-		itemSize[] = {10,10};
+		itemSize[] = {11,11};
 		weight = 999999;
 		inventorySlot[] = {"Merchant_Storage" };
 		class Cargo
@@ -1779,10 +1781,10 @@ class CfgNonAIVehicles
 };
 class CfgSlots
 {
-	class Slot_MarketStorage
+	class Slot_Merchant_Storage
 	{
-		name = "MarketStorage";
-		displayName = "MarketStorage";
+		name = "Merchant_Storage";
+		displayName = "Market Storage";
 		ghostIcon = "book";
 	};
 	
