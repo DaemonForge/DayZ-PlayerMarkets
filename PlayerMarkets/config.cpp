@@ -68,6 +68,10 @@ class CfgVehicles
 		itemSize[] = {1,5};
 		weight = 280;
 		itemBehaviour=1;
+		attachments[]=
+		{
+			"Rope"
+		};
 		class AnimationSources
 		{
 			class AnimSourceShown
@@ -100,6 +104,10 @@ class CfgVehicles
 		itemSize[] = {1,2};
 		weight = 280;
 		itemBehaviour=1;
+		attachments[]=
+		{
+			"Rope"
+		};
 		class AnimationSources
 		{
 			class AnimSourceShown
@@ -987,17 +995,6 @@ class CfgVehicles
 		};
 		class GUIInventoryAttachmentsProps
 		{
-			//class Base
-			//{
-			//	name="$STR_CfgVehicles_Fence_Att_Category_Base";
-			//	description="";
-			//	attachmentSlots[]=
-			//	{
-			//		"Material_WoodenLogs"
-			//	};
-			//	icon="set:dayz_inventory image:cat_bb_base";
-			//	selection="wall";
-			//};
 			class Attachments
 			{
 				name="Merchant Slots";
@@ -1016,7 +1013,6 @@ class CfgVehicles
 					"Merchant_Storage"
 				};
 				icon="set:dayz_inventory image:cat_bb_attachments";
-				selection="wall";
 			};
 			class Material
 			{
