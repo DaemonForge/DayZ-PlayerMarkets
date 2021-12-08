@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{99DBD37C655D7F73}PlayerMarkets/gui/images/circle.edds"
+ Author "desktop-cjp9n6b"
+ ChangeDate 279227272
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "circle.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

@@ -4,6 +4,7 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;
 	
+	protected Widget m_ItemStateFrame;
 	protected Widget m_QuanityFrame;
 	protected TextWidget m_QuanityAmount;
 	protected TextWidget m_QuanityMax;
@@ -13,7 +14,7 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 	protected ItemPreviewWidget m_ItemPreview;
 	protected TextWidget m_DisplayName;
 	protected ButtonWidget m_List;
-	protected TextWidget m_State;
+	protected ImageWidget m_ItemState;
 	protected EntityAI m_Item;
 	
 	void MarketStallAvailableItemWidget(Widget parent, EntityAI item, MarketStallSellerMenu menu ){
@@ -26,7 +27,8 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 		m_QuanityAmount = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityAmount"));
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
-		m_State = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("State"));
+		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
+		m_ItemState = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		m_List = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("List"));
 		
 		
@@ -34,43 +36,34 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 		EntityAI m_Item = EntityAI.Cast(item);
 		m_DisplayName.SetText(item.GetDisplayName());
 		int healthLevel = item.GetHealthLevel("");
-		Print(item);
-		Print(healthLevel);
 		switch  (healthLevel) {
 			case GameConstants.STATE_RUINED:
-				Print("STATE_RUINED");
-				m_State.Show(true);
-				m_State.SetText("RUINED");
-				m_State.SetColor(Colors.COLOR_RUINED);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_RUINED);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_BADLY_DAMAGED:
-				Print("STATE_BADLY_DAMAGED");
-				m_State.Show(true);
-				m_State.SetText("BADLY DAMAGED");
-				m_State.SetColor(Colors.COLOR_BADLY_DAMAGED);
-			
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_BADLY_DAMAGED);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_DAMAGED:
-				Print("STATE_DAMAGED");
-				m_State.Show(true);
-				m_State.SetText("DAMAGED");
-				m_State.SetColor(Colors.COLOR_DAMAGED);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_DAMAGED);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_WORN:
-				Print("STATE_WORN");
-				m_State.Show(true);
-				m_State.SetText("W");
-				m_State.SetColor(Colors.COLOR_WORN);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_WORN);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_PRISTINE:
-				Print("STATE_PRISTINE");
-				m_State.Show(true);
-				m_State.SetText("PRISTINE");
-				m_State.SetColor(Colors.COLOR_PRISTINE);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_PRISTINE);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			default:
-				Print("default");
-				m_State.Show(false);
+				m_ItemStateFrame.Show(false);
 			break;
 		}
 		m_Quanity.Show(false);
@@ -79,8 +72,10 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 		UpdateItemPreviw(item);
 		
 		
+		
 		m_LayoutRoot.SetHandler(this);
 	}
+	
 	void UpdateItemPreviw(EntityAI item){
 		InventoryItem iItem = InventoryItem.Cast(item);
 		if (iItem){
