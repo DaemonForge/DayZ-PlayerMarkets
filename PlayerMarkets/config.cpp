@@ -1595,13 +1595,11 @@ class CfgVehicles
 	{
 		scope = 2;
 		displayName  = "Merchant Item Slot";
-		descriptionShort = "";
 		model = "PlayerMarkets\data\SlotItems\GunSlot.p3d";
-		itemSize[] = {3,3};
-		rotationFlags = 17;
+		descriptionShort = "This item is only meant to be created on to a market stand";
+		itemSize[] = {11,11};
 		weight = 280;
 		itemBehaviour = 1;
-		attachments[] = { "Shoulder" };
 		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotSmall1","Merchant_SlotSmall2","Merchant_SlotSmall3","Merchant_SlotSmall4","Merchant_SlotSmall5","Merchant_SlotSmall6","Merchant_SlotSmall7" };
 	};
 	class PM_Merchant_Guns: PM_Merchant_Base
@@ -1637,13 +1635,12 @@ class CfgVehicles
 		model = "PlayerMarkets\data\SlotItems\HeadgearSlot.p3d";
 		attachments[] = { "Headgear" };
 	};
-	class PM_MarketStorage : Container_Base 
+	class PM_MarketStorage : PM_Merchant_Base 
 	{
 		scope = 2;
 		displayName = "(DEBUG)Market Storage";
 		model = "\DZ\gear\containers\ChristmasBox1.p3d";
 		descriptionShort = "This item is only meant to be created on to a market stand";
-		itemSize[] = {11,11};
 		weight = 999999;
 		inventorySlot[] = {"Merchant_Storage" };
 		class Cargo

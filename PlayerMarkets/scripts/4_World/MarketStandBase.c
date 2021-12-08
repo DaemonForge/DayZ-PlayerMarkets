@@ -1,3 +1,26 @@
+class PM_Merchant_Base extends ItemBase {
+
+}
+ //m_OwnerGUID, m_StandName, m_AuthorizedSellers, m_ItemsArray
+typedef Param4<string, string, TStringIntMap, array<autoptr PlayerMarketItemDetails>> PM_RPCSyncData;
+
+typedef Param1<PlayerMarketItemDetails> PM_RPCItemData;
+
+class PM_MarketStorage extends PM_Merchant_Base {
+	void PM_Merchant_Base(){
+		if (GetGame().IsClient()){ //Doing it based on the market storage cause it will ensure all the items are loaded client side first
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitMarketsClient);
+		}
+	}
+	
+	void InitMarketsClient(){
+		MarketStandBase stand;
+		if (Class.CastTo(stand, GetHierarchyParent())){
+			stand.InitStandData();
+		}
+	}
+}
+
 class MarketStandBase extends BaseBuildingBase  {
 	
 	const float MAX_FLOOR_VERTICAL_DISTANCE 		= 0.5;
@@ -7,6 +30,8 @@ class MarketStandBase extends BaseBuildingBase  {
 	const float MAX_ACTION_DETECTION_DISTANCE 		= 2.0;		//meters
 	const float MAX_ACTION_DETECTION_ANGLE_RAD 		= 1.3;		//1.3 RAD = ~75 DEG
 	
+	
+	protected bool m_IsSellerInterfaceOpen = false;
 	
 	
 	protected string m_OwnerGUID = "";
@@ -19,8 +44,14 @@ class MarketStandBase extends BaseBuildingBase  {
 	protected autoptr array<autoptr PlayerMarketItemDetails> m_ItemsArray;
 	protected autoptr TStringSet m_Visitors;
 	protected int m_Vists;
+	protected bool m_MarketIsInit = false;
+	protected bool m_IsBuilt = false;
+	protected bool m_IsInUse = false;
 	
-	
+	void MarketStandBase(){
+		RegisterNetSyncVariableBool("m_IsBuilt");
+		RegisterNetSyncVariableBool("m_IsInUse");
+	}
 	
 	/*
 	--------------------------------------------------------------------------------------------	
@@ -41,6 +72,56 @@ class MarketStandBase extends BaseBuildingBase  {
 		m_StandName = name;
 	}
 	
+	
+	void InitStandData(){
+		if (m_MarketIsInit) return;
+		m_MarketIsInit = true;
+		Print("InitStandData");
+		GetItemsForSale().Debug();
+		GetItemsInCargo().Debug();
+		SyncPMData();
+	}
+	array<EntityAI> GetItemsForSale(){
+		array<EntityAI> items = new array<EntityAI>;
+		GetInventory().EnumerateInventory(InventoryTraversalType.PREORDER, items);
+		if (!items || items.Count() < 1) return NULL;
+		EntityAI item;
+		array<EntityAI> returnItems = new array<EntityAI>;
+		for (int i = 0; i < items.Count(); i++){
+			if (Class.CastTo(item, items.Get(i)) && item != this &&  GetInventory().HasAttachment(item.GetHierarchyParent())){
+				returnItems.Insert(item);
+			}
+		}
+		return returnItems;
+	}
+	
+	void SyncPMData(){
+	
+	}
+	
+	void OnSyncClient(string owner, string standname, TStringIntMap sellers, array<autoptr PlayerMarketItemDetails> itemDetails){
+		m_OwnerGUID = owner;
+		m_StandName = standname;
+		if (!m_AuthorizedSellers){ m_AuthorizedSellers = new TStringIntMap; }
+		m_AuthorizedSellers.Copy(sellers);
+		foreach(PlayerMarketItemDetails detail : itemDetails){
+			m_ItemsArray.Insert(detail);
+		}
+	}
+	
+	array<EntityAI> GetItemsInCargo(){
+		array<EntityAI> items = new array<EntityAI>;
+		GetInventory().EnumerateInventory(InventoryTraversalType.PREORDER, items);
+		if (!items || items.Count() < 1) return NULL;
+		EntityAI item;
+		array<EntityAI> returnItems = new array<EntityAI>;
+		for (int i = 0; i < items.Count(); i++){
+			if (Class.CastTo(item, items.Get(i)) && item.GetHierarchyParent() == this && !GetInventory().HasAttachment(item)){
+				returnItems.Insert(item);
+			}
+		}
+		return returnItems;
+	}
 	
 	array<autoptr PlayerMarketItemDetails> GetItemsArray(){
 		return m_ItemsArray;
@@ -69,8 +150,38 @@ class MarketStandBase extends BaseBuildingBase  {
 		m_AuthorizedSellers.Insert(seller, perm);
 	}
 	
+	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
+	{
+		super.OnRPC(sender, rpc_type, ctx);
+		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsClient()) {
+			
+		}
+		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsServer() && sender) {
+			
+		}
+		if (rpc_type == PLAYER_MARKET_LIST &&  GetGame().IsServer() && sender) {
+			
+		}
+		if (rpc_type == PLAYER_MARKET_DELIST &&  GetGame().IsServer() && sender) {
+			
+		}
+		if (rpc_type == PLAYER_MARKET_BUY &&  GetGame().IsServer() && sender) {
+			
+		}
+		if (rpc_type == PLAYER_MARKET_EDIT &&  GetGame().IsServer() && sender) {
+			
+		}
+	}
 	
 	
+	void SetIsInUse(bool state){
+		m_IsInUse = state;
+		SetSynchDirty();
+	}
+	
+	bool IsInUse(){
+		return m_IsInUse;
+	}
 	
 	/*
 	--------------------------------------------------------------------------------------------	
@@ -129,6 +240,14 @@ class MarketStandBase extends BaseBuildingBase  {
 		super.AfterStoreLoad();
 		
 		UpdateVisuals();
+		
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitStandData);
+		if (IsBuilt()){
+			m_IsBuilt = true;
+		} else {
+			m_IsBuilt = false;
+		}
+		SetSynchDirty();
 	}
 	
 	
@@ -144,6 +263,33 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	
 	
+	bool IsBuilt(){
+		Construction construction = GetConstruction();
+		map<string, ref ConstructionPart> parts = construction.GetConstructionParts();
+		bool isBuilt = true;
+		for (int i = 0; i < parts.Count(); i++){
+			isBuilt = (isBuilt && construction.IsPartConstructed(parts.GetKey(i)));
+		}
+		
+		return isBuilt;
+	}
+	
+	override bool CanDisplayAttachmentCategory(string category_name) {
+        if (category_name  == "Attachments" && GetGame().IsClient() ) {
+            //return false;
+		}
+		if (category_name == "Material" && m_IsBuilt){
+			return false;
+		}
+        return super.CanDisplayAttachmentCategory(category_name);
+    }
+	
+	override bool CanDisplayCargo(){
+		if ((!m_IsBuilt || IsInUse()) && GetGame().IsClient() ){
+			return false;
+		}
+		return super.CanDisplayCargo();
+	}
 	
 	ItemBase FoldBaseBuildingObject()
 	{
@@ -193,11 +339,6 @@ class MarketStandBase extends BaseBuildingBase  {
 	{
 		return true;
 	}
-
-	override bool CanDisplayAttachmentCategory( string category_name )
-	{
-		return true;
-	}	
 	
 	//returns true if attachment slot position is within given range
 	override bool CheckSlotVerticalDistance( int slot_id, PlayerBase player )
@@ -277,6 +418,13 @@ class MarketStandBase extends BaseBuildingBase  {
 	override void OnPartBuiltServer( notnull Man player, string part_name, int action_id )
 	{
 		super.OnPartBuiltServer( player, part_name, action_id );
+		if (IsBuilt()){
+			m_IsBuilt = true;
+			GetInventory().CreateAttachment("PM_MarketStorage");
+		} else {
+			m_IsBuilt = false;
+		}
+		SetSynchDirty();
 		//update visuals (server)
 		UpdateVisuals();
 	}
@@ -285,6 +433,12 @@ class MarketStandBase extends BaseBuildingBase  {
 	{
 		super.OnPartDismantledServer( player, part_name, action_id );
 		//update visuals (server)
+		if (IsBuilt()){
+			m_IsBuilt = true;
+		} else {
+			m_IsBuilt = false;
+		}
+		SetSynchDirty();
 		UpdateVisuals();
 	}
 	
@@ -292,6 +446,12 @@ class MarketStandBase extends BaseBuildingBase  {
 	{
 		super.OnPartDestroyedServer( player, part_name, action_id );
 		//update visuals (server)
+		if (IsBuilt()){
+			m_IsBuilt = true;
+		} else {
+			m_IsBuilt = false;
+		}
+		SetSynchDirty();
 		UpdateVisuals();
 	}
 	

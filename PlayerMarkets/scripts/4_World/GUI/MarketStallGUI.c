@@ -18,18 +18,26 @@ class MarketStallMenu extends UIScriptedMenu {
 		return layoutRoot;
 	}
 	
+	void ~MarketStallMenu(){
+		if (m_Stand){
+			m_Stand.SetIsInUse(false);
+		}
+	}
+	
 	void SetStall(MarketStandBase stand){
-		Class.CastTo(m_Stand, stand);
-		m_ShopTitle.SetText(m_Stand.GetStandName());
-		m_ItemWidgets = new array<autoptr MarketStallItemWidget>;
-		array<autoptr PlayerMarketItemDetails> itemsArray = m_Stand.GetItemsArray();
-		if (itemsArray && itemsArray.Count() > 0){
-			for (int i = 0; i < itemsArray.Count(); i++){
-				if (itemsArray.Get(i).GetItem() && itemsArray.Get(i).GetItem().GetHierarchyRoot() == stand){
-					m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
+		if (Class.CastTo(m_Stand, stand)){
+			m_Stand.SetIsInUse(true);
+			m_ShopTitle.SetText(m_Stand.GetStandName());
+			m_ItemWidgets = new array<autoptr MarketStallItemWidget>;
+			array<autoptr PlayerMarketItemDetails> itemsArray = m_Stand.GetItemsArray();
+			if (itemsArray && itemsArray.Count() > 0){
+				for (int i = 0; i < itemsArray.Count(); i++){
+					if (itemsArray.Get(i).GetItem() && itemsArray.Get(i).GetItem().GetHierarchyRoot() == stand){
+						m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
+					}
 				}
+			
 			}
-		
 		}
 	}
 	

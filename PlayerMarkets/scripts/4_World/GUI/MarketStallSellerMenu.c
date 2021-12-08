@@ -29,7 +29,6 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 					m_ItemWidgets.Insert(new MarketStallItemSellerWidget(m_ItemGrid, itemsArray.Get(i),this));
 				}
 			}
-		
 		}
 	}
 	
