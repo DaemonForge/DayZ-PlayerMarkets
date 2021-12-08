@@ -202,7 +202,7 @@ class CfgVehicles
 			{
 				class Health
 				{
-					hitpoints=100;
+					hitpoints=1000;
 					healthLevels[]=
 					{
 						
@@ -273,7 +273,7 @@ class CfgVehicles
 					class Health
 					{
 						displayName="Table";
-						hitpoints=100;
+						hitpoints=1000;
 						transferToGlobalCoef=0;
 						healthLevels[]=
 						{
@@ -378,7 +378,7 @@ class CfgVehicles
 					class Health
 					{
 						displayName="Posts";
-						hitpoints=200;
+						hitpoints=1500;
 						transferToGlobalCoef=0;
 						healthLevels[]=
 						{
@@ -707,7 +707,7 @@ class CfgVehicles
 			{
 				class Health
 				{
-					hitpoints=100;
+					hitpoints=1000;
 					healthLevels[]=
 					{
 						
@@ -778,7 +778,7 @@ class CfgVehicles
 					class Health
 					{
 						displayName="Table";
-						hitpoints=100;
+						hitpoints=1000;
 						transferToGlobalCoef=0;
 						healthLevels[]=
 						{
@@ -883,7 +883,7 @@ class CfgVehicles
 					class Health
 					{
 						displayName="Posts";
-						hitpoints=200;
+						hitpoints=1500;
 						transferToGlobalCoef=0;
 						healthLevels[]=
 						{
@@ -1200,7 +1200,7 @@ class CfgVehicles
 			{
 				class Health
 				{
-					hitpoints=100;
+					hitpoints=1000;
 					healthLevels[]=
 					{
 						
@@ -1271,7 +1271,7 @@ class CfgVehicles
 					class Health
 					{
 						displayName="Base";
-						hitpoints=100;
+						hitpoints=1000;
 						transferToGlobalCoef=0;
 						healthLevels[]=
 						{
@@ -1376,7 +1376,7 @@ class CfgVehicles
 					class Health
 					{
 						displayName="Table";
-						hitpoints=200;
+						hitpoints=1500;
 						transferToGlobalCoef=0;
 						healthLevels[]=
 						{
