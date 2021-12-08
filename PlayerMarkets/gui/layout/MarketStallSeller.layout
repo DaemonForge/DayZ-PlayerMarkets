@@ -54,6 +54,8 @@ FrameWidgetClass rootFrame {
        vexactpos 0
        hexactsize 0
        vexactsize 0
+       "Scrollbar V" 1
+       "Scrollbar V Left" 1
        {
         GridSpacerWidgetClass InventoryGrid {
          ignorepointer 1
@@ -120,6 +122,9 @@ FrameWidgetClass rootFrame {
        vexactpos 0
        hexactsize 0
        vexactsize 0
+       style blank
+       "Scrollbar V" 1
+       "Scrollbar V Left" 1
        {
         GridSpacerWidgetClass StallItemsGrid {
          ignorepointer 1
@@ -130,6 +135,7 @@ FrameWidgetClass rootFrame {
          vexactpos 0
          hexactsize 0
          vexactsize 0
+         draggable 0
          "Size To Content V" 1
          Columns 1
          Rows 100

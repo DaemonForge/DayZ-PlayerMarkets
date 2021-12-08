@@ -9,7 +9,7 @@ modded class MissionBase extends MissionBaseWorld
                     menu = new MarketStallMenu;
                     break;
                 case PLAYER_MARKET_MENU_SELL:
-                    menu = new MarketStallMenu;
+                    menu = new MarketStallSellerMenu;
                     break;
             }
             if (menu) {

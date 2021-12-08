@@ -96,7 +96,9 @@ class ActionDestroyPM_MarketPart: ActionContinuousBase
 				Construction construction = base_building.GetConstruction();		
 				ConstructionPart construction_part = construction.GetConstructionPartToDestroy( part_name );
 				MarketStandBase NDBase = MarketStandBase.Cast( target.GetObject() );
-				
+				if (!NDBase.IsOwner(player)){
+					return false;
+				}
 				if ( construction_part )
 				{
 					//camera and position checks

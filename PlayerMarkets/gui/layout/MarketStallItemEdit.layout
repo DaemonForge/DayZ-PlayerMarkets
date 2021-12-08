@@ -1,0 +1,236 @@
+ImageWidgetClass rootFrame {
+ position 0 0
+ size 760 900
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ image0 "PlayerMarkets\gui\images\ItemInfoBG.edds"
+ mode blend
+ "src alpha" 1
+ "no wrap" 1
+ stretch 1
+ "flip u" 1
+ {
+  FrameWidgetClass ItemPreviewFrame {
+   ignorepointer 1
+   position 0 100
+   size 640 400
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    ItemPreviewWidgetClass ItemPreveiw {
+     ignorepointer 0
+     position 0 0
+     size 0 0
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+    }
+   }
+  }
+  TextWidgetClass ItemName {
+   ignorepointer 1
+   color 0 0 0 1
+   position 0 18
+   size 0.8 76
+   halign center_ref
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "Item Name"
+   font "PlayerMarkets/gui/fonts/Pangolin"
+   "exact text" 1
+   "size to text h" 0
+   "size to text v" 0
+   "text halign" center
+   "text valign" center
+  }
+  MultilineTextWidgetClass Description {
+   ignorepointer 1
+   color 0 0 0 1
+   position 0 580
+   size 0.75 165
+   halign center_ref
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "This is the item description, and potential a written description by the player And now lets see what happens with a longer text"
+   font "PlayerMarkets/gui/fonts/AmaticSCBold"
+   "exact text" 1
+   wrap 1
+   "condense whitespace" 1
+  }
+  GridSpacerWidgetClass ItemDetails {
+   ignorepointer 1
+   position 0 515
+   size 0.79 48
+   halign center_ref
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   Padding 3
+   "Size To Content H" 1
+   content_halign center
+   content_valign center
+   Columns 8
+   Rows 1
+   {
+    TextWidgetClass DamageState {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass Quanity {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass LiquidType {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass Weight {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+   }
+  }
+  ButtonWidgetClass List {
+   visible 1
+   position 24 50
+   size 200 64
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    TextWidgetClass List_Label {
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     text "List"
+     font "PlayerMarkets/gui/fonts/Pangolin"
+     "exact text" 0
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  ButtonWidgetClass Cancel {
+   visible 1
+   position 232 50
+   size 200 64
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    TextWidgetClass Cancel_Label {
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     text "Cancel"
+     font "PlayerMarkets/gui/fonts/AmaticSCBold"
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  FrameWidgetClass PriceFrame {
+   ignorepointer 1
+   position -216 50
+   size 264 64
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    EditBoxWidgetClass Price {
+     clipchildren 0
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 100 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 0
+     text "5"
+     "Default text color" 0 0 0 1
+     font "PlayerMarkets/gui/fonts/AmaticSCBold"
+     "text color" 0 0 0 1
+     "disabled text color" 0 0 0 1
+     {
+      TextWidgetClass DollarSign {
+       ignorepointer 1
+       color 0 0 0 1
+       position -27 0
+       size 25 1.05
+       valign center_ref
+       hexactpos 1
+       vexactpos 0
+       hexactsize 1
+       vexactsize 0
+       text "$"
+       font "PlayerMarkets/gui/fonts/Pangolin"
+       "text halign" right
+       "text valign" center
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,3 +1,4 @@
+ref MarketStallMenu m_MarketStallMenu;
 class MarketStallMenu extends UIScriptedMenu {
 	
 	protected const string ROOT_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStall.layout";
@@ -18,10 +19,11 @@ class MarketStallMenu extends UIScriptedMenu {
 		return layoutRoot;
 	}
 	
-	void ~MarketStallMenu(){
-		if (m_Stand){
+	void ~MarketStallMenu() {
+		if (m_Stand) {
 			m_Stand.SetIsInUse(false);
 		}
+		MSUnLockControls();
 	}
 	
 	void SetStall(MarketStandBase stand){
@@ -36,16 +38,21 @@ class MarketStallMenu extends UIScriptedMenu {
 						m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
 					}
 				}
-			
 			}
+			MSLockControls();
 		}
 	}
 	
+	override bool OnKeyPress(Widget w, int x, int y, int key){
+		Print(key);
+		return super.OnKeyPress(w,x,y,key);
+	}
 	
 	override void Update( float timeslice )
 	{
 		super.Update( timeslice );
 		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !InspectIsOpen()) {
+			Print("UAUIBack");
 			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
 		}		
 	}
@@ -58,4 +65,14 @@ class MarketStallMenu extends UIScriptedMenu {
 		return m_Stand;
 	}
 	
+	protected void MSLockControls() {
+        GetGame().GetMission().PlayerControlDisable(INPUT_EXCLUDE_INVENTORY);
+        GetGame().GetUIManager().ShowUICursor(true);
+    }
+
+    protected void MSUnLockControls() {
+        GetGame().GetMission().PlayerControlEnable(false);
+        GetGame().GetInput().ResetGameFocus();
+        GetGame().GetUIManager().ShowUICursor(false);
+    }
 }

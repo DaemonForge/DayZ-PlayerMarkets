@@ -7,7 +7,7 @@ typedef Param4<string, string, TStringIntMap, array<autoptr PlayerMarketItemDeta
 typedef Param1<PlayerMarketItemDetails> PM_RPCItemData;
 
 class PM_MarketStorage extends PM_Merchant_Base {
-	void PM_Merchant_Base(){
+	void PM_MarketStorage(){
 		if (GetGame().IsClient()){ //Doing it based on the market storage cause it will ensure all the items are loaded client side first
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitMarketsClient);
 		}
@@ -63,6 +63,13 @@ class MarketStandBase extends BaseBuildingBase  {
 	*/	
 	
 	
+	bool CanOpenSellMenu(PlayerBase player){
+		return IsBuilt() && IsPlayerInside(player,"") && IsOwner(player);
+	}
+	
+	bool CanOpenBuyMenu(PlayerBase player){
+		return IsBuilt();
+	}
 	
 	string GetStandName(){
 		return m_StandName;
@@ -95,19 +102,6 @@ class MarketStandBase extends BaseBuildingBase  {
 		return returnItems;
 	}
 	
-	void SyncPMData(){
-	
-	}
-	
-	void OnSyncClient(string owner, string standname, TStringIntMap sellers, array<autoptr PlayerMarketItemDetails> itemDetails){
-		m_OwnerGUID = owner;
-		m_StandName = standname;
-		if (!m_AuthorizedSellers){ m_AuthorizedSellers = new TStringIntMap; }
-		m_AuthorizedSellers.Copy(sellers);
-		foreach(PlayerMarketItemDetails detail : itemDetails){
-			m_ItemsArray.Insert(detail);
-		}
-	}
 	
 	array<EntityAI> GetItemsInCargo(){
 		array<EntityAI> items = new array<EntityAI>;
@@ -150,14 +144,46 @@ class MarketStandBase extends BaseBuildingBase  {
 		m_AuthorizedSellers.Insert(seller, perm);
 	}
 	
+	
+	
+	void SetIsInUse(bool state){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_INUSE, new Param1<bool>(state),true);
+		} else {
+			m_IsInUse = state;
+			SetSynchDirty();
+		}
+	}
+	
+	bool IsInUse(){
+		return m_IsInUse;
+	}
+	
+	
+	bool IsOwner(PlayerBase player){
+		if (player.GetIdentity()){
+			return (m_OwnerGUID == player.GetIdentity().GetId());
+		}
+		return (m_OwnerGUID == "");
+	}
+	/*
+	--------------------------------------------------------------------------------------------
+	
+	RPC Functions
+	
+	--------------------------------------------------------------------------------------------
+	*/	
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
 	{
 		super.OnRPC(sender, rpc_type, ctx);
 		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsClient()) {
-			
+			PM_RPCSyncData syncData;
+			if (ctx.Read(syncData)){
+				OnSyncClient(syncData.param1, syncData.param2, syncData.param3, syncData.param4);
+			}
 		}
 		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsServer() && sender) {
-			
+			SyncPMData(sender);
 		}
 		if (rpc_type == PLAYER_MARKET_LIST &&  GetGame().IsServer() && sender) {
 			
@@ -171,17 +197,49 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (rpc_type == PLAYER_MARKET_EDIT &&  GetGame().IsServer() && sender) {
 			
 		}
+		if (rpc_type == PLAYER_MARKET_INUSE &&  GetGame().IsServer() && sender) {
+			Param1<bool> inuseSet;
+			if (ctx.Read(inuseSet) /* TODO check sender is able to use sell menu */){
+				SetIsInUse(inuseSet.param1);
+			}
+		}
 	}
 	
+	/*
+	--------------------------------------------------------------------------------------------
 	
-	void SetIsInUse(bool state){
-		m_IsInUse = state;
-		SetSynchDirty();
+	DataSyncing
+	
+	--------------------------------------------------------------------------------------------
+	*/
+	
+	void OnSyncClient(string owner, string standname, TStringIntMap sellers, array<autoptr PlayerMarketItemDetails> itemDetails){
+		m_OwnerGUID = owner;
+		m_StandName = standname;
+		if (!m_AuthorizedSellers){ m_AuthorizedSellers = new TStringIntMap; }
+		
+		m_AuthorizedSellers.Copy(sellers);
+		array<EntityAI> items = GetItemsForSale();
+		foreach (PlayerMarketItemDetails detail : itemDetails){
+			foreach (EntityAI item : items){
+				if (detail.CheckAndSetItem(item)){
+					items.RemoveItem(item);//Remove it from array to improve performance on adding more items
+					break;
+				}
+			}
+			m_ItemsArray.Insert(detail);
+		}
+		m_ItemsArray.Debug();
 	}
 	
-	bool IsInUse(){
-		return m_IsInUse;
+	void SyncPMData(PlayerIdentity player = NULL){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_SYNC, NULL, true);
+		} else {
+			RPCSingleParam(PLAYER_MARKET_SYNC, new PM_RPCSyncData(m_OwnerGUID,m_StandName,m_AuthorizedSellers,m_ItemsArray), true, player);
+		}
 	}
+	
 	
 	/*
 	--------------------------------------------------------------------------------------------	
@@ -421,6 +479,12 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (IsBuilt()){
 			m_IsBuilt = true;
 			GetInventory().CreateAttachment("PM_MarketStorage");
+			PlayerBase playerB = PlayerBase.Cast(player);
+			if (playerB && playerB.GetIdentity()){
+				m_OwnerGUID = playerB.GetIdentity().GetId();
+				m_StandName = playerB.GetIdentity().GetName() + "'s Market";
+			}
+			SyncPMData();
 		} else {
 			m_IsBuilt = false;
 		}
@@ -437,6 +501,9 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_IsBuilt = true;
 		} else {
 			m_IsBuilt = false;
+			m_OwnerGUID = "";
+			m_StandName = "";
+			SyncPMData();
 		}
 		SetSynchDirty();
 		UpdateVisuals();
@@ -450,6 +517,9 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_IsBuilt = true;
 		} else {
 			m_IsBuilt = false;
+			m_OwnerGUID = "";
+			m_StandName = "";
+			SyncPMData();
 		}
 		SetSynchDirty();
 		UpdateVisuals();
@@ -524,7 +594,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		{
 			vector selection_pos = ModelToWorld( GetMemoryPointPos( selection ) );
 			float distance = vector.Distance( selection_pos, player.GetPosition() );
-			if ( distance >= 0.4 )
+			if ( distance >= 0.3 )
 			{
 				return false;
 			}
@@ -569,6 +639,8 @@ class MarketStandBase extends BaseBuildingBase  {
 	{
 		super.SetActions();
 		AddAction(ActionFoldBaseBuildingObject);
+		AddAction(ActionOpenMarketStallBuy);
+		AddAction(ActionOpenMarketStallSell);
 	}
 }
 

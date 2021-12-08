@@ -5,6 +5,8 @@ modded class ActionConstructor
         super.RegisterActions(actions);
 
 		actions.Insert(ActionDestroyPM_MarketPart);
+		actions.Insert( ActionOpenMarketStallBuy );
+		actions.Insert( ActionOpenMarketStallSell );
 	}
 }
 

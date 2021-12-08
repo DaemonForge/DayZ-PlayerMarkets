@@ -81,6 +81,13 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 	
 	
 	void UpdateQuanity(EntityAI item){
+		Magazine mag;
+		if (Class.CastTo(mag, item)){
+			m_Quanity.Show(true);
+			string magText = mag.GetAmmoCount().ToString();
+			m_Quanity.SetText( magText );
+			return;
+		}
 		ItemBase itemB;
 		if (!Class.CastTo(itemB, item) || !itemB.HasQuantity()){
 			return;
