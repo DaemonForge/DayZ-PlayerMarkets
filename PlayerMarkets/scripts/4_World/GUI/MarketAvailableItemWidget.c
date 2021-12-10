@@ -76,6 +76,24 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 		m_LayoutRoot.SetHandler(this);
 	}
 	
+	void ~MarketStallAvailableItemWidget(){
+		Print("~MarketStallAvailableItemWidget");
+		delete m_LayoutRoot;
+	}
+	
+	override bool OnClick(Widget w, int x, int y, int button){
+		
+		if (w == m_List && m_parent){
+			m_parent.OpenSetPrice(m_Item);
+			return true;
+		}
+		
+		return super.OnClick(w,x,y,button);
+	
+	}
+	
+	
+	
 	void UpdateItemPreviw(EntityAI item){
 		InventoryItem iItem = InventoryItem.Cast(item);
 		if (iItem){

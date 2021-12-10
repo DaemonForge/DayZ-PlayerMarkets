@@ -1,27 +1,14 @@
 class PlayerMarketItemDetails extends PlayerMarketItemDetailsBase {
 	
 	void PlayerMarketItemDetails(EntityAI item, int price, EntityAI stall){
-		m_Items = new map<int, EntityAI>;
-		EntityAI theItem = EntityAI.Cast(item);
-		if (theItem){
-			AddItem(theItem);
-		}
+		AddItem(item)
+		SetPrice(price);
 	}
 	
 	[NonSerialized()]
-	protected autoptr map<int, EntityAI> m_Items;
+	protected EntityAI m_Item;
 	
 	bool AddItem(EntityAI item){
-		if (!m_Items){
-			m_Items = new map<int, EntityAI>; }
-		if (!m_b1){
-			m_b1 = new TIntArray; }
-		if (!m_b2){
-			m_b2 = new TIntArray; }
-		if (!m_b3){
-			m_b3 = new TIntArray; }
-		if (!m_b4){
-			m_b4 = new TIntArray; }
 		if (m_ItemClass == ""){
 			m_ItemClass = item.GetType();
 			m_ItemName = item.GetDisplayName();
@@ -29,30 +16,39 @@ class PlayerMarketItemDetails extends PlayerMarketItemDetailsBase {
 			return false;
 		}
 		int b1,b2,b3,b4;
-		item.GetPersistentID(b1,b2,b3,b4);
-		int idx = m_b1.Insert(b1);
-		m_b2.Insert(b2);
-		m_b3.Insert(b3);
-		m_b4.Insert(b4);
-		m_Items.Insert(idx,item);
+		ItemBase itemB = ItemBase.Cast(item);
+		if (itemB && GetGame().IsClient()){
+			itemB.GetSyncedPersistantsId(b1,b2,b3,b4);
+		} else {
+			item.GetPersistentID(b1,b2,b3,b4);
+		}
+		m_b1 = b1;
+		m_b2 = b2;
+		m_b3 = b3;
+		m_b4 = b4;
+		Class.CastTo(m_Item,item);
 		return true;
 	}
-	
+		
 	bool CheckAndSetItem(EntityAI item){
 		if (item.GetType() != m_ItemClass) {return false;}
+		ItemBase itemB = ItemBase.Cast(item);
 		int b1,b2,b3,b4;
-		item.GetPersistentID(b1,b2,b3,b4);
-		for (int i = 0; i < m_b1.Count(); i++){
-			if (m_b1.Get(i) == b1 && m_b2.Get(i) == b2 && m_b3.Get(i) == b3 && m_b4.Get(i) == b4){
-				m_Items.Set(i,item);
-				return true;
-			}
+		if (itemB && GetGame().IsClient()){
+			itemB.GetSyncedPersistantsId(b1,b2,b3,b4);
+		} else {
+			item.GetPersistentID(b1,b2,b3,b4);
+		}
+		if (m_b1 == b1 && m_b2 == b2 && m_b3 == b3 && m_b4 == b4){
+			Class.CastTo(m_Item,item);
+			Print(m_Item);
+			return true;
 		}
 		return false;
 	}
 	
 	override EntityAI GetItem(){
-		if (!m_Items) {return NULL;}
-		return m_Items.GetElement(0);
+		if (!m_Item) {return NULL;}
+		return m_Item;
 	}
 }

@@ -4,6 +4,7 @@ class MarketStallMenu extends UIScriptedMenu {
 	protected const string ROOT_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStall.layout";
 	protected TextWidget m_ShopTitle;
 	protected GridSpacerWidget m_ItemGrid;
+	protected TextWidget m_Balance;
 	
 	protected autoptr array<autoptr MarketStallItemWidget> m_ItemWidgets;
 	
@@ -15,7 +16,7 @@ class MarketStallMenu extends UIScriptedMenu {
 		
 		m_ShopTitle 	= TextWidget.Cast(layoutRoot.FindAnyWidget("ShopTitle"));
 		m_ItemGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("ItemGrid"));
-		
+		m_Balance		= TextWidget.Cast(layoutRoot.FindAnyWidget("Balance"));
 		return layoutRoot;
 	}
 	
@@ -27,6 +28,7 @@ class MarketStallMenu extends UIScriptedMenu {
 	}
 	
 	void SetStall(MarketStandBase stand){
+		Print("SetStall");
 		if (Class.CastTo(m_Stand, stand)){
 			m_Stand.SetIsInUse(true);
 			m_ShopTitle.SetText(m_Stand.GetStandName());
@@ -34,7 +36,7 @@ class MarketStallMenu extends UIScriptedMenu {
 			array<autoptr PlayerMarketItemDetails> itemsArray = m_Stand.GetItemsArray();
 			if (itemsArray && itemsArray.Count() > 0){
 				for (int i = 0; i < itemsArray.Count(); i++){
-					if (itemsArray.Get(i).GetItem() && itemsArray.Get(i).GetItem().GetHierarchyRoot() == stand){
+					if (itemsArray.Get(i).GetItem()){
 						m_ItemWidgets.Insert(new MarketStallItemWidget(m_ItemGrid, itemsArray.Get(i),this));
 					}
 				}
@@ -44,7 +46,6 @@ class MarketStallMenu extends UIScriptedMenu {
 	}
 	
 	override bool OnKeyPress(Widget w, int x, int y, int key){
-		Print(key);
 		return super.OnKeyPress(w,x,y,key);
 	}
 	
@@ -52,9 +53,12 @@ class MarketStallMenu extends UIScriptedMenu {
 	{
 		super.Update( timeslice );
 		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !InspectIsOpen()) {
-			Print("UAUIBack");
 			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
-		}		
+		}
+		PlayerBase player;
+		if (Class.CastTo(player, GetGame().GetPlayer())){
+			m_Balance.SetText("On You: $" +  UUtil.ConvertIntToNiceString(player.UGetPlayerBalance("Coins")));
+		}
 	}
 	
 	bool InspectIsOpen(){

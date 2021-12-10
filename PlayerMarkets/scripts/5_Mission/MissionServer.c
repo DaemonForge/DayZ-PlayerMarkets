@@ -1,12 +1,10 @@
 modded class MissionServer extends MissionBase {
 
-	protected autoptr CyptoMarketHandler m_Handler;
-	
 	override void OnMissionStart()
 	{
 		super.OnMissionStart();
-		string ModFile = "Crypto_types.xml";
-		string Path = "Crypto\\xmls\\";
+		//string ModFile = "Crypto_types.xml";
+		//string Path = "Crypto\\xmls\\";
 		//CopyXmlFile(Path + ModFile, ModFile);
 		Print("[PlayerMarkets] OnInit");
 		GetPMConfig();
@@ -17,6 +15,7 @@ modded class MissionServer extends MissionBase {
 	
 	
 	void RPCPlayerMarketsConfig( CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target ) {
+		Print("RPCPlayerMarketsConfig");
 		PlayerIdentity RequestedBy = PlayerIdentity.Cast(sender); 
 		if (RequestedBy){
 			GetRPCManager().SendRPC("PlayerMarkets", "RPCPlayerMarketsConfig", new Param1< PlayerMarketsConfig >( GetPMConfig() ), true, RequestedBy);
@@ -28,7 +27,7 @@ modded class MissionServer extends MissionBase {
 		Copy Xml Files to Mission director and add entry to cfg econmoy core
 	
 		PathToFile - Is the path to the file inside your mod structure 
-	                 remember to add *.xml to the copy directly in addon BuildingSuper
+	                 remember to add *.xml to the copy directly in addon buiilder
 		
 		FileName - This is the file name to save the xml as in the folder, recommended to use modname_type.xml
 	    

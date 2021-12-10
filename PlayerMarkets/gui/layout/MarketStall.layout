@@ -97,5 +97,76 @@ FrameWidgetClass rootFrame {
     }
    }
   }
+  PanelWidgetClass PlayerBalanceFrame {
+   clipchildren 0
+   ignorepointer 1
+   color 0.2078 0 0.1529 0.4235
+   position 0 -60
+   size 328 50
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style rover_sim_colorable
+   {
+    PanelWidgetClass Top {
+     ignorepointer 1
+     position 0 0
+     size 1 2
+     halign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 1
+     style rover_sim_colorable
+    }
+    PanelWidgetClass Bottom {
+     ignorepointer 1
+     size 1 2
+     halign center_ref
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 1
+     style rover_sim_colorable
+    }
+    PanelWidgetClass Right {
+     ignorepointer 1
+     size 2 1
+     halign right_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 0
+     style rover_sim_colorable
+    }
+    PanelWidgetClass Left {
+     ignorepointer 1
+     size 2 1
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 0
+     style rover_sim_colorable
+    }
+    TextWidgetClass Balance {
+     ignorepointer 1
+     size 0.95 0.85
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     text "On You: $10,000"
+     font "gui/fonts/etelkatextpro"
+     "text valign" center
+    }
+   }
+  }
  }
 }

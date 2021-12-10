@@ -2,7 +2,7 @@ class PM_Merchant_Base extends ItemBase {
 
 }
  //m_OwnerGUID, m_StandName, m_MoneyBalance, m_AuthorizedSellers, m_ItemsArray
-typedef Param5<string, string,int, TStringIntMap, array<autoptr PlayerMarketItemDetails>> PM_RPCSyncData;
+typedef Param5<string, string,int, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>> PM_RPCSyncData;
 
 typedef Param1<PlayerMarketItemDetails> PM_RPCItemData;
 
@@ -39,20 +39,27 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	protected int m_MoneyBalance = 0;
 	
-	protected autoptr TStringIntMap m_AuthorizedSellers;
+	protected autoptr TStringIntMap m_AuthorizedSellers = new TStringIntMap;
 	
-	protected autoptr TStringMap m_Notes;
+	protected autoptr TStringMap m_Notes = new TStringMap;
 	
-	protected autoptr array<autoptr PlayerMarketItemDetails> m_ItemsArray;
-	protected autoptr TStringSet m_Visitors;
-	protected int m_Vists;
+	protected autoptr array<autoptr PlayerMarketItemDetails> m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
+	protected autoptr TStringSet m_Visitors = new TStringSet;
+	protected int m_Vists = 0;
 	protected bool m_MarketIsInit = false;
 	protected bool m_IsBuilt = false;
 	protected bool m_IsInUse = false;
+	protected autoptr map<string, int> m_MerchantSlots = new map<string,int>;
 	
 	void MarketStandBase(){
 		RegisterNetSyncVariableBool("m_IsBuilt");
 		RegisterNetSyncVariableBool("m_IsInUse");
+		TStringArray attachmentSlots = new TStringArray;
+		GetAttachmentSlots(this, attachmentSlots);
+		
+		for (int i = 0; i < attachmentSlots.Count(); i++){
+			m_MerchantSlots.Set(attachmentSlots.Get(i), InventorySlots.GetSlotIdFromString(attachmentSlots.Get(i)));
+		}
 	}
 	
 	/*
@@ -63,6 +70,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	--------------------------------------------------------------------------------------------	
 	*/	
+	
 	
 	
 	bool CanOpenSellMenu(PlayerBase player){
@@ -81,14 +89,47 @@ class MarketStandBase extends BaseBuildingBase  {
 		m_StandName = name;
 	}
 	
+	int GetMoneyBalance(){
+		return m_MoneyBalance;
+	}
+	
+	void WithdrawBalance(PlayerBase player){
+		if (!player){return;}
+		player.UAddMoney("Coins", m_MoneyBalance);
+		ResetMoneyBalance();
+	}
+	
+	void IncreaseMoneyBalance(int amount){
+		m_MoneyBalance += amount;
+		SyncPMData();
+	}
+	
+	protected void ResetMoneyBalance(){
+		m_MoneyBalance = 0;
+		SyncPMData();
+	}
 	
 	void InitStandData(){
 		if (m_MarketIsInit) return;
 		m_MarketIsInit = true;
-		Print("InitStandData");
-		GetItemsForSale().Debug();
-		GetItemsInCargo().Debug();
 		SyncPMData();
+		
+		array<EntityAI> items = GetItemsForSale();
+		Print(items);
+		Print(m_ItemsArray);
+		if (GetGame().IsServer()){
+			for (int i = 0; i < m_ItemsArray.Count(); i++){ 
+				PlayerMarketItemDetails detail = PlayerMarketItemDetails.Cast(m_ItemsArray.Get(i));
+				foreach (EntityAI item : items){
+					Print(detail);
+					Print(item);
+					if (detail.CheckAndSetItem(item)){
+						items.RemoveItem(item);//Remove it from array to improve performance on adding more items
+						break;
+					}
+				}
+			}
+		}
 	}
 	array<EntityAI> GetItemsForSale(){
 		array<EntityAI> items = new array<EntityAI>;
@@ -120,15 +161,102 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	array<autoptr PlayerMarketItemDetails> GetItemsArray(){
+		Print("GetItemsArray");
 		return m_ItemsArray;
 	}
 	
 	bool AddItemForSale(EntityAI item, int price, PlayerBase player){
+		if (!IsOwner(player)){ return false; }
 		if (!m_ItemsArray){
 			m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
 		}
 		m_ItemsArray.Insert(new PlayerMarketItemDetails(EntityAI.Cast(item),price, this));
+		if (GetMerchantStorage()){
+			GetMerchantStorage().ServerTakeEntityToCargo(item);
+		}
+		SyncPMData();
 		return true;
+	}
+	
+	PlayerMarketItemDetails GetRightDetails(int b1,int b2,int b3,int b4){
+		if (!m_ItemsArray){
+			return NULL;
+		}
+		for (int i = 0; i < m_ItemsArray.Count(); i++){
+			if (m_ItemsArray.Get(i).Is(b1,b2,b3,b4)){
+				return m_ItemsArray.Get(i);
+			}
+		}
+		return NULL;
+	}
+	
+	bool DelistItem(PlayerMarketItemDetails item, PlayerBase player){
+		if (!m_ItemsArray || !player || !item){
+			return false;
+		}
+		if (!IsOwner(player)){
+			return false;
+		}
+		int b1, b2, b3, b4;
+		item.GetIds(b1, b2, b3, b4);
+		PlayerMarketItemDetails details = GetRightDetails(b1, b2, b3, b4);
+		if (!details){
+			return false;
+		}
+		EntityAI entity = item.GetItem();
+		if (entity.GetHierarchyRoot() == this){
+			ServerTakeEntityToCargo(entity);
+			if (entity.GetHierarchyParent() != this){
+				this.ServerDropEntity(entity);
+				entity.SetPosition(player.GetPosition() + "0 0.05 0");
+				entity.PlaceOnSurface()
+			}
+		}
+		if (entity.GetHierarchyRoot() != this){
+			m_ItemsArray.RemoveItem(details);
+			return true;
+		}
+		return false;
+	}
+	
+	bool SellItem(PlayerMarketItemDetails item, PlayerBase player){
+		if (!m_ItemsArray || !player || !item){
+			return false;
+		}
+		int b1, b2, b3, b4;
+		item.GetIds(b1, b2, b3, b4);
+		PlayerMarketItemDetails details = GetRightDetails(b1, b2, b3, b4);
+		if (!details){
+			return false;
+		}
+		if (player.UGetPlayerBalance("Coins") < details.GetPrice()){
+			return false;
+		}
+		EntityAI entity = item.GetItem();
+		if (entity.GetHierarchyRoot() == this){
+			player.ServerTakeEntityToInventory(FindInventoryLocationType.ANY, entity);
+			if (entity.GetHierarchyRootPlayer() != player){
+				this.ServerDropEntity(entity);
+				entity.SetPosition(player.GetPosition() + "0 0.05 0");
+				entity.PlaceOnSurface()
+			}
+		}
+		if (entity.GetHierarchyRoot() != this){
+			int price = details.GetPrice();
+			player.URemoveMoney("Coins", price);
+			m_ItemsArray.RemoveItem(details);
+			IncreaseMoneyBalance(price);
+			return true;
+		}
+		SyncPMData();
+		return false;
+	}
+	
+	PM_Merchant_Base GetMerchantStorage(){
+		if (m_MerchantSlots.Get("Merchant_Storage") != -1){
+			return PM_Merchant_Base.Cast(GetInventory().FindAttachment(m_MerchantSlots.Get("Merchant_Storage")));	
+		}
+		return NULL;
 	}
 	
 	void AddVisitor(string player){
@@ -147,16 +275,6 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	
-	
-	void SetIsInUse(bool state){
-		if (GetGame().IsClient()){
-			RPCSingleParam(PLAYER_MARKET_INUSE, new Param1<bool>(state),true);
-		} else {
-			m_IsInUse = state;
-			SetSynchDirty();
-		}
-	}
-	
 	bool IsInUse(){
 		return m_IsInUse;
 	}
@@ -168,6 +286,12 @@ class MarketStandBase extends BaseBuildingBase  {
 		}
 		return (m_OwnerGUID == "");
 	}
+	bool IsOwner(PlayerIdentity player){
+		if (player){
+			return (m_OwnerGUID == player.GetId());
+		}
+		return (m_OwnerGUID == "");
+	}
 	/*
 	--------------------------------------------------------------------------------------------
 	
@@ -175,34 +299,111 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	--------------------------------------------------------------------------------------------
 	*/	
+	
+	
+	void RequestWithdraw(){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_WITHDRAWN, NULL,true);
+		}
+	}
+	
+	void RequestBuy(PlayerMarketItemDetails details){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_BUY, new PM_RPCItemData(details),true);
+		}
+	}
+	
+	void RequestDeList(PlayerMarketItemDetails details){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_DELIST, new PM_RPCItemData(details),true);
+		}
+	}
+	
+	void RequestList(PlayerMarketItemDetails details){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_LIST, new PM_RPCItemData(details),true);
+		}
+	}
+		
+	void SetIsInUse(bool state){
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_INUSE, new Param1<bool>(state),true);
+		} else {
+			m_IsInUse = state;
+			SetSynchDirty();
+		}
+	}
+	
+	
+	
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
 	{
 		super.OnRPC(sender, rpc_type, ctx);
+		PlayerBase player;
 		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsClient()) {
 			PM_RPCSyncData syncData;
 			if (ctx.Read(syncData)){
 				OnSyncClient(syncData.param1, syncData.param2,syncData.param3, syncData.param4, syncData.param5);
 			}
+			return;
 		}
 		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsServer() && sender) {
 			SyncPMData(sender);
+			return;
 		}
-		if (rpc_type == PLAYER_MARKET_LIST &&  GetGame().IsServer() && sender) {
-			
-		}
-		if (rpc_type == PLAYER_MARKET_DELIST &&  GetGame().IsServer() && sender) {
-			
-		}
-		if (rpc_type == PLAYER_MARKET_BUY &&  GetGame().IsServer() && sender) {
-			
-		}
-		if (rpc_type == PLAYER_MARKET_EDIT &&  GetGame().IsServer() && sender) {
-			
+		if (rpc_type == PLAYER_MARKET_WITHDRAWN &&  GetGame().IsServer() && sender) {
+			if ( IsOwner(sender) && Class.CastTo(player,UUtil.FindPlayerByIdentity(sender)) ){
+				WithdrawBalance(player);
+			}
+			return;
 		}
 		if (rpc_type == PLAYER_MARKET_INUSE &&  GetGame().IsServer() && sender) {
 			Param1<bool> inuseSet;
-			if (ctx.Read(inuseSet) /* TODO check sender is able to use sell menu */){
+			if (ctx.Read(inuseSet) && IsOwner(sender)){
 				SetIsInUse(inuseSet.param1);
+			}
+			return;
+		}
+		PM_RPCItemData marketData;
+		array<EntityAI> items;
+		autoptr PlayerMarketItemDetails details;
+		if (rpc_type == PLAYER_MARKET_LIST &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			if (Class.CastTo(details, marketData.param1)){
+				items = GetItemsInCargo();
+				foreach (EntityAI itemL : items){
+					if (details.CheckAndSetItem(itemL)){
+						AddItemForSale(itemL, details.GetPrice(), PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender)));
+					}
+				}
+			}
+		}
+		if (rpc_type == PLAYER_MARKET_EDIT &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			if (Class.CastTo(details, marketData.param1)){
+				items = GetItemsForSale();
+				foreach (EntityAI itemE : items){
+					if (details.CheckAndSetItem(itemE)){
+						break;
+					}
+				}
+			}
+			
+		}
+		if (rpc_type == PLAYER_MARKET_DELIST &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			if (Class.CastTo(details, marketData.param1)){
+				if (DelistItem(details, UUtil.FindPlayerByIdentity(sender))){
+					
+				} else {
+					
+				}
+			}
+		}
+		if (rpc_type == PLAYER_MARKET_BUY &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			if (Class.CastTo(details, marketData.param1)){
+				if (SellItem(details, UUtil.FindPlayerByIdentity(sender))){
+					
+				} else {
+					
+				}
 			}
 		}
 	}
@@ -215,7 +416,8 @@ class MarketStandBase extends BaseBuildingBase  {
 	--------------------------------------------------------------------------------------------
 	*/
 	
-	void OnSyncClient(string owner, string standname, int balance, TStringIntMap sellers, array<autoptr PlayerMarketItemDetails> itemDetails){
+	void OnSyncClient(string owner, string standname, int balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails){
+		Print("OnSyncClient");
 		m_OwnerGUID = owner;
 		m_StandName = standname;
 		m_MoneyBalance = balance;
@@ -223,10 +425,11 @@ class MarketStandBase extends BaseBuildingBase  {
 		
 		m_AuthorizedSellers.Copy(sellers);
 		array<EntityAI> items = GetItemsForSale();
+		array<autoptr PlayerMarketItemDetails> idetals = array<autoptr PlayerMarketItemDetails>.Cast(itemDetails);
 		if (!m_ItemsArray){
 			m_ItemsArray = new array<autoptr PlayerMarketItemDetails>
 		}
-		foreach (PlayerMarketItemDetails detail : itemDetails){
+		foreach (PlayerMarketItemDetails detail : idetals){
 			foreach (EntityAI item : items){
 				if (detail.CheckAndSetItem(item)){
 					items.RemoveItem(item);//Remove it from array to improve performance on adding more items
@@ -295,6 +498,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		super.OnStoreSave(ctx);
 		ctx.Write( m_OwnerGUID );
 		ctx.Write( m_StandName );
+		ctx.Write( m_MoneyBalance );
 		ctx.Write( m_Notes );
 		ctx.Write( m_AuthorizedSellers );
 		ctx.Write( m_ItemsArray );
@@ -315,6 +519,7 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_IsBuilt = false;
 		}
 		SetSynchDirty();
+		m_ItemsArray.Debug();
 	}
 	
 	
@@ -603,7 +808,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		{
 			vector selection_pos = ModelToWorld( GetMemoryPointPos( selection ) );
 			float distance = vector.Distance( selection_pos, player.GetPosition() );
-			if ( distance >= 0.3 )
+			if ( distance >= 0.5 )
 			{
 				return false;
 			}
