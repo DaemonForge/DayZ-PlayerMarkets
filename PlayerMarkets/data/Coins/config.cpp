@@ -21,9 +21,11 @@ class cfgvehicles
 		itemSize[]={1,1};
 		displayName="Copper Coin";
 		descriptionShort="A Copper Coin for buying stuff";
-		varQuantityInit = 1.0;
-		varQuantityMin = 0.0;
-		varQuantityMax = 100.0;
+		varQuantityInit = 1;
+		varQuantityMin = 0;
+		varQuantityMax = 100;
+        canBeSplit=1;
+        varQuantityDestroyOnMin=1;
 	};
 	class PM_SilverCoin: Inventory_Base
 	{
@@ -35,6 +37,8 @@ class cfgvehicles
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 50;
+        canBeSplit=1;
+        varQuantityDestroyOnMin=1;
 	};
 	class PM_GoldCoin: Inventory_Base
 	{
@@ -46,5 +50,7 @@ class cfgvehicles
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 20;
+        canBeSplit=1;
+        varQuantityDestroyOnMin=1;
 	};
 };
