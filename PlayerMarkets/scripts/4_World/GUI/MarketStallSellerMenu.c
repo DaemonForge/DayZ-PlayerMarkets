@@ -97,6 +97,13 @@ class MarketStallSellerMenu extends UIScriptedMenu {
         GetGame().GetUIManager().ShowUICursor(false);
     }
 	
+	void RequestRefresh(){
+		if (!m_AwaitingRefresh){
+			m_AwaitingRefresh = true;
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+		}
+	}
+	
 	void RefreshGUI(){
 		Print("RefreshGUI Start");
 		m_AwaitingRefresh = false;

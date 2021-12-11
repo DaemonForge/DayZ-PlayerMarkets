@@ -12,10 +12,12 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	
 	
 	void MarketStallSetPriceWidget(Widget parent, EntityAI item, MarketStallSellerMenu menu ){
+		Print("MarketStallSetPriceWidget");
 		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
 		m_parent = MarketStallSellerMenu.Cast(menu);
-		
+		Print(item);
 		Class.CastTo(m_Item,item);
+		Print(m_Item);
 		
 		m_Price 	= EditBoxWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
 		m_Set 		= ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Set"));

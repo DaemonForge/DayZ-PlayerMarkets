@@ -4,17 +4,18 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;
 	
-	protected Widget m_ItemStateFrame;
 	protected Widget m_QuanityFrame;
 	protected TextWidget m_QuanityAmount;
 	protected TextWidget m_QuanityMax;
 	protected TextWidget m_Quanity;
 	
+	protected Widget m_ItemStateFrame;
+	protected ImageWidget m_ItemState;
+	
 	
 	protected ItemPreviewWidget m_ItemPreview;
 	protected TextWidget m_DisplayName;
 	protected ButtonWidget m_List;
-	protected ImageWidget m_ItemState;
 	protected EntityAI m_Item;
 	
 	void MarketStallAvailableItemWidget(Widget parent, EntityAI item, MarketStallSellerMenu menu ){
@@ -33,7 +34,7 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 		
 		
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4
-		EntityAI m_Item = EntityAI.Cast(item);
+		m_Item = EntityAI.Cast(item);
 		m_DisplayName.SetText(item.GetDisplayName());
 		int healthLevel = item.GetHealthLevel("");
 		switch  (healthLevel) {
@@ -81,17 +82,6 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 		delete m_LayoutRoot;
 	}
 	
-	override bool OnClick(Widget w, int x, int y, int button){
-		
-		if (w == m_List && m_parent){
-			m_parent.OpenSetPrice(m_Item);
-			return true;
-		}
-		
-		return super.OnClick(w,x,y,button);
-	
-	}
-	
 	
 	
 	void UpdateItemPreviw(EntityAI item){
@@ -104,6 +94,15 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 			m_ItemPreview.SetSize( 1, 1);
 			m_ItemPreview.SetView( 0 );
 		}
+	}
+		
+	override bool OnClick(Widget w, int x, int y, int button){
+		if (w == m_List && m_parent){
+			m_parent.OpenSetPrice(m_Item);
+			return true;
+		}
+		return super.OnClick(w,x,y,button);
+	
 	}
 	
 	

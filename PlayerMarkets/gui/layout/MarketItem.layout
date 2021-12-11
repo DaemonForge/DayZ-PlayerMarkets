@@ -1,4 +1,5 @@
 FrameWidgetClass ItemRoot {
+ clipchildren 0
  ignorepointer 0
  color 1 1 1 0
  size 1 164
@@ -73,7 +74,7 @@ FrameWidgetClass ItemRoot {
    {
     GridSpacerWidgetClass ItemDetails {
      ignorepointer 1
-     size 1 46
+     size 1 58
      valign center_ref
      hexactpos 0
      vexactpos 0
@@ -85,23 +86,34 @@ FrameWidgetClass ItemRoot {
      Columns 80
      Rows 1
      {
-      TextWidgetClass State {
+      PanelWidgetClass ItemStateFrame {
        ignorepointer 1
-       color 0 0.502 0.1255 1
        position 0 0
-       size 100 1
-       hexactpos 1
-       vexactpos 1
+       size 30 1
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
        hexactsize 1
        vexactsize 0
-       text "PERSTINE"
-       font "PlayerMarkets/gui/fonts/AmaticSCBold"
-       "text color" 0 0 0 1
-       "exact text" 0
-       "size to text h" 1
-       "size to text v" 0
-       "text halign" center
-       "text valign" center
+       {
+        ImageWidgetClass ItemState {
+         visible 1
+         ignorepointer 1
+         color 0 0 0 0
+         size 16 16
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         image0 "PlayerMarkets/gui/images/dot.edds"
+         mode blend
+         "src alpha" 1
+         "no wrap" 0
+         stretch 1
+        }
+       }
       }
       TextWidgetClass Quanity {
        visible 0
@@ -143,7 +155,8 @@ FrameWidgetClass ItemRoot {
          vexactpos 1
          hexactsize 0
          vexactsize 0
-         font "PlayerMarkets/gui/fonts/AmaticSCBold"
+         font "gui/fonts/etelkatextpro"
+         "text color" 0 0 0 1
          "size to text h" 1
          "text halign" center
          "text valign" center
@@ -169,7 +182,8 @@ FrameWidgetClass ItemRoot {
          vexactpos 1
          hexactsize 0
          vexactsize 0
-         font "PlayerMarkets/gui/fonts/AmaticSCBold"
+         font "gui/fonts/etelkatextpro"
+         "text color" 0 0 0 1
          "size to text h" 1
          "text halign" center
          "text valign" center

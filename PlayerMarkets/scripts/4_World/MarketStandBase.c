@@ -1,5 +1,5 @@
 class PM_Merchant_Base extends ItemBase {
-
+	
 }
  //m_OwnerGUID, m_StandName, m_MoneyBalance, m_AuthorizedSellers, m_ItemsArray
 typedef Param5<string, string,int, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>> PM_RPCSyncData;
@@ -203,13 +203,13 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (!details){
 			return false;
 		}
-		EntityAI entity = item.GetItem();
+		EntityAI entity = details.GetItem();
 		if (entity.GetHierarchyRoot() == this){
 			ServerTakeEntityToCargo(entity);
 			if (entity.GetHierarchyParent() != this){
 				this.ServerDropEntity(entity);
 				entity.SetPosition(player.GetPosition() + "0 0.05 0");
-				entity.PlaceOnSurface()
+				entity.PlaceOnSurface();
 			}
 		}
 		if (entity.GetHierarchyRoot() != this){
@@ -230,15 +230,16 @@ class MarketStandBase extends BaseBuildingBase  {
 			return false;
 		}
 		if (player.UGetPlayerBalance("Coins") < details.GetPrice()){
+			
 			return false;
 		}
-		EntityAI entity = item.GetItem();
+		EntityAI entity = details.GetItem();
 		if (entity.GetHierarchyRoot() == this){
 			player.ServerTakeEntityToInventory(FindInventoryLocationType.ANY, entity);
 			if (entity.GetHierarchyRootPlayer() != player){
 				this.ServerDropEntity(entity);
 				entity.SetPosition(player.GetPosition() + "0 0.05 0");
-				entity.PlaceOnSurface()
+				entity.PlaceOnSurface();
 			}
 		}
 		if (entity.GetHierarchyRoot() != this){
@@ -351,13 +352,13 @@ class MarketStandBase extends BaseBuildingBase  {
 			SyncPMData(sender);
 			return;
 		}
-		if (rpc_type == PLAYER_MARKET_WITHDRAWN &&  GetGame().IsServer() && sender) {
+		if (rpc_type == PLAYER_MARKET_WITHDRAWN && GetGame().IsServer() && sender) {
 			if ( IsOwner(sender) && Class.CastTo(player,UUtil.FindPlayerByIdentity(sender)) ){
 				WithdrawBalance(player);
 			}
 			return;
 		}
-		if (rpc_type == PLAYER_MARKET_INUSE &&  GetGame().IsServer() && sender) {
+		if (rpc_type == PLAYER_MARKET_INUSE && GetGame().IsServer() && sender) {
 			Param1<bool> inuseSet;
 			if (ctx.Read(inuseSet) && IsOwner(sender)){
 				SetIsInUse(inuseSet.param1);
@@ -367,7 +368,8 @@ class MarketStandBase extends BaseBuildingBase  {
 		PM_RPCItemData marketData;
 		array<EntityAI> items;
 		autoptr PlayerMarketItemDetails details;
-		if (rpc_type == PLAYER_MARKET_LIST &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_LIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			Print("rpc PLAYER_MARKET_LIST");
 			if (Class.CastTo(details, marketData.param1)){
 				items = GetItemsInCargo();
 				foreach (EntityAI itemL : items){
@@ -377,7 +379,8 @@ class MarketStandBase extends BaseBuildingBase  {
 				}
 			}
 		}
-		if (rpc_type == PLAYER_MARKET_EDIT &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_EDIT && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			Print("rpc PLAYER_MARKET_EDIT");
 			if (Class.CastTo(details, marketData.param1)){
 				items = GetItemsForSale();
 				foreach (EntityAI itemE : items){
@@ -388,18 +391,20 @@ class MarketStandBase extends BaseBuildingBase  {
 			}
 			
 		}
-		if (rpc_type == PLAYER_MARKET_DELIST &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_DELIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			Print("rpc PLAYER_MARKET_DELIST");
 			if (Class.CastTo(details, marketData.param1)){
-				if (DelistItem(details, UUtil.FindPlayerByIdentity(sender))){
+				if (DelistItem(details, PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender)))){
 					
 				} else {
 					
 				}
 			}
 		}
-		if (rpc_type == PLAYER_MARKET_BUY &&  GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_BUY && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+			Print("rpc PLAYER_MARKET_BUY");
 			if (Class.CastTo(details, marketData.param1)){
-				if (SellItem(details, UUtil.FindPlayerByIdentity(sender))){
+				if ( SellItem(details, PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender))) ){
 					
 				} else {
 					

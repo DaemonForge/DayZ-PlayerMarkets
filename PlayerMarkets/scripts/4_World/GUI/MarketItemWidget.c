@@ -12,7 +12,10 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 	protected TextWidget m_QuanityAmount;
 	protected TextWidget m_QuanityMax;
 	protected TextWidget m_Quanity;
-	protected TextWidget m_State;
+	protected Widget m_ItemStateFrame;
+	protected ImageWidget m_ItemState;
+	
+	protected ImageWidget m_BG;
 	
 	
 	void MarketStallItemWidget(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
@@ -20,7 +23,7 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
 		m_parent = MarketStallMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
-		
+		m_BG = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("BG"));
 		m_ItemPreview = ItemPreviewWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemPreview"));
 		m_ItemName = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemName"));
 		m_Cost = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Cost"));
@@ -28,7 +31,8 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		m_QuanityAmount = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityAmount"));
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
-		m_State = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("State"));
+		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
+		m_ItemState = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		
 		
 		
@@ -40,33 +44,32 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		int healthLevel = item.GetHealthLevel("");
 		switch  (healthLevel) {
 			case GameConstants.STATE_RUINED:
-				m_State.SetText("RUINED");
-				m_State.SetColor(Colors.COLOR_RUINED);
-				m_State.SetAlpha(0.5);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_RUINED);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_BADLY_DAMAGED:
-				m_State.SetText("BADLY DAMAGED");
-				m_State.SetColor(Colors.COLOR_BADLY_DAMAGED);
-				m_State.SetAlpha(0.5);
-			
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_BADLY_DAMAGED);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_DAMAGED:
-				m_State.SetText("DAMAGED");
-				m_State.SetColor(Colors.COLOR_DAMAGED);
-				m_State.SetAlpha(0.5);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_DAMAGED);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_WORN:
-				m_State.SetText("WORN");
-				m_State.SetColor(Colors.COLOR_WORN);
-				m_State.SetAlpha(0.5);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_WORN);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			case GameConstants.STATE_PRISTINE:
-				m_State.SetText("PRISTINE");
-				m_State.SetColor(Colors.COLOR_PRISTINE);
-				m_State.SetAlpha(0.5);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_PRISTINE);
+				m_ItemState.SetAlpha(0.5);
 			break;
 			default:
-				m_State.Show(false);
+				m_ItemStateFrame.Show(false);
 			break;
 		}
 		m_Quanity.Show(false);
@@ -85,6 +88,38 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		Print("~MarketStallItemWidget");
 		delete m_LayoutRoot;
 	}
+	
+	override bool OnClick(Widget w, int x, int y, int button){
+		if (w == m_LayoutRoot && m_parent){
+			m_parent.OpenViewItem(m_ItemDetails);
+			return true;
+		}
+		
+		return super.OnClick(w,x,y,button);
+	
+	}
+	
+	bool OnMouseEnter(Widget w, int x, int y){
+		if (w == m_LayoutRoot){
+			m_BG.SetSize(1.05,1.05);
+		}
+		return super.OnMouseEnter(w,x,y);
+	}
+	bool OnMouseLeave(Widget w, Widget enterW, int x, int y){
+		if (w == m_LayoutRoot){
+			m_BG.SetSize(1,1);
+			
+		}
+		return super.OnMouseLeave(w,enterW,x,y);
+	}
+	bool OnMouseButtonUp(Widget w, int x, int y, int button){
+		if (w == m_LayoutRoot && m_parent){
+			m_parent.OpenViewItem(m_ItemDetails);
+			return true;
+		}
+		return super.OnMouseButtonUp(w,x,y, button);
+	}
+	
 	
 	void UpdateItemPreviw(EntityAI item){
 		InventoryItem iItem = InventoryItem.Cast(item);

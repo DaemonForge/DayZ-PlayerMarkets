@@ -27,6 +27,7 @@ FrameWidgetClass rootFrame {
    stretch 1
   }
   FrameWidgetClass ItemsListed {
+   clipchildren 0
    ignorepointer 1
    position 0 0
    size 0.85 0.85
@@ -38,6 +39,7 @@ FrameWidgetClass rootFrame {
    vexactsize 0
    {
     ScrollWidgetClass Scroll {
+     clipchildren 0
      ignorepointer 1
      position 0 0
      size 1 1
@@ -46,8 +48,10 @@ FrameWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
+     "Scrollbar V" 1
      {
       GridSpacerWidgetClass ItemGrid {
+       clipchildren 0
        ignorepointer 1
        position 0 0
        size 1 1
