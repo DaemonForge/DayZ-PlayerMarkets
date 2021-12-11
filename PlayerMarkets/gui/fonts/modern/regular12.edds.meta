@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{64AF906CA9017264}StyleFramework/gui/fonts/regular12.edds"
+ Author "mauricio"
+ ChangeDate 688647015
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "regular12.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

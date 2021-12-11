@@ -1,0 +1,124 @@
+PanelWidgetClass rootFrame {
+ color 0 0 0 0.9412
+ size 400 100
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 99
+ style rover_sim_colorable
+ {
+  TextWidgetClass Title {
+   ignorepointer 1
+   position 10 5
+   size 0.85 32
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "@ui_set_price"
+   font "PlayerMarkets/gui/fonts/modern/regular18"
+  }
+  EditBoxWidgetClass Price {
+   clipchildren 0
+   color 0.9961 1 1 1
+   position 0.02 0.05
+   size 0.65 40
+   valign bottom_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 1
+   style No_Highlight
+   text "$"
+   "Use default text" 1
+   "exact text" 1
+   font "PlayerMarkets/gui/fonts/modern/regular18"
+   {
+    TextWidgetClass DollarSign {
+     visible 0
+     ignorepointer 1
+     position -25 0
+     size 25 40
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "$"
+     font "PlayerMarkets/gui/fonts/modern/regular16"
+     "text halign" right
+     "text valign" center
+    }
+   }
+  }
+  ButtonWidgetClass Set {
+   clipchildren 0
+   position 10 5
+   size 0.22 40
+   halign right_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   style Outline_1px_Button
+   text "@ui_set"
+   font "PlayerMarkets/gui/fonts/modern/regular18"
+  }
+  ButtonWidgetClass Close {
+   color 1 0 0 1
+   position 10 5
+   size 32 32
+   halign right_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style EmptyHighlight
+   "no focus" 1
+   font "PlayerMarkets/gui/fonts/modern/regular18"
+   {
+    TextWidgetClass close_label {
+     ignorepointer 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     text "X"
+     font "PlayerMarkets/gui/fonts/modern/regular16"
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass close_outline {
+     ignorepointer 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style Outline_1px
+    }
+   }
+  }
+  PanelWidgetClass outline {
+   ignorepointer 1
+   position 0 0
+   size 400 100
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style Outline_1px
+  }
+ }
+}

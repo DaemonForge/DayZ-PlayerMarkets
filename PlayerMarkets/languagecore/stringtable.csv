@@ -1,0 +1,12 @@
+"Language","original","english","czech","german","russian","polish","hungarian","italian","spanish","french","chinese","japanese","portuguese","chinesesimp",
+
+"@ui_set_price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Set Price","Defina o Preço","Set Price",
+"@ui_set","SET","SET","SET","SET","SET","SET","SET","SET","SET","SET","SET","SET","Definir","SET",
+"@ui_inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventory","Inventario","Inventory",
+"@ui_iems_for_sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items for sale","Items para venda","Items for sale",
+"@ui_withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Withdraw","Sacar","Withdraw",
+"@ui_withdraw_available","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","You have available for withdrawal: $10,000","Você tem disponivel para saque: $10,000","You have available for withdrawal: $10,000",
+"@ui_buy","BUY","BUY","BUY","BUY","BUY","BUY","BUY","BUY","BUY","BUY","BUY","BUY","COMPRAR","BUY",
+"@ui_cancel","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCEL","CANCELAR","CANCEL",
+"@ui_list","List","List","List","List","List","List","List","List","List","List","List","List","Listar","List",
+"@ui_on_you","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","On You: $ 10.000","Você possui: $ 10.000","On You: $ 10.000",

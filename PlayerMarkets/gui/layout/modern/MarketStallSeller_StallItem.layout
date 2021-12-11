@@ -1,0 +1,291 @@
+FrameWidgetClass rootFrame {
+ color 1 1 1 0
+ size 1 164
+ halign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 1
+ {
+  PanelWidgetClass ItemBG {
+   ignorepointer 1
+   color 0 0 0 0.9412
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style rover_sim_colorable
+  }
+  GridSpacerWidgetClass Buttons {
+   ignorepointer 1
+   position 18 0
+   size 142 86
+   halign right_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   Columns 1
+   Rows 2
+   {
+    ButtonWidgetClass Edit {
+     visible 0
+     color 0.749 0.3725 0.3725 1
+     position 0 2
+     size 1 0.46
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style EmptyHighlight
+     "no focus" 1
+     {
+      TextWidgetClass Edit_label {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       text "Edit"
+       font "PlayerMarkets/gui/fonts/modern/regular20"
+       "text halign" center
+       "text valign" center
+      }
+      PanelWidgetClass edit_outline {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style Outline_1px
+      }
+     }
+    }
+    ButtonWidgetClass Delist {
+     color 0.749 0.3725 0.3725 1
+     position 0 2
+     size 1 0.46
+     halign center_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style EmptyHighlight
+     "no focus" 1
+     {
+      TextWidgetClass Delist_label {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       text "Delist"
+       font "PlayerMarkets/gui/fonts/modern/regular20"
+       "text halign" center
+       "text valign" center
+      }
+      PanelWidgetClass delist_outline {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style Outline_1px
+      }
+     }
+    }
+   }
+  }
+  FrameWidgetClass ItemPreviewFrame {
+   ignorepointer 1
+   position 12 0
+   size 128 128
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   {
+    ItemPreviewWidgetClass ItemPreview {
+     ignorepointer 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+    }
+   }
+  }
+  GridSpacerWidgetClass DetailsFrame {
+   ignorepointer 1
+   position 0.1 0.11
+   size 600 0.8
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 0
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
+   Columns 1
+   {
+    TextWidgetClass ItemName {
+     ignorepointer 1
+     size 600 30
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Mosin 91/30"
+     font "PlayerMarkets/gui/fonts/modern/regular20"
+     "text valign" center
+    }
+    PanelWidgetClass Details {
+     ignorepointer 1
+     position 0 12
+     size 600 44
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     {
+      PanelWidgetClass ItemStateFrame {
+       ignorepointer 1
+       position 0 0
+       size 30 1
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 1
+       vexactsize 0
+       {
+        PanelWidgetClass ItemState {
+         visible 1
+         ignorepointer 1
+         color 0.2706 0.6235 0.3608 1
+         size 20 20
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style rover_sim_colorable
+        }
+       }
+      }
+      TextWidgetClass Quanity {
+       visible 0
+       ignorepointer 1
+       position 10 10
+       size 80 36
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       text "Quanity"
+       font "PlayerMarkets/gui/fonts/modern/regular20"
+      }
+      GridSpacerWidgetClass QuanityFrame {
+       visible 0
+       clipchildren 1
+       ignorepointer 1
+       size 40 63
+       halign right_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       Padding 5
+       Margin 0
+       "Size To Content H" 1
+       "Size To Content V" 1
+       content_valign center
+       Rows 1
+       {
+        TextWidgetClass QuanityAmount {
+         ignorepointer 1
+         position 0 0
+         size 40 20
+         halign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         text "300"
+         font "PlayerMarkets/gui/fonts/modern/regular16"
+         "text color" 0 0 0 1
+         "size to text h" 0
+         "size to text v" 0
+         "text halign" center
+         "text valign" center
+        }
+        TextWidgetClass Bar {
+         visible 1
+         ignorepointer 1
+         color 0.749 0.3725 0.3725 1
+         size 18 18
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style Normal
+         text "____"
+         "text halign" center
+         "text valign" center
+        }
+        TextWidgetClass QuanityMax {
+         ignorepointer 1
+         position 0 0
+         size 40 20
+         halign center_ref
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         text "1000"
+         font "PlayerMarkets/gui/fonts/modern/regular16"
+         "text color" 0 0 0 1
+         "size to text h" 0
+         "text halign" center
+         "text valign" center
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

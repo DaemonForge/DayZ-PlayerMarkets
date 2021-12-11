@@ -1,0 +1,252 @@
+FrameWidgetClass rootFrame {
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ {
+  PanelWidgetClass BG {
+   visible 1
+   ignorepointer 1
+   color 0 0 0 0.9412
+   position 0 0
+   size 1280 720
+   halign center_ref
+   valign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   style rover_sim_colorable
+   {
+    FrameWidgetClass Inventory {
+     visible 1
+     ignorepointer 1
+     position 0.02 0.02
+     size 0.4 0.95
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      FrameWidgetClass InventoryFrame {
+       ignorepointer 1
+       size 1 640
+       halign center_ref
+       valign bottom_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       {
+        ScrollWidgetClass InventoryScroll {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         halign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         "Scrollbar V" 1
+         "Scrollbar V Left" 1
+         {
+          GridSpacerWidgetClass InventoryGrid {
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           Padding 4
+           Margin 4
+           "Size To Content V" 1
+           Columns 2
+           Rows 100
+          }
+         }
+        }
+       }
+      }
+      TextWidgetClass IventoryTitle {
+       ignorepointer 1
+       size 1 68
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "@ui_inventory"
+       font "PlayerMarkets/gui/fonts/modern/regular22"
+       "text halign" center
+       "text valign" center
+      }
+     }
+    }
+    FrameWidgetClass Stall {
+     ignorepointer 1
+     position 0.02 0.02
+     size 0.42 0.95
+     halign right_ref
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      FrameWidgetClass StallItemsFrame {
+       ignorepointer 1
+       position 0 0
+       size 1 640
+       halign center_ref
+       valign bottom_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       {
+        ScrollWidgetClass StallItemsScroll {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         halign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style blank
+         "Scrollbar V" 1
+         {
+          GridSpacerWidgetClass StallItemsGrid {
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           draggable 0
+           "Size To Content V" 1
+           Columns 1
+           Rows 100
+          }
+         }
+        }
+       }
+      }
+      TextWidgetClass StallItemsTitle {
+       ignorepointer 1
+       size 1 68
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "@ui_iems_for_sale"
+       font "PlayerMarkets/gui/fonts/modern/regular22"
+       "text halign" center
+       "text valign" center
+      }
+     }
+    }
+   }
+  }
+  TextWidgetClass Title {
+   ignorepointer 1
+   position 0 0.05
+   size 0.6 64
+   halign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 1
+   style Normal
+   text "MARKET"
+   font "PlayerMarkets/gui/fonts/modern/bold40"
+   "exact text" 0
+   "text halign" center
+   "text valign" center
+  }
+  FrameWidgetClass TitleFrame {
+   visible 0
+   ignorepointer 1
+   position 0 0
+   size 0.9 0.115
+   halign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+  }
+  FrameWidgetClass WithdrawFrame {
+   ignorepointer 1
+   position 0.05 0.02
+   size 400 90
+   valign bottom_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   {
+    ButtonWidgetClass Withdraw {
+     color 0.749 0.3725 0.3725 1
+     size 200 50
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     style Colorable
+     {
+      TextWidgetClass text {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       text "@ui_withdraw"
+       font "PlayerMarkets/gui/fonts/modern/regular22"
+       "text halign" center
+       "text valign" center
+      }
+      PanelWidgetClass oultine {
+       ignorepointer 1
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       style Outline_1px
+      }
+     }
+    }
+    TextWidgetClass Withdraw_label {
+     ignorepointer 1
+     position 0.01 0.02
+     size 327 30
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     text "@ui_withdraw_available"
+     font "PlayerMarkets/gui/fonts/modern/regular18"
+     "exact text" 0
+     "text valign" center
+    }
+   }
+  }
+ }
+}
