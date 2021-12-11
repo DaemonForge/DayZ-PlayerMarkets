@@ -62,9 +62,12 @@ class MarketStallMenu extends UIScriptedMenu {
 		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !InspectIsOpen()) {
 			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
 		}
+		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && InspectIsOpen()) {
+			m_MarketStallItemView.Close();
+		}
 		PlayerBase player;
 		if (Class.CastTo(player, GetGame().GetPlayer())){
-			m_PlayerBalance = player.UGetPlayerBalance("Coins")
+			m_PlayerBalance = player.UGetPlayerBalance("Coins");
 			m_Balance.SetText("On You: $" +  UUtil.ConvertIntToNiceString(m_PlayerBalance));
 		}
 	}
@@ -88,7 +91,7 @@ class MarketStallMenu extends UIScriptedMenu {
 	}
 	
 	bool InspectIsOpen(){
-		return false;
+		return (m_MarketStallItemView != NULL);
 	}
 	
 	MarketStandBase GetStand(){
