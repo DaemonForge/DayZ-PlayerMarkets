@@ -101,6 +101,7 @@ ImageWidgetClass rootFrame {
      ignorepointer 1
      size 120 1
      halign center_ref
+     font "PlayerMarkets/gui/fonts/AmaticSCBold"
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -128,7 +129,7 @@ ImageWidgetClass rootFrame {
        vexactpos 1
        hexactsize 0
        vexactsize 0
-       font "gui/fonts/etelkatextpro"
+       font "PlayerMarkets/gui/fonts/AmaticSCBold"
        "size to text h" 1
        "text halign" center
        "text valign" center
@@ -152,7 +153,7 @@ ImageWidgetClass rootFrame {
        vexactpos 1
        hexactsize 0
        vexactsize 0
-       font "gui/fonts/etelkatextpro"
+       font "PlayerMarkets/gui/fonts/AmaticSCBold"
        "size to text h" 1
        "text halign" center
        "text valign" center
@@ -163,19 +164,27 @@ ImageWidgetClass rootFrame {
      ignorepointer 1
      size 120 1
      halign center_ref
+     font "PlayerMarkets/gui/fonts/AmaticSCBold48"
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 0
+     "size to text h" 1
+     "text halign" center
+     "text valign" center
     }
     TextWidgetClass Weight {
      ignorepointer 1
      size 120 1
      halign center_ref
+     font "PlayerMarkets/gui/fonts/AmaticSCBold48"
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 0
+     "size to text h" 1
+     "text halign" center
+     "text valign" center
     }
    }
   }

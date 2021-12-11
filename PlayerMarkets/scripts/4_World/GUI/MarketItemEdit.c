@@ -14,6 +14,9 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected TextWidget m_Quanity;
 	protected TextWidget m_State;
 	protected TextWidget m_Price;
+	protected TextWidget m_Weight;
+	protected Widget m_ItemStateFrame;
+	protected ImageWidget m_ItemState;
 	
 	protected ButtonWidget m_Buy;
 	protected ButtonWidget m_Cancel;
@@ -32,6 +35,9 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
 		m_State = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("DamageState"));
 		m_Price = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
+		m_Weight = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Weight"));
+		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
+		m_ItemState = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		
 		m_Buy = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Buy"));
 		m_Cancel = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Cancel"));
@@ -44,35 +50,39 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		UUtil.GetConfigString(item.GetType(),"descriptionShort",description );
 		m_Description.SetText(description);
 		int healthLevel = item.GetHealthLevel("");
+		m_Weight.SetText(item.GetWeight().ToString() + "g");
+		if (item.GetWeight() > 1450){
+			float weight = Math.Round(item.GetWeight() / 100) / 10;
+			m_Weight.SetText(weight.ToString() + "kg");
+		}
 		switch  (healthLevel) {
 			case GameConstants.STATE_RUINED:
-				m_State.SetText("RUINED");
-				m_State.SetColor(Colors.COLOR_RUINED);
-				m_State.SetAlpha(1);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_RUINED);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_BADLY_DAMAGED:
-				m_State.SetText("BADLY DAMAGED");
-				m_State.SetColor(Colors.COLOR_BADLY_DAMAGED);
-				m_State.SetAlpha(1);
-			
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_BADLY_DAMAGED);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_DAMAGED:
-				m_State.SetText("DAMAGED");
-				m_State.SetColor(Colors.COLOR_DAMAGED);
-				m_State.SetAlpha(1);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_DAMAGED);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_WORN:
-				m_State.SetText("WORN");
-				m_State.SetColor(Colors.COLOR_WORN);
-				m_State.SetAlpha(1);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_WORN);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_PRISTINE:
-				m_State.SetText("PRISTINE");
-				m_State.SetColor(Colors.COLOR_PRISTINE);
-				m_State.SetAlpha(1);
+				m_ItemStateFrame.Show(true);
+				m_ItemState.SetColor(Colors.COLOR_PRISTINE);
+				m_ItemState.SetAlpha(1);
 			break;
 			default:
-				m_State.Show(false);
+				m_ItemStateFrame.Show(false);
 			break;
 		}
 		m_Quanity.Show(false);
@@ -98,8 +108,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 			Close();
 			return true;
 		}
-		if (w == m_Cancel && m_parent && m_parent.GetStand()){
-			m_parent.GetStand().RequestBuy(m_ItemDetails);
+		if (w == m_Cancel){
 			Close();
 			return true;
 		}

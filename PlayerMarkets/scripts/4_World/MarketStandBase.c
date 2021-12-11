@@ -190,25 +190,41 @@ class MarketStandBase extends BaseBuildingBase  {
 			return false;
 		}
 		if (!IsOwner(player)){
+			UUtil.SendNotification("Warning", "Is not owner", player.GetIdentity());
 			return false;
 		}
 		int b1, b2, b3, b4;
 		item.GetIds(b1, b2, b3, b4);
 		PlayerMarketItemDetails details = GetRightDetails(b1, b2, b3, b4);
 		if (!details){
+			UUtil.SendNotification("Warning", "Error Getting Item Details from server", player.GetIdentity());
 			return false;
 		}
 		EntityAI entity = details.GetItem();
+		if (!entity){
+			array<EntityAI> items = GetItemsForSale();
+			foreach (EntityAI itemL : items){
+				details.CheckAndSetItem(itemL);
+			}
+			entity = details.GetItem();
+			if (!entity){
+				UUtil.SendNotification("Warning", "Error Getting Item from server", player.GetIdentity());
+				return false;
+			}
+		}
 		if (entity.GetHierarchyRoot() == this){
 			ServerTakeEntityToCargo(entity);
 			if (entity.GetHierarchyParent() != this){
-				this.ServerDropEntity(entity);
-				entity.SetPosition(player.GetPosition() + "0 0.05 0");
+				this.GetInventory().DropEntity(InventoryMode.SERVER, player, entity);
+				vector pos = player.GetPosition() + "0 0.05 0";
+				entity.SetPosition(pos);
 				entity.PlaceOnSurface();
+				UUtil.SendNotification("Warning", entity.GetDisplayName() + " Placed on Ground", player.GetIdentity());
 			}
 		}
-		if (entity.GetHierarchyRoot() != this){
+		if (entity.GetHierarchyParent() == this || entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() != this){
 			m_ItemsArray.RemoveItem(details);
+			SyncPMData();
 			return true;
 		}
 		return false;
@@ -222,31 +238,51 @@ class MarketStandBase extends BaseBuildingBase  {
 		item.GetIds(b1, b2, b3, b4);
 		PlayerMarketItemDetails details = GetRightDetails(b1, b2, b3, b4);
 		if (!details){
+			UUtil.SendNotification("Warning", "Error Getting Item Details from server", player.GetIdentity());
 			return false;
 		}
 		if (player.UGetPlayerBalance("Coins") < details.GetPrice()){
 			
+			UUtil.SendNotification("Warning", "Not Enought Money", player.GetIdentity());
 			return false;
 		}
 		EntityAI entity = details.GetItem();
-		if (entity.GetHierarchyRoot() == this){
-			player.ServerTakeEntityToInventory(FindInventoryLocationType.ANY, entity);
-			if (entity.GetHierarchyRootPlayer() != player){
-				this.ServerDropEntity(entity);
-				entity.SetPosition(player.GetPosition() + "0 0.05 0");
-				entity.PlaceOnSurface();
+		if (!entity){
+			array<EntityAI> items = GetItemsForSale();
+			foreach (EntityAI itemL : items){
+				details.CheckAndSetItem(itemL);
+			}
+			entity = details.GetItem();
+			if (!entity){
+				UUtil.SendNotification("Warning", "Error Getting Item from server", player.GetIdentity());
+				return false;
 			}
 		}
-		if (entity.GetHierarchyRoot() != this){
+		if (entity.GetHierarchyRoot() == this){
+			this.GetInventory().DropEntity(InventoryMode.SERVER, this, entity);
+			player.GetHumanInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, entity);
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,300, false, entity,player);
+		}
+		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
 			int price = details.GetPrice();
 			player.URemoveMoney("Coins", price);
 			m_ItemsArray.RemoveItem(details);
 			IncreaseMoneyBalance(price);
+			SyncPMData();
+			UUtil.SendNotification("Player Markets", entity.GetDisplayName() + " Bought", player.GetIdentity());
 			return true;
 		}
-		SyncPMData();
 		return false;
 	}
+	
+	void CheckIfOnGround(EntityAI entity, PlayerBase player){
+		if (entity.GetHierarchyRoot() == entity){
+			entity.PlaceOnSurface();
+			UUtil.SendNotification("Warning", entity.GetDisplayName() + " Placed on Ground", player.GetIdentity());
+		}
+	}
+	
+	
 	
 	PM_Merchant_Base GetMerchantStorage(){
 		if (m_MerchantSlots.Get("Merchant_Storage") != -1){
@@ -539,7 +575,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	override bool CanDisplayAttachmentCategory(string category_name) {
         if (category_name  == "Attachments" && GetGame().IsClient() ) {
-            //return false;
+            return false;
 		}
 		if (category_name == "Material" && m_IsBuilt){
 			return false;

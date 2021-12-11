@@ -45,27 +45,27 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 			case GameConstants.STATE_RUINED:
 				m_ItemStateFrame.Show(true);
 				m_ItemState.SetColor(Colors.COLOR_RUINED);
-				m_ItemState.SetAlpha(0.5);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_BADLY_DAMAGED:
 				m_ItemStateFrame.Show(true);
 				m_ItemState.SetColor(Colors.COLOR_BADLY_DAMAGED);
-				m_ItemState.SetAlpha(0.5);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_DAMAGED:
 				m_ItemStateFrame.Show(true);
 				m_ItemState.SetColor(Colors.COLOR_DAMAGED);
-				m_ItemState.SetAlpha(0.5);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_WORN:
 				m_ItemStateFrame.Show(true);
 				m_ItemState.SetColor(Colors.COLOR_WORN);
-				m_ItemState.SetAlpha(0.5);
+				m_ItemState.SetAlpha(1);
 			break;
 			case GameConstants.STATE_PRISTINE:
 				m_ItemStateFrame.Show(true);
 				m_ItemState.SetColor(Colors.COLOR_PRISTINE);
-				m_ItemState.SetAlpha(0.5);
+				m_ItemState.SetAlpha(1);
 			break;
 			default:
 				m_ItemStateFrame.Show(false);

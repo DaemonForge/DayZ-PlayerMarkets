@@ -23,6 +23,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		
 		m_Withdraw 			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("Withdraw"));
 		m_Withdraw_label 	= TextWidget.Cast(layoutRoot.FindAnyWidget("Withdraw_label"));
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 900,true);
 		return layoutRoot;
 	}
 	
@@ -30,9 +31,9 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		if (m_Stand){
 			m_Stand.SetIsInUse(false);
 		}
-		if (m_AwaitingRefresh){
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.RefreshGUI);
-		}
+		//if (m_AwaitingRefresh){
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
+		//}
 		MSUnLockControls();
 	}
 	
@@ -57,7 +58,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	void CloseSetPrice(){
 		m_MarketStallSetPriceWidget = NULL;
 		m_AwaitingRefresh = true;
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+		//GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
 	}
 	
 	void OpenSetPrice(EntityAI item){
@@ -97,7 +98,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	void RequestRefresh(){
 		if (!m_AwaitingRefresh){
 			m_AwaitingRefresh = true;
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+			//GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
 		}
 	}
 	

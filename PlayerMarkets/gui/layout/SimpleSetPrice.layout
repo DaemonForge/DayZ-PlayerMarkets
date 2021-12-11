@@ -7,7 +7,7 @@ PanelWidgetClass rootFrame {
  vexactpos 1
  hexactsize 1
  vexactsize 1
- priority 99
+ priority 100
  style rover_sim_colorable
  {
   TextWidgetClass Title {

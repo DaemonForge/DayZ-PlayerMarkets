@@ -21,6 +21,7 @@ class MarketStallMenu extends UIScriptedMenu {
 		m_ShopTitle 	= TextWidget.Cast(layoutRoot.FindAnyWidget("ShopTitle"));
 		m_ItemGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("ItemGrid"));
 		m_Balance		= TextWidget.Cast(layoutRoot.FindAnyWidget("Balance"));
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 900,true);
 		return layoutRoot;
 	}
 	
@@ -28,6 +29,7 @@ class MarketStallMenu extends UIScriptedMenu {
 		if (m_Stand) {
 			m_Stand.SetIsInUse(false);
 		}
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
 		MSUnLockControls();
 	}
 	
@@ -42,7 +44,7 @@ class MarketStallMenu extends UIScriptedMenu {
 		m_ItemsListed.Show(true);
 		m_MarketStallItemView = NULL;
 		m_AwaitingRefresh = true;
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+		//GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
 	}
 	
 	void OpenViewItem(PlayerMarketItemDetails item){
