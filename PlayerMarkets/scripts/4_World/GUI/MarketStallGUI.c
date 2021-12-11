@@ -32,7 +32,6 @@ class MarketStallMenu extends UIScriptedMenu {
 	}
 	
 	void SetStall(MarketStandBase stand){
-		Print("SetStall");
 		if (Class.CastTo(m_Stand, stand)){
 			RefreshGUI();
 			MSLockControls();
@@ -41,11 +40,9 @@ class MarketStallMenu extends UIScriptedMenu {
 	
 	void CloseViewItem(){
 		m_ItemsListed.Show(true);
-		Print("CloseViewItem");
 		m_MarketStallItemView = NULL;
 		m_AwaitingRefresh = true;
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
-		Print("CloseViewItem End");
 	}
 	
 	void OpenViewItem(PlayerMarketItemDetails item){

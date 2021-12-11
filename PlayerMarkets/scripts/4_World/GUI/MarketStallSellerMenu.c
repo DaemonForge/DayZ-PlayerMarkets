@@ -37,7 +37,6 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	}
 	
 	void SetStall(MarketStandBase stand){
-		Print("MarketStallSellerMenu SetStall");
 		if (Class.CastTo(m_Stand, stand)){
 			RefreshGUI();
 			MSLockControls();
@@ -56,11 +55,9 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	}
 	
 	void CloseSetPrice(){
-		Print("CloseSetPrice");
 		m_MarketStallSetPriceWidget = NULL;
 		m_AwaitingRefresh = true;
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
-		Print("CloseSetPrice End");
 	}
 	
 	void OpenSetPrice(EntityAI item){
@@ -105,7 +102,6 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	}
 	
 	void RefreshGUI(){
-		Print("RefreshGUI Start");
 		m_AwaitingRefresh = false;
 		if (!GetStand()){return;}
 		GetStand().SetIsInUse(true);
@@ -130,6 +126,5 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 			m_AvailableItemWidgets.Insert(new MarketStallAvailableItemWidget(m_InventoryGrid, item, this));
 		}
 		m_Withdraw_label.SetText("Withdraw: " + UUtil.ConvertIntToNiceString(GetStand().GetMoneyBalance()));
-		Print("RefreshGUI End");
 	}
 }

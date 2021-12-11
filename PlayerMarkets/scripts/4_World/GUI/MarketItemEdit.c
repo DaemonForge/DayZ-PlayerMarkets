@@ -13,6 +13,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected TextWidget m_QuanityMax;
 	protected TextWidget m_Quanity;
 	protected TextWidget m_State;
+	protected TextWidget m_Price;
 	
 	protected ButtonWidget m_Buy;
 	protected ButtonWidget m_Cancel;
@@ -29,7 +30,8 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		m_QuanityAmount = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityAmount"));
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
-		m_State = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("State"));
+		m_State = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("DamageState"));
+		m_Price = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
 		
 		m_Buy = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Buy"));
 		m_Cancel = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Cancel"));
@@ -37,6 +39,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		EntityAI item = m_ItemDetails.GetItem();
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4 = ruined
 		m_DisplayName.SetText(item.GetDisplayName());
+		m_Price.SetText("$" + UUtil.ConvertIntToNiceString(m_ItemDetails.GetPrice()));
 		string description = "";
 		UUtil.GetConfigString(item.GetType(),"descriptionShort",description );
 		m_Description.SetText(description);

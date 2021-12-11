@@ -19,7 +19,6 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 	
 	
 	void MarketStallItemWidget(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
-		Print("MarketStallItemWidget");
 		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
 		m_parent = MarketStallMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
@@ -73,19 +72,16 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 			break;
 		}
 		m_Quanity.Show(false);
-		Print("UpdateQuanity");
 		UpdateQuanity(item);
-		Print("UpdateItemPreviw");
 		UpdateItemPreviw(item);
 		
 		
 		m_LayoutRoot.SetHandler(this);
-		Print(this);
 	}
 	
 	
 	void ~MarketStallItemWidget(){
-		Print("~MarketStallItemWidget");
+		m_LayoutRoot.Show(false);
 		delete m_LayoutRoot;
 	}
 	

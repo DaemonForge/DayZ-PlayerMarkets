@@ -75,6 +75,12 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 		
 		m_LayoutRoot.SetHandler(this);
 	}
+	
+	void ~MarketStallItemSellerWidget(){
+		m_LayoutRoot.Show(false);
+		delete m_LayoutRoot;
+	}
+	
 	void UpdateItemPreviw(EntityAI item){
 		InventoryItem iItem = InventoryItem.Cast(item);
 		if (iItem){
@@ -98,12 +104,6 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 		
 		return super.OnClick(w,x,y,button);
 	
-	}
-	
-	
-	void ~MarketStallItemSellerWidget(){
-		Print("~MarketStallItemSellerWidget");
-		delete m_LayoutRoot;
 	}
 	
 	void UpdateQuanity(EntityAI item){

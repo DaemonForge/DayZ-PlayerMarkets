@@ -97,24 +97,7 @@ ImageWidgetClass rootFrame {
      vexactsize 0
     }
     TextWidgetClass Quanity {
-     ignorepointer 1
-     size 120 1
-     halign center_ref
-     hexactpos 1
-     vexactpos 1
-     hexactsize 1
-     vexactsize 0
-    }
-    TextWidgetClass LiquidType {
-     ignorepointer 1
-     size 120 1
-     halign center_ref
-     hexactpos 1
-     vexactpos 1
-     hexactsize 1
-     vexactsize 0
-    }
-    TextWidgetClass Weight {
+     visible 0
      ignorepointer 1
      size 120 1
      halign center_ref
@@ -178,6 +161,24 @@ ImageWidgetClass rootFrame {
        "text valign" center
       }
      }
+    }
+    TextWidgetClass LiquidType {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
+    }
+    TextWidgetClass Weight {
+     ignorepointer 1
+     size 120 1
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 0
     }
    }
   }

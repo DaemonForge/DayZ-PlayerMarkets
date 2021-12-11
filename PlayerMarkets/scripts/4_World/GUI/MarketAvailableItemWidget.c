@@ -78,7 +78,7 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 	}
 	
 	void ~MarketStallAvailableItemWidget(){
-		Print("~MarketStallAvailableItemWidget");
+		m_LayoutRoot.Show(false);
 		delete m_LayoutRoot;
 	}
 	

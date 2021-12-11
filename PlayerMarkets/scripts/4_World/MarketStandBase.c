@@ -115,14 +115,10 @@ class MarketStandBase extends BaseBuildingBase  {
 		SyncPMData();
 		
 		array<EntityAI> items = GetItemsForSale();
-		Print(items);
-		Print(m_ItemsArray);
 		if (GetGame().IsServer()){
 			for (int i = 0; i < m_ItemsArray.Count(); i++){ 
 				PlayerMarketItemDetails detail = PlayerMarketItemDetails.Cast(m_ItemsArray.Get(i));
 				foreach (EntityAI item : items){
-					Print(detail);
-					Print(item);
 					if (detail.CheckAndSetItem(item)){
 						items.RemoveItem(item);//Remove it from array to improve performance on adding more items
 						break;
@@ -161,7 +157,6 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	array<autoptr PlayerMarketItemDetails> GetItemsArray(){
-		Print("GetItemsArray");
 		return m_ItemsArray;
 	}
 	
@@ -369,7 +364,6 @@ class MarketStandBase extends BaseBuildingBase  {
 		array<EntityAI> items;
 		autoptr PlayerMarketItemDetails details;
 		if (rpc_type == PLAYER_MARKET_LIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
-			Print("rpc PLAYER_MARKET_LIST");
 			if (Class.CastTo(details, marketData.param1)){
 				items = GetItemsInCargo();
 				foreach (EntityAI itemL : items){
@@ -380,7 +374,6 @@ class MarketStandBase extends BaseBuildingBase  {
 			}
 		}
 		if (rpc_type == PLAYER_MARKET_EDIT && GetGame().IsServer() && sender && ctx.Read(marketData)) {
-			Print("rpc PLAYER_MARKET_EDIT");
 			if (Class.CastTo(details, marketData.param1)){
 				items = GetItemsForSale();
 				foreach (EntityAI itemE : items){
@@ -392,7 +385,6 @@ class MarketStandBase extends BaseBuildingBase  {
 			
 		}
 		if (rpc_type == PLAYER_MARKET_DELIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
-			Print("rpc PLAYER_MARKET_DELIST");
 			if (Class.CastTo(details, marketData.param1)){
 				if (DelistItem(details, PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender)))){
 					
@@ -402,7 +394,6 @@ class MarketStandBase extends BaseBuildingBase  {
 			}
 		}
 		if (rpc_type == PLAYER_MARKET_BUY && GetGame().IsServer() && sender && ctx.Read(marketData)) {
-			Print("rpc PLAYER_MARKET_BUY");
 			if (Class.CastTo(details, marketData.param1)){
 				if ( SellItem(details, PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender))) ){
 					
@@ -422,7 +413,6 @@ class MarketStandBase extends BaseBuildingBase  {
 	*/
 	
 	void OnSyncClient(string owner, string standname, int balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails){
-		Print("OnSyncClient");
 		m_OwnerGUID = owner;
 		m_StandName = standname;
 		m_MoneyBalance = balance;
@@ -431,9 +421,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		m_AuthorizedSellers.Copy(sellers);
 		array<EntityAI> items = GetItemsForSale();
 		array<autoptr PlayerMarketItemDetails> idetals = array<autoptr PlayerMarketItemDetails>.Cast(itemDetails);
-		if (!m_ItemsArray){
-			m_ItemsArray = new array<autoptr PlayerMarketItemDetails>
-		}
+		m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
 		foreach (PlayerMarketItemDetails detail : idetals){
 			foreach (EntityAI item : items){
 				if (detail.CheckAndSetItem(item)){
@@ -443,7 +431,6 @@ class MarketStandBase extends BaseBuildingBase  {
 			}
 			m_ItemsArray.Insert(detail);
 		}
-		m_ItemsArray.Debug();
 	}
 	
 	void SyncPMData(PlayerIdentity player = NULL){
@@ -524,7 +511,6 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_IsBuilt = false;
 		}
 		SetSynchDirty();
-		m_ItemsArray.Debug();
 	}
 	
 	

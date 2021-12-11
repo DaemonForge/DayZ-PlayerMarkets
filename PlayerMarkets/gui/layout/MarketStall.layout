@@ -27,10 +27,10 @@ FrameWidgetClass rootFrame {
    stretch 1
   }
   FrameWidgetClass ItemsListed {
-   clipchildren 0
+   clipchildren 1
    ignorepointer 1
    position 0 0
-   size 0.85 0.85
+   size 0.95 0.87
    halign center_ref
    valign bottom_ref
    hexactpos 1
@@ -41,8 +41,8 @@ FrameWidgetClass rootFrame {
     ScrollWidgetClass Scroll {
      clipchildren 0
      ignorepointer 1
-     position 0 0
-     size 1 1
+     position 0 0.02
+     size 0.95 1
      halign center_ref
      hexactpos 0
      vexactpos 0

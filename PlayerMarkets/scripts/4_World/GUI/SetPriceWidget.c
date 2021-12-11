@@ -27,7 +27,6 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	}
 	
 	void ~MarketStallSetPriceWidget(){
-		Print("~MarketStallSetPriceWidget");
 		delete m_LayoutRoot;
 	}
 	
