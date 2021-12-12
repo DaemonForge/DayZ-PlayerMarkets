@@ -184,6 +184,7 @@ class CfgVehicles
 		attachments[]=
 		{
 			"Material_Nails",
+			"Material_WoodenLogs",
 			"Material_WoodenPlanks",
 			"Merchant_SlotLarge1",
 			"Merchant_SlotLarge2",
@@ -521,9 +522,33 @@ class CfgVehicles
 				icon="";
 				selection="";
 			};
-			class Material
+			class Table
 			{
-				name="$STR_CfgVehicles_Fence_Att_Category_Materials";
+				name="First Stage";
+				description="";
+				attachmentSlots[]=
+				{
+					"Material_Nails",
+					"Material_WoodenPlanks"
+				};
+				icon="set:dayz_inventory image:cat_bb_material";
+				selection="wall";
+			};
+			class Posts
+			{
+				name="Second Stage";
+				description="";
+				attachmentSlots[]=
+				{
+					"Material_Nails",
+				    "Material_WoodenLogs"
+				};
+				icon="set:dayz_inventory image:cat_bb_material";
+				selection="wall";
+			};
+			class Roof
+			{
+				name="Third Stage";
 				description="";
 				attachmentSlots[]=
 				{
@@ -588,13 +613,13 @@ class CfgVehicles
 						{
 							type="WoodenPlank";
 							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							quantity=12;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=16;
 						};
 					};
 				};
@@ -616,14 +641,14 @@ class CfgVehicles
 						class Material1
 						{
 							type="WoodenPlank";
-							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							slot_name="Material_WoodenLogs";
+							quantity=2;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=8;
 						};
 					};
 				};
@@ -646,13 +671,13 @@ class CfgVehicles
 						{
 							type="WoodenPlank";
 							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							quantity=8;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=12;
 						};
 					};
 				};
@@ -689,6 +714,7 @@ class CfgVehicles
 		attachments[]=
 		{
 			"Material_Nails",
+			"Material_WoodenLogs",
 			"Material_WoodenPlanks",
 			"Merchant_SlotLarge1",
 			"Merchant_SlotLarge2",
@@ -1014,9 +1040,33 @@ class CfgVehicles
 				};
 				icon="set:dayz_inventory image:cat_bb_attachments";
 			};
-			class Material
+			class Table
 			{
-				name="$STR_CfgVehicles_Fence_Att_Category_Materials";
+				name="First Stage";
+				description="";
+				attachmentSlots[]=
+				{
+					"Material_Nails",
+					"Material_WoodenPlanks"
+				};
+				icon="set:dayz_inventory image:cat_bb_material";
+				selection="wall";
+			};
+			class Posts
+			{
+				name="Second Stage";
+				description="";
+				attachmentSlots[]=
+				{
+					"Material_Nails",
+				    "Material_WoodenLogs"
+				};
+				icon="set:dayz_inventory image:cat_bb_material";
+				selection="wall";
+			};
+			class Roof
+			{
+				name="Third Stage";
 				description="";
 				attachmentSlots[]=
 				{
@@ -1081,13 +1131,13 @@ class CfgVehicles
 						{
 							type="WoodenPlank";
 							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							quantity=16;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=32;
 						};
 					};
 				};
@@ -1109,14 +1159,14 @@ class CfgVehicles
 						class Material1
 						{
 							type="WoodenPlank";
-							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							slot_name="Material_WoodenLogs";
+							quantity=2;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=8;
 						};
 					};
 				};
@@ -1139,13 +1189,13 @@ class CfgVehicles
 						{
 							type="WoodenPlank";
 							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							quantity=12;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=24;
 						};
 					};
 				};
@@ -1565,20 +1615,20 @@ class CfgVehicles
 					collision_data[]={};
 					build_action_type=2;
 					dismantle_action_type=2;
-					material_type=1;
+					material_type=2;
 					class Materials
 					{
 						class Material1
 						{
 							type="WoodenPlank";
 							slot_name="Material_WoodenPlanks";
-							quantity=1;
+							quantity=6;
 						};
 						class Material2
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=1;
+							quantity=20;
 						};
 					};
 				};

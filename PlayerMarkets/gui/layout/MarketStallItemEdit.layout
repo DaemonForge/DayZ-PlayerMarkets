@@ -72,6 +72,7 @@ ImageWidgetClass rootFrame {
    "condense whitespace" 1
   }
   GridSpacerWidgetClass ItemDetails {
+   clipchildren 0
    ignorepointer 1
    position 0 515
    size 0.79 48
@@ -101,15 +102,15 @@ ImageWidgetClass rootFrame {
      ignorepointer 1
      size 120 1
      halign center_ref
-     font "PlayerMarkets/gui/fonts/AmaticSCBold"
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 0
+     font "PlayerMarkets/gui/fonts/AmaticSCBold"
     }
     GridSpacerWidgetClass QuanityFrame {
      visible 0
-     clipchildren 1
+     clipchildren 0
      ignorepointer 1
      size 48 1
      valign center_ref
@@ -123,7 +124,8 @@ ImageWidgetClass rootFrame {
      {
       TextWidgetClass QuanityAmount {
        ignorepointer 1
-       size 1 0.53
+       position 0 -4
+       size 1 0.6
        halign center_ref
        hexactpos 1
        vexactpos 1
@@ -137,7 +139,7 @@ ImageWidgetClass rootFrame {
       PanelWidgetClass Bar {
        ignorepointer 1
        position 10 10
-       size 48 2
+       size 48 3
        hexactpos 1
        vexactpos 1
        hexactsize 1
@@ -146,7 +148,8 @@ ImageWidgetClass rootFrame {
       }
       TextWidgetClass QuanityMax {
        ignorepointer 1
-       size 1 0.53
+       position 0 -4
+       size 1 0.6
        halign center_ref
        valign bottom_ref
        hexactpos 1
@@ -164,11 +167,11 @@ ImageWidgetClass rootFrame {
      ignorepointer 1
      size 120 1
      halign center_ref
-     font "PlayerMarkets/gui/fonts/AmaticSCBold48"
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 0
+     font "PlayerMarkets/gui/fonts/AmaticSCBold48"
      "size to text h" 1
      "text halign" center
      "text valign" center
@@ -177,11 +180,11 @@ ImageWidgetClass rootFrame {
      ignorepointer 1
      size 120 1
      halign center_ref
-     font "PlayerMarkets/gui/fonts/AmaticSCBold48"
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 0
+     font "PlayerMarkets/gui/fonts/AmaticSCBold48"
      "size to text h" 1
      "text halign" center
      "text valign" center

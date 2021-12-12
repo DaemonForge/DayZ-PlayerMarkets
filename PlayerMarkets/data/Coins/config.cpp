@@ -20,12 +20,13 @@ class cfgvehicles
 		model="PlayerMarkets\data\Coins\CopperCoin.p3d";
 		itemSize[]={1,1};
 		displayName="Copper Coin";
-		descriptionShort="A Copper Coin for buying stuff";
+		descriptionShort="A Copper Coin for buying stuff \n100 Copper coin equals 1 Silver Coin\n1000 Copper Coins equals 1 Gold Coins";
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 100;
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
+		weight=2;
 	};
 	class PM_SilverCoin: Inventory_Base
 	{
@@ -33,12 +34,13 @@ class cfgvehicles
 		model="PlayerMarkets\data\Coins\SilverCoin.p3d";
 		itemSize[]={1,1};
 		displayName="Silver Coin";
-		descriptionShort="A Silver Coin for buying stuff";
+		descriptionShort="A Silver Coin for buying stuff \n100 Copper coin equals 1 Silver Coin\n10 Silver Coins is equal to 1 Gold Coin";
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 50;
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
+		weight=10;
 	};
 	class PM_GoldCoin: Inventory_Base
 	{
@@ -46,11 +48,12 @@ class cfgvehicles
 		model="PlayerMarkets\data\Coins\GoldCoin.p3d";
 		itemSize[]={1,1};
 		displayName="Gold Coin";
-		descriptionShort="A Gold Coin for buying stuff";
+		descriptionShort="A Gold Coin for buying stuff\n1000 Copper coin equals 1 Gold Coin\n10 Silver Coins is equal to 1 Gold Coin";
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 20;
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
+		weight=40;
 	};
 };

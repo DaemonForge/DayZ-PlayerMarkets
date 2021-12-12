@@ -577,11 +577,23 @@ class MarketStandBase extends BaseBuildingBase  {
         if (category_name  == "Attachments" && GetGame().IsClient() ) {
             return false;
 		}
-		if (category_name == "Material" && m_IsBuilt){
+		
+		if ( category_name == "Table" && !HasBase() )
+			return true;
+		else if ( category_name == "Posts" && HasBase() && (!GetConstruction().IsPartConstructed("wall_base_down") && !GetConstruction().IsPartConstructed("posts")))
+			return true;
+		else if ( category_name == "Roof" && GetConstruction().IsPartConstructed("wall_base_down") && !GetConstruction().IsPartConstructed("wall_base_up") )
+			return true;
+		else if ( category_name == "Roof" && GetConstruction().IsPartConstructed("posts") && !GetConstruction().IsPartConstructed("roof") )
+			return true;
+		else
 			return false;
-		}
-        return super.CanDisplayAttachmentCategory(category_name);
+		
     }
+	
+	
+	
+	
 	
 	override bool CanDisplayCargo(){
 		if ((!m_IsBuilt || IsInUse()) && GetGame().IsClient() ){
@@ -724,6 +736,25 @@ class MarketStandBase extends BaseBuildingBase  {
 			if (playerB && playerB.GetIdentity()){
 				m_OwnerGUID = playerB.GetIdentity().GetId();
 				m_StandName = playerB.GetIdentity().GetName() + "'s Market";
+			}
+			EntityAI attachment;
+			if (m_MerchantSlots.Get("Material_WoodenPlanks") != -1){
+				if ( Class.CastTo(attachment, GetInventory().FindAttachment(m_MerchantSlots.Get("Material_WoodenPlanks")) )) {
+					
+					this.GetInventory().DropEntity(InventoryMode.SERVER, player, attachment);
+				}
+			}
+			if (m_MerchantSlots.Get("Material_Nails") != -1){
+				if ( Class.CastTo(attachment, GetInventory().FindAttachment(m_MerchantSlots.Get("Material_Nails")) )) {
+					
+					this.GetInventory().DropEntity(InventoryMode.SERVER, player, attachment);
+				}
+			}
+			if (m_MerchantSlots.Get("Material_WoodenLogs") != -1){
+				if ( Class.CastTo(attachment, GetInventory().FindAttachment(m_MerchantSlots.Get("Material_WoodenLogs")) )) {
+					
+					this.GetInventory().DropEntity(InventoryMode.SERVER, player, attachment);
+				}
 			}
 			SyncPMData();
 		} else {
