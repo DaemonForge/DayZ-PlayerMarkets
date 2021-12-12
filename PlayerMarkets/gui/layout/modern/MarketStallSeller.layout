@@ -45,6 +45,7 @@ FrameWidgetClass rootFrame {
        {
         ScrollWidgetClass InventoryScroll {
          ignorepointer 1
+         color 0.749 0.3725 0.3725 1
          position 0 0
          size 1 1
          halign center_ref
@@ -113,6 +114,7 @@ FrameWidgetClass rootFrame {
        {
         ScrollWidgetClass StallItemsScroll {
          ignorepointer 1
+         color 0.749 0.3725 0.3725 1
          position 0 0
          size 1 1
          halign center_ref

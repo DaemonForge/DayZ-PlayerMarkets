@@ -158,70 +158,59 @@ FrameWidgetClass ItemRoot {
        "text valign" center
       }
       GridSpacerWidgetClass QuanityFrame {
-       visible 1
+       visible 0
        clipchildren 1
        ignorepointer 1
-       size 40 63
+       size 48 1
        halign right_ref
        valign center_ref
        hexactpos 1
        vexactpos 1
        hexactsize 1
-       vexactsize 1
+       vexactsize 0
        Padding 5
        Margin 0
        "Size To Content H" 1
        "Size To Content V" 1
-       content_valign center
-       Rows 1
+       Columns 1
        {
         TextWidgetClass QuanityAmount {
          ignorepointer 1
-         position 0 0
-         size 40 20
+         size 1 16
          halign center_ref
          hexactpos 1
          vexactpos 1
-         hexactsize 1
+         hexactsize 0
          vexactsize 1
-         text "300"
+         text "5"
          font "PlayerMarkets/gui/fonts/modern/regular16"
-         "text color" 0 0 0 1
-         "size to text h" 0
-         "size to text v" 0
+         "size to text h" 1
          "text halign" center
          "text valign" center
         }
-        TextWidgetClass Bar {
-         visible 1
+        PanelWidgetClass Bar {
          ignorepointer 1
          color 0.749 0.3725 0.3725 1
-         size 18 18
-         halign center_ref
-         valign center_ref
+         position 10 10
+         size 48 2
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Normal
-         text "____"
-         "text halign" center
-         "text valign" center
+         style rover_sim_colorable
         }
         TextWidgetClass QuanityMax {
          ignorepointer 1
-         position 0 0
-         size 40 20
+         size 1 16
          halign center_ref
          valign bottom_ref
          hexactpos 1
          vexactpos 1
-         hexactsize 1
+         hexactsize 0
          vexactsize 1
-         text "1000"
+         text "10"
          font "PlayerMarkets/gui/fonts/modern/regular16"
-         "text color" 0 0 0 1
-         "size to text h" 0
+         "size to text h" 1
          "text halign" center
          "text valign" center
         }
