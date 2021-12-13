@@ -19,6 +19,19 @@ FrameWidgetClass rootFrame {
    hexactsize 0
    vexactsize 0
    style rover_sim_colorable
+   {
+    PanelWidgetClass oultine_ {
+     ignorepointer 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     style Outline_1px
+    }
+   }
   }
   GridSpacerWidgetClass Buttons {
    ignorepointer 1
