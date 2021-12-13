@@ -57,7 +57,7 @@ class CfgVehicles
 	class Container_Base;
 	class Inventory_Base;
 	class BaseBuildingBase;
-	class MarketStandBase: BaseBuildingBase {}
+	class MarketStandBase: BaseBuildingBase {};
 	
 	class PM_MarketKit: Inventory_Base
 	{
@@ -160,7 +160,7 @@ class CfgVehicles
 		hologramMaterialPath="dz\gear\camping\data";
 		alignHologramToTerain=0;
 		slopeTolerance=0.30000001;	
-	}
+	};
 	class PM_MarketStand : MarketStandBase 
 	{
 		scope = 2;
@@ -1700,7 +1700,7 @@ class CfgVehicles
 			openable = 0;
 			allowOwnedCargoManipulation = 1;
 		};
-	}
+	};
 };
 class CfgWeapons
 {
