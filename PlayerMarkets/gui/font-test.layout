@@ -1,0 +1,754 @@
+FrameWidgetClass rootFrame {
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ {
+  GridSpacerWidgetClass GridFonts {
+   ignorepointer 1
+   position 0.1 0.1
+   size 48 148
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
+   content_halign center
+   content_valign center
+   Columns 1
+   {
+    TextWidgetClass english {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 62
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> This is my custom font"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass tcheco {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 62
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Toto je můj vlastní font"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass russian {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 92
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Это мой собственный шрифт"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass german {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 122
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Dies ist meine benutzerdefinierte Schriftart"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass polish {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 162
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> To jest moja niestandardowa czcionka"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass hungarian {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 192
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Ez az én egyéni betűtípusom"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass Italiano {
+     visible 1
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 222
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Questo è il mio carattere personalizzato"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass spanish {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 252
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Esta es mi fuente personalizada"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass french {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 282
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Ceci est ma police personnalisée"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass chinese {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> 這是我的自定義字體"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass japanese {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 312
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> これは私のカスタムフォントです"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass portuguese {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 32
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Essa é minha fonte customizada"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass "chinese simp" {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> 这是我的自定义中文字体"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+   }
+  }
+  GridSpacerWidgetClass GridFontsBold {
+   ignorepointer 1
+   position 0.1 0.1
+   size 48 148
+   halign right_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
+   content_halign center
+   content_valign center
+   Columns 1
+   {
+    TextWidgetClass english0 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 62
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "This is my custom font <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass tcheco0 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 62
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Toto je můj vlastní font <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass russian0 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 92
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Это мой собственный шрифт <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass german0 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 122
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Dies ist meine benutzerdefinierte Schriftart <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass polish0 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 162
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "To jest moja niestandardowa czcionka <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass hungarian0 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 192
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Ez az én egyéni betűtípusom <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass Italiano0 {
+     visible 1
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 222
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Questo è il mio carattere personalizzato <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass spanish0 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 252
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Esta es mi fuente personalizada <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass french0 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 282
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Ceci est ma police personnalisée <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass chinese0 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "這是我的自定義字體 <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass japanese0 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 312
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "これは私のカスタムフォントです <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass portuguese0 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 32
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Essa é minha fonte customizada"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass "chinese simp0" {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "这是我的自定义中文字体 <"
+     font "PlayerMarkets/gui/fonts/modern/bold22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+   }
+  }
+  GridSpacerWidgetClass GridFontsLight {
+   ignorepointer 1
+   position 0 0.1
+   size 48 148
+   halign center_ref
+   valign bottom_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
+   content_halign center
+   content_valign center
+   Columns 1
+   {
+    TextWidgetClass english1 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 62
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> This is my custom font"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass tcheco1 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 62
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Toto je můj vlastní font"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass russian1 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 92
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Это мой собственный шрифт"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass german1 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 122
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Dies ist meine benutzerdefinierte Schriftart"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass polish1 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 162
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> To jest moja niestandardowa czcionka"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass hungarian1 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 192
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Ez az én egyéni betűtípusom"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass Italiano1 {
+     visible 1
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 222
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Questo è il mio carattere personalizzato"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass spanish1 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 252
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Esta es mi fuente personalizada"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass french1 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 282
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Ceci est ma police personnalisée"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass chinese1 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> 這是我的自定義字體"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass japanese1 {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     position 0 312
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> これは私のカスタムフォントです"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass portuguese1 {
+     ignorepointer 1
+     color 0.2353 0.6235 0.3333 1
+     position 0 32
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> Essa é minha fonte customizada"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass "chinese simp1" {
+     ignorepointer 1
+     color 0.749 0.3725 0.3725 1
+     size 1000 25
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "> 这是我的自定义中文字体"
+     font "PlayerMarkets/gui/fonts/modern/light22"
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+ }
+}

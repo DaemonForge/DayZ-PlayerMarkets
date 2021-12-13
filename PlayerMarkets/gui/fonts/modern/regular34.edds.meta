@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{1416023B955CDEF1}StyleFramework/gui/fonts/regular34.edds"
+ Author "mauricio"
+ ChangeDate 755755879
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "regular34.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

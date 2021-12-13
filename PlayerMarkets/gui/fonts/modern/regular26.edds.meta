@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{793AFC7DD25A7B86}StyleFramework/gui/fonts/regular26.edds"
+ Author "mauricio"
+ ChangeDate 722201447
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "regular26.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

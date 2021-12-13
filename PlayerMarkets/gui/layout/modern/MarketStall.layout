@@ -1,0 +1,153 @@
+FrameWidgetClass rootFrame {
+ clipchildren 0
+ color 0.5882 0.5569 0.5255 0
+ position 0 0
+ size 1300 800
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ {
+  PanelWidgetClass BG {
+   ignorepointer 1
+   color 0 0 0 0.9412
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style rover_sim_colorable
+  }
+  FrameWidgetClass ItemsListed {
+   clipchildren 1
+   ignorepointer 1
+   position 0 0.02
+   size 0.9 0.83
+   halign center_ref
+   valign bottom_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+    ScrollWidgetClass Scroll {
+     clipchildren 0
+     ignorepointer 1
+     position 0 0
+     size 1 1
+     halign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     "Scrollbar V" 1
+     {
+      GridSpacerWidgetClass ItemGrid {
+       clipchildren 0
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       Padding 5
+       Margin 5
+       "Size To Content V" 1
+       Columns 2
+       Rows 99
+      }
+     }
+    }
+   }
+  }
+  FrameWidgetClass Header {
+   ignorepointer 1
+   position 0 15
+   size 0.9 0.12
+   halign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   {
+    TextWidgetClass ShopTitle {
+     ignorepointer 1
+     color 0.8745 0.8941 0.9373 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     text "DaemonForge's Shop"
+     font "PlayerMarkets/gui/fonts/modern/bold40"
+     "text color" 0.6549 0.8745 0.8745 1
+     "exact text" 0
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  PanelWidgetClass PlayerBalanceFrame {
+   clipchildren 0
+   ignorepointer 1
+   color 0.2078 0 0.1529 0.4235
+   position 0 -60
+   size 328 50
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style rover_sim_colorable
+   {
+    PanelWidgetClass outline_ {
+     ignorepointer 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style Outline_1px
+    }
+    TextWidgetClass Balance {
+     ignorepointer 1
+     size 0.95 0.85
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     text "#@ui_on_you"
+     font "PlayerMarkets/gui/fonts/modern/regular18"
+     "text valign" center
+    }
+   }
+  }
+  PanelWidgetClass outline {
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   style Outline_1px
+  }
+ }
+}
