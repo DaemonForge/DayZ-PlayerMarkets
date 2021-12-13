@@ -1,5 +1,5 @@
 class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
-	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller_Available.layout","PlayerMarkets/gui/layout/Modern/MarketStallSeller_Available.layout"};
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller_Available.layout","PlayerMarkets/gui/layout/modern/MarketStallSeller_Available.layout"};
 	
 	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;

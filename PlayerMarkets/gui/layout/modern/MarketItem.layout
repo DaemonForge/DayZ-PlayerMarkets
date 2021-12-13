@@ -47,10 +47,10 @@ FrameWidgetClass ItemRoot {
   }
   GridSpacerWidgetClass GridSpacerWidget0 {
    ignorepointer 1
-   position 0.1 0.11
+   position 144 11
    size 48 48
-   hexactpos 0
-   vexactpos 0
+   hexactpos 1
+   vexactpos 1
    hexactsize 1
    vexactsize 1
    Padding 0
@@ -62,7 +62,7 @@ FrameWidgetClass ItemRoot {
     TextWidgetClass ItemName {
      ignorepointer 1
      position 180 32
-     size 600 30
+     size 300 30
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -74,7 +74,7 @@ FrameWidgetClass ItemRoot {
     FrameWidgetClass DetailsFrame {
      ignorepointer 1
      position 180 18
-     size 600 44
+     size 300 44
      valign bottom_ref
      hexactpos 1
      vexactpos 1
@@ -84,7 +84,7 @@ FrameWidgetClass ItemRoot {
       GridSpacerWidgetClass ItemDetails {
        visible 1
        ignorepointer 1
-       size 600 62
+       size 300 62
        valign center_ref
        hexactpos 0
        vexactpos 0
@@ -223,6 +223,7 @@ FrameWidgetClass ItemRoot {
   }
   PanelWidgetClass oultine_ {
    ignorepointer 1
+   color 0.9961 1 1 1
    size 1 1
    halign center_ref
    valign center_ref

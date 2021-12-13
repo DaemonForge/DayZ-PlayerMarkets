@@ -1,7 +1,7 @@
 ref MarketStallSellerMenu m_MarketStallSellerMenu;
 class MarketStallSellerMenu extends UIScriptedMenu {
 	
-	protected const autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller.layout","PlayerMarkets/gui/layout/Modern/MarketStallSeller.layout"};
+	protected const autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller.layout","PlayerMarkets/gui/layout/modern/MarketStallSeller.layout"};
 	protected GridSpacerWidget m_StallItemsGrid;
 	protected GridSpacerWidget m_InventoryGrid;
 	protected ButtonWidget m_Withdraw;

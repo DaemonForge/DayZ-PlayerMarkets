@@ -1,7 +1,7 @@
 ref MarketStallMenu m_MarketStallMenu;
 class MarketStallMenu extends UIScriptedMenu {
 	
-	protected static  autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStall.layout","PlayerMarkets/gui/layout/Modern/MarketStall.layout"};
+	protected static  autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStall.layout","PlayerMarkets/gui/layout/modern/MarketStall.layout"};
 	protected TextWidget m_ShopTitle;
 	protected GridSpacerWidget m_ItemGrid;
 	protected TextWidget m_Balance;

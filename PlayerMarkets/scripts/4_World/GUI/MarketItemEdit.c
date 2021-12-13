@@ -1,5 +1,5 @@
 class MarketStallItemView  extends ScriptedWidgetEventHandler {
-	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallItemView.layout","PlayerMarkets/gui/layout/Modern/MarketStallItemView.layout"};
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallItemView.layout","PlayerMarkets/gui/layout/modern/MarketStallItemView.layout"};
 	protected autoptr PlayerMarketItemDetails m_ItemDetails;
 	
 	private vector              m_PreviewWidgetOrientation;	

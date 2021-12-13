@@ -1,5 +1,5 @@
 class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
-	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/SimpleSetPrice.layout","PlayerMarkets/gui/layout/Modern/SimpleSetPrice.layout"};
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/SimpleSetPrice.layout","PlayerMarkets/gui/layout/modern/SimpleSetPrice.layout"};
 	
 	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;

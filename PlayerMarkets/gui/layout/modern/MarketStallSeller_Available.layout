@@ -38,6 +38,7 @@ PanelWidgetClass rootFrame {
     }
     PanelWidgetClass outline {
      ignorepointer 1
+     color 0.9961 1 1 1
      position 0 0
      size 1 1
      halign center_ref
@@ -218,6 +219,7 @@ PanelWidgetClass rootFrame {
   }
   PanelWidgetClass oultine_ {
    ignorepointer 1
+   color 0.9961 1 1 1
    size 1 1
    halign center_ref
    valign center_ref

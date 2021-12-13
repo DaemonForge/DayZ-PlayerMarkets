@@ -172,6 +172,7 @@ FrameWidgetClass rootFrame {
     }
     PanelWidgetClass oultine_1 {
      ignorepointer 1
+     color 0.9961 1 1 1
      size 1 1
      halign center_ref
      valign center_ref
@@ -248,6 +249,7 @@ FrameWidgetClass rootFrame {
       }
       PanelWidgetClass oultine_ {
        ignorepointer 1
+       color 0.9961 1 1 1
        size 1 1
        halign center_ref
        valign center_ref
@@ -310,6 +312,7 @@ FrameWidgetClass rootFrame {
       }
       PanelWidgetClass oultine_0 {
        ignorepointer 1
+       color 0.9961 1 1 1
        size 1 1
        halign center_ref
        valign center_ref

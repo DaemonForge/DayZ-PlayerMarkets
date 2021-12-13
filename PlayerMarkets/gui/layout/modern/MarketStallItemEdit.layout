@@ -227,6 +227,7 @@ PanelWidgetClass rootFrame {
     }
     PanelWidgetClass outline1 {
      ignorepointer 1
+     color 0.9961 1 1 1
      position 0 0
      size 1 1
      halign center_ref
@@ -269,6 +270,7 @@ PanelWidgetClass rootFrame {
     }
     PanelWidgetClass outline0 {
      ignorepointer 1
+     color 0.9961 1 1 1
      position 0 0
      size 1 1
      halign center_ref
@@ -304,7 +306,7 @@ PanelWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     style No_Highlight
+     style Default
      text "$ 0"
      "Use default text" 1
      "exact text" 1
@@ -333,6 +335,7 @@ PanelWidgetClass rootFrame {
   }
   PanelWidgetClass outline {
    ignorepointer 1
+   color 0.9961 1 1 1
    position 0 0
    size 1 1
    halign center_ref
