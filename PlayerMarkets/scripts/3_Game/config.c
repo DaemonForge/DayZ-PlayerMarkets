@@ -7,13 +7,17 @@ class PlayerMarketsConfig extends Managed {
 	
 	ref array<ref PMCurrencyMap> Currencies = new array<autoptr PMCurrencyMap>;
 	ref TStringArray BlackList = {"PM_GoldCoin", "PM_SilverCoin", "PM_CopperCoin"};
-	
+	int GUIOption = 0;
 	bool ManagedTypesFile = true;
 	
 	void Load(){
 		if (GetGame().IsServer()){
 			if (FileExist(ConfigPATH)){ // If config exist load File
 			    UApiJSONHandler<PlayerMarketsConfig>.FromFile(ConfigPATH, this);
+				if (!BlackList){
+					BlackList = {"PM_GoldCoin", "PM_SilverCoin", "PM_CopperCoin"};
+					Save();
+				}
 				LoadCurrencys();
 				
 			} else { // File does not exist create file	
