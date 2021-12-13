@@ -12,10 +12,10 @@ PanelWidgetClass rootFrame {
  {
   TextWidgetClass Title {
    ignorepointer 1
-   position 10 5
+   position 0.02 0.05
    size 0.85 32
-   hexactpos 1
-   vexactpos 1
+   hexactpos 0
+   vexactpos 0
    hexactsize 0
    vexactsize 1
    text "#@ui_set_price"
@@ -50,12 +50,12 @@ PanelWidgetClass rootFrame {
    }
   }
   ButtonWidgetClass Close {
-   color 1 0 0 1
-   position 5 5
-   size 35 35
+   color 0.749 0.3725 0.3725 1
+   position 0.02 0.05
+   size 32 32
    halign right_ref
-   hexactpos 1
-   vexactpos 1
+   hexactpos 0
+   vexactpos 0
    hexactsize 1
    vexactsize 1
    style EmptyHighlight
@@ -73,7 +73,8 @@ PanelWidgetClass rootFrame {
      hexactsize 0
      vexactsize 0
      text "X"
-     font "PlayerMarkets/gui/fonts/modern/regular16"
+     font "PlayerMarkets/gui/fonts/modern/regular22"
+     "exact text" 1
      "text halign" center
      "text valign" center
     }

@@ -150,9 +150,9 @@ PanelWidgetClass rootFrame {
        vexactsize 0
        text "10/20"
        font "PlayerMarkets/gui/fonts/modern/regular20"
+       "text offset" 0 2
        "size to text h" 1
        "text halign" center
-       "text valign" center
       }
       GridSpacerWidgetClass QuanityFrame {
        visible 0
@@ -188,7 +188,7 @@ PanelWidgetClass rootFrame {
          ignorepointer 1
          color 0.749 0.3725 0.3725 1
          position 10 10
-         size 48 2
+         size 48 1
          hexactpos 1
          vexactpos 1
          hexactsize 1

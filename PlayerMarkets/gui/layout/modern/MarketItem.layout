@@ -133,6 +133,7 @@ FrameWidgetClass ItemRoot {
          vexactsize 1
          text "$3,650"
          font "PlayerMarkets/gui/fonts/modern/regular18"
+         "text offset" 0 -2
          "exact text" 0
          "size to text h" 1
          "size to text v" 0
