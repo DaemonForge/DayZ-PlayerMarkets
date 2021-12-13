@@ -2,6 +2,10 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected const string ITEM_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStallItemView.layout";
 	protected autoptr PlayerMarketItemDetails m_ItemDetails;
 	
+	private vector              m_PreviewWidgetOrientation;	
+    private int                 m_PreviewWidgetRotationX;
+	private int                 m_PreviewWidgetRotationY;
+	
 	protected autoptr MarketStallMenu m_parent;
 	protected Widget m_LayoutRoot;
 	
@@ -96,10 +100,37 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	
 	void ~MarketStallItemView(){
 		m_LayoutRoot.Show(false);
+		GetGame().GetDragQueue().RemoveCalls(this);
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.OnUpdate);
 		delete m_LayoutRoot;
 	}
 	
+    bool OnMouseButtonDown(Widget w, int x, int y, int button)
+	{
+		super.OnMouseButtonDown(w, x, y, button);
+		
+		if (w == m_ItemPreview)
+		{
+			GetGame().GetDragQueue().Call(this, "UpdateRotation");
+			g_Game.GetMousePos(m_PreviewWidgetRotationX, m_PreviewWidgetRotationY);
+			return true;
+		}
+		return false;
+	};
+	
+	void UpdateRotation(int mouse_x, int mouse_y, bool is_dragging)
+	{
+		vector o = m_PreviewWidgetOrientation;
+		o[0] = o[0] + (m_PreviewWidgetRotationY - mouse_y);
+		o[1] = o[1] - (m_PreviewWidgetRotationX - mouse_x);
+		
+		m_ItemPreview.SetModelOrientation( o );
+		
+		if (!is_dragging)
+		{
+			m_PreviewWidgetOrientation = o;
+		};
+	};
 	
 	override bool OnClick(Widget w, int x, int y, int button){
 		
@@ -141,7 +172,8 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		if (iItem){
 			m_ItemPreview.SetItem( iItem );
 			m_ItemPreview.SetModelPosition( Vector(0,0,0) );
-			m_ItemPreview.SetModelOrientation( Vector(0,0,0) );
+			m_PreviewWidgetOrientation = Vector(0,0,0);
+			m_ItemPreview.SetModelOrientation( m_PreviewWidgetOrientation );
 			m_ItemPreview.SetPos( 0, 0);
 			m_ItemPreview.SetSize( 1, 1);
 			m_ItemPreview.SetView( 0 );

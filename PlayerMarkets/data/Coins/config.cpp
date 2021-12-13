@@ -20,7 +20,7 @@ class cfgvehicles
 		model="PlayerMarkets\data\Coins\CopperCoin.p3d";
 		itemSize[]={1,1};
 		displayName="Copper Coin";
-		descriptionShort="A Copper Coin for buying stuff \n100 Copper coin equals 1 Silver Coin\n1000 Copper Coins equals 1 Gold Coins";
+		descriptionShort="A Copper Coin for buying stuff - 100 Copper coin equals 1 Silver Coin - 1000 Copper Coins equals 1 Gold Coins";
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 100;
@@ -34,7 +34,7 @@ class cfgvehicles
 		model="PlayerMarkets\data\Coins\SilverCoin.p3d";
 		itemSize[]={1,1};
 		displayName="Silver Coin";
-		descriptionShort="A Silver Coin for buying stuff \n100 Copper coin equals 1 Silver Coin\n10 Silver Coins is equal to 1 Gold Coin";
+		descriptionShort="A Silver Coin for buying stuff - 100 Copper coin equals 1 Silver Coin - 10 Silver Coins is equal to 1 Gold Coin";
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 50;
@@ -48,7 +48,7 @@ class cfgvehicles
 		model="PlayerMarkets\data\Coins\GoldCoin.p3d";
 		itemSize[]={1,1};
 		displayName="Gold Coin";
-		descriptionShort="A Gold Coin for buying stuff\n1000 Copper coin equals 1 Gold Coin\n10 Silver Coins is equal to 1 Gold Coin";
+		descriptionShort="A Gold Coin for buying stuff - 1000 Copper coin equals 1 Gold Coin - 10 Silver Coins is equal to 1 Gold Coin";
 		varQuantityInit = 1;
 		varQuantityMin = 0;
 		varQuantityMax = 20;

@@ -26,6 +26,7 @@ FrameWidgetClass ItemRoot {
    stretch 1
   }
   TextWidgetClass ItemName {
+   clipchildren 0
    ignorepointer 1
    color 0 0 0 1
    position 180 32
@@ -63,6 +64,7 @@ FrameWidgetClass ItemRoot {
    }
   }
   FrameWidgetClass DetailsFrame {
+   clipchildren 0
    ignorepointer 1
    position 180 18
    size 0.6 44
@@ -73,6 +75,7 @@ FrameWidgetClass ItemRoot {
    vexactsize 1
    {
     GridSpacerWidgetClass ItemDetails {
+     clipchildren 0
      ignorepointer 1
      size 1 58
      valign center_ref
@@ -134,7 +137,7 @@ FrameWidgetClass ItemRoot {
       }
       GridSpacerWidgetClass QuanityFrame {
        visible 0
-       clipchildren 1
+       clipchildren 0
        ignorepointer 1
        size 48 1
        valign center_ref
@@ -149,13 +152,13 @@ FrameWidgetClass ItemRoot {
         TextWidgetClass QuanityAmount {
          ignorepointer 1
          color 0 0 0 1
-         size 1 0.53
+         size 1 0.55
          halign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 0
          vexactsize 0
-         font "gui/fonts/etelkatextpro"
+         font "PlayerMarkets/gui/fonts/Pangolin"
          "text color" 0 0 0 1
          "size to text h" 1
          "text halign" center
@@ -175,14 +178,14 @@ FrameWidgetClass ItemRoot {
         TextWidgetClass QuanityMax {
          ignorepointer 1
          color 0 0 0 1
-         size 1 0.53
+         size 1 0.55
          halign center_ref
          valign bottom_ref
          hexactpos 1
          vexactpos 1
          hexactsize 0
          vexactsize 0
-         font "gui/fonts/etelkatextpro"
+         font "PlayerMarkets/gui/fonts/Pangolin"
          "text color" 0 0 0 1
          "size to text h" 1
          "text halign" center

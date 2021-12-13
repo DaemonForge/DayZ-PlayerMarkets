@@ -324,6 +324,17 @@ class MarketStandBase extends BaseBuildingBase  {
 		}
 		return (m_OwnerGUID == "");
 	}
+	
+	
+	override bool CanReceiveItemIntoCargo( EntityAI item )
+	{
+		//Print("CanReceiveItemIntoCargo: " + item.GetType());
+		if (GetPMConfig().BlackList.Find(item.GetType()) != -1){
+			return false;
+		}
+		
+		return super.CanReceiveItemIntoCargo( item );
+	}
 	/*
 	--------------------------------------------------------------------------------------------
 	
@@ -589,10 +600,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		else
 			return false;
 		
-    }
-	
-	
-	
+    }	
 	
 	
 	override bool CanDisplayCargo(){

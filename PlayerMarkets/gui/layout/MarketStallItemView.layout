@@ -73,6 +73,7 @@ ImageWidgetClass rootFrame {
   }
   GridSpacerWidgetClass ItemDetails {
    ignorepointer 1
+   clipchildren 0
    position 0 510
    size 0.79 64
    halign center_ref
@@ -131,7 +132,7 @@ ImageWidgetClass rootFrame {
     }
     GridSpacerWidgetClass QuanityFrame {
      visible 0
-     clipchildren 1
+     clipchildren 0
      ignorepointer 1
      size 48 1
      valign center_ref
@@ -146,13 +147,13 @@ ImageWidgetClass rootFrame {
       TextWidgetClass QuanityAmount {
        ignorepointer 1
        color 0 0 0 1
-       size 1 0.53
+       size 1 0.63
        halign center_ref
        hexactpos 1
        vexactpos 1
        hexactsize 0
        vexactsize 0
-       font "PlayerMarkets/gui/fonts/AmaticSCBold"
+       font "PlayerMarkets/gui/fonts/Pangolin"
        "size to text h" 1
        "text halign" center
        "text valign" center
@@ -171,14 +172,14 @@ ImageWidgetClass rootFrame {
       TextWidgetClass QuanityMax {
        ignorepointer 1
        color 0 0 0 1
-       size 1 0.53
+       size 1 0.63
        halign center_ref
        valign bottom_ref
        hexactpos 1
        vexactpos 1
        hexactsize 0
        vexactsize 0
-       font "PlayerMarkets/gui/fonts/AmaticSCBold"
+       font "PlayerMarkets/gui/fonts/Pangolin"
        "size to text h" 1
        "text halign" center
        "text valign" center

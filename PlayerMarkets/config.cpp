@@ -1561,9 +1561,9 @@ class CfgVehicles
 				icon="";
 				selection="";
 			};
-			class Material
+			class Table
 			{
-				name="$STR_CfgVehicles_Fence_Att_Category_Materials";
+				name="First Stage";
 				description="";
 				attachmentSlots[]=
 				{

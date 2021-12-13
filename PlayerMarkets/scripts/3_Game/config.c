@@ -6,6 +6,7 @@ class PlayerMarketsConfig extends Managed {
 	string ConfigVersion = "0";
 	
 	ref array<ref PMCurrencyMap> Currencies = new array<autoptr PMCurrencyMap>;
+	ref TStringArray BlackList = {"PM_GoldCoin", "PM_SilverCoin", "PM_CopperCoin"};
 	
 	bool ManagedTypesFile = true;
 	
