@@ -11,6 +11,7 @@ FrameWidgetClass rootFrame {
  vexactsize 1
  {
   PanelWidgetClass BG {
+   visible 1
    ignorepointer 1
    color 0 0 0 0.9412
    position 0 0
@@ -27,7 +28,7 @@ FrameWidgetClass rootFrame {
    clipchildren 1
    ignorepointer 1
    position 0 0.02
-   size 0.9 0.83
+   size 0.95 0.83
    halign center_ref
    valign bottom_ref
    hexactpos 0
@@ -38,6 +39,7 @@ FrameWidgetClass rootFrame {
     ScrollWidgetClass Scroll {
      clipchildren 0
      ignorepointer 1
+     color 1 1 1 0
      position 0 0
      size 1 1
      halign center_ref
@@ -99,9 +101,10 @@ FrameWidgetClass rootFrame {
    }
   }
   PanelWidgetClass PlayerBalanceFrame {
+   visible 1
    clipchildren 0
    ignorepointer 1
-   color 0.2078 0 0.1529 0.4235
+   color 0 0 0 0.9412
    position 0 -60
    size 328 50
    valign bottom_ref
@@ -113,6 +116,7 @@ FrameWidgetClass rootFrame {
    {
     PanelWidgetClass outline_ {
      ignorepointer 1
+     color 0.9961 1 1 1
      size 1 1
      halign center_ref
      valign center_ref
@@ -139,6 +143,7 @@ FrameWidgetClass rootFrame {
   }
   PanelWidgetClass outline {
    ignorepointer 1
+   color 0.9961 1 1 1
    position 0 0
    size 1 1
    halign center_ref

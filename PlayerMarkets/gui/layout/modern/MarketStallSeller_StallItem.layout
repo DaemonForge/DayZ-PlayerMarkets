@@ -1,6 +1,6 @@
 FrameWidgetClass rootFrame {
  color 1 1 1 0
- size 1 164
+ size 1 140
  halign center_ref
  hexactpos 1
  vexactpos 1
@@ -36,14 +36,18 @@ FrameWidgetClass rootFrame {
   }
   GridSpacerWidgetClass Buttons {
    ignorepointer 1
-   position 18 0
+   position 20 20
    size 142 86
    halign right_ref
-   valign center_ref
+   valign bottom_ref
    hexactpos 1
    vexactpos 1
    hexactsize 1
    vexactsize 1
+   Padding 5
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
    Columns 1
    Rows 2
    {
@@ -51,12 +55,12 @@ FrameWidgetClass rootFrame {
      visible 0
      color 0.749 0.3725 0.3725 1
      position 0 2
-     size 1 0.46
+     size 160 48
      halign center_ref
      hexactpos 1
      vexactpos 1
-     hexactsize 0
-     vexactsize 0
+     hexactsize 1
+     vexactsize 1
      style EmptyHighlight
      "no focus" 1
      {
@@ -92,14 +96,14 @@ FrameWidgetClass rootFrame {
     }
     ButtonWidgetClass Delist {
      color 0.749 0.3725 0.3725 1
-     position 0 2
-     size 1 0.46
-     halign center_ref
+     position 20 20
+     size 160 48
+     halign right_ref
      valign bottom_ref
      hexactpos 1
      vexactpos 1
-     hexactsize 0
-     vexactsize 0
+     hexactsize 1
+     vexactsize 1
      style EmptyHighlight
      "no focus" 1
      {
@@ -182,7 +186,7 @@ FrameWidgetClass rootFrame {
      font "PlayerMarkets/gui/fonts/modern/regular20"
      "text valign" center
     }
-    PanelWidgetClass Details {
+    GridSpacerWidgetClass Details {
      ignorepointer 1
      position 0 12
      size 300 44
@@ -191,6 +195,11 @@ FrameWidgetClass rootFrame {
      vexactpos 1
      hexactsize 1
      vexactsize 1
+     Padding 10
+     Margin 0
+     "Size To Content H" 1
+     Columns 2
+     Rows 1
      {
       PanelWidgetClass ItemStateFrame {
        ignorepointer 1
@@ -207,7 +216,6 @@ FrameWidgetClass rootFrame {
          ignorepointer 1
          color 0.2706 0.6235 0.3608 1
          size 20 20
-         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
@@ -233,67 +241,65 @@ FrameWidgetClass rootFrame {
        visible 0
        clipchildren 1
        ignorepointer 1
-       size 40 63
-       halign right_ref
+       size 48 1
        valign center_ref
        hexactpos 1
        vexactpos 1
        hexactsize 1
-       vexactsize 1
+       vexactsize 0
        Padding 5
        Margin 0
        "Size To Content H" 1
-       "Size To Content V" 1
+       content_halign center
        content_valign center
        Rows 1
        {
         TextWidgetClass QuanityAmount {
          ignorepointer 1
-         position 0 0
-         size 40 20
+         size 1 13
          halign center_ref
          hexactpos 1
          vexactpos 1
-         hexactsize 1
+         hexactsize 0
          vexactsize 1
-         text "300"
+         text "1000"
          font "PlayerMarkets/gui/fonts/modern/regular16"
-         "text color" 0 0 0 1
-         "size to text h" 0
-         "size to text v" 0
+         "text offset" 0 -2
+         "size to text h" 1
+         "size to text v" 1
          "text halign" center
          "text valign" center
         }
         TextWidgetClass Bar {
-         visible 1
          ignorepointer 1
          color 0.749 0.3725 0.3725 1
-         size 18 18
-         halign center_ref
-         valign center_ref
+         position 10 10
+         size 48 16
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
          style Normal
-         text "____"
+         text "/"
+         font "PlayerMarkets/gui/fonts/modern/regular16"
+         "size to text h" 1
+         "size to text v" 0
          "text halign" center
          "text valign" center
         }
         TextWidgetClass QuanityMax {
          ignorepointer 1
-         position 0 0
-         size 40 20
+         size 1 16
          halign center_ref
          valign bottom_ref
          hexactpos 1
          vexactpos 1
-         hexactsize 1
+         hexactsize 0
          vexactsize 1
-         text "1000"
+         text "5000"
          font "PlayerMarkets/gui/fonts/modern/regular16"
-         "text color" 0 0 0 1
-         "size to text h" 0
+         "text offset" 0 -2
+         "size to text h" 1
          "text halign" center
          "text valign" center
         }

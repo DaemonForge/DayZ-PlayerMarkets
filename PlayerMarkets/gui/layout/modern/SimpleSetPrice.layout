@@ -128,8 +128,8 @@ PanelWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     style Default
-     text "$ 3492"
+     style No_Highlight
+     text "$"
      "Use default text" 1
      "exact text" 1
      font "PlayerMarkets/gui/fonts/modern/regular18"
