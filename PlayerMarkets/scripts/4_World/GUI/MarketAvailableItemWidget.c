@@ -97,7 +97,7 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 	}
 		
 	override bool OnClick(Widget w, int x, int y, int button){
-		if (w == m_List && m_parent){
+		if (w == m_List && m_parent && m_parent.GetStand().GetItemsForSaleCount() < m_parent.GetStand().GetMaxItemsForSale()){
 			m_parent.OpenSetPrice(m_Item);
 			return true;
 		}

@@ -39,7 +39,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		
 		GetGame().GetMission().GetHud().Show(false);
     	PPEffects.SetBlurInventory(0.5);
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1600,true);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1200,true);
 		return layoutRoot;
 	}
 	

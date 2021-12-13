@@ -187,6 +187,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	bool AddItemForSale(EntityAI item, int price, PlayerBase player){
 		if (!IsOwner(player)){ return false; }
+		if (GetItemsForSaleCount() >= GetMaxItemsForSale()) {return false;}
 		if (!m_ItemsArray){
 			m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
 		}
