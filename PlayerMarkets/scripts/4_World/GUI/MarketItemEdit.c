@@ -21,7 +21,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected TextWidget m_Weight;
 	protected TextWidget m_LiquidType;
 	protected Widget m_ItemStateFrame;
-	protected ImageWidget m_ItemState;
+	protected Widget m_ItemState;
 	
 	protected ButtonWidget m_Buy;
 	protected ButtonWidget m_Cancel;
@@ -42,7 +42,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		m_Price = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
 		m_Weight = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Weight"));
 		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
-		m_ItemState = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
+		m_ItemState = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		m_LiquidType = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("LiquidType"));
 		
 		m_Buy = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Buy"));
@@ -183,54 +183,62 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	}
 	
 	
-	void UpdateLiquidType(int type){			
+	void UpdateLiquidType(int type){		
 		switch(type)
 		{
 			case LIQUID_WATER:
 			{
 				m_LiquidType.SetText("#inv_inspect_water");//Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 				
 			case LIQUID_RIVERWATER:
 			{
 				m_LiquidType.SetText("#inv_inspect_river_water");//Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 				
 			case LIQUID_VODKA:
 			{
 				m_LiquidType.SetText("#inv_inspect_vodka");//Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 			
 			case LIQUID_BEER:
 			{
 				m_LiquidType.SetText("#inv_inspect_beer");//Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 		
 			case LIQUID_GASOLINE:
 			{
 				m_LiquidType.SetText("#inv_inspect_gasoline");//Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 			
 			case LIQUID_DIESEL:
 			{
 				m_LiquidType.SetText("#inv_inspect_diesel");//Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 			
 			case LIQUID_DISINFECTANT:
 			{
 				m_LiquidType.SetText("#inv_inspect_disinfectant");// Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 
 			case LIQUID_SALINE:
 			{
 				m_LiquidType.SetText("#inv_inspect_saline");// Colors.COLOR_LIQUID);
+				m_LiquidType.Show(true);	
 				break;
 			}
 			

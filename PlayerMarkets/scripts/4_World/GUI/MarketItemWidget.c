@@ -13,7 +13,7 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 	protected TextWidget m_QuanityMax;
 	protected TextWidget m_Quanity;
 	protected Widget m_ItemStateFrame;
-	protected ImageWidget m_ItemState;
+	protected Widget m_ItemState;
 	
 	protected ImageWidget m_BG;
 	
@@ -31,7 +31,7 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
 		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
-		m_ItemState = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
+		m_ItemState = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		
 		
 		
