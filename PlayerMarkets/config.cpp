@@ -405,7 +405,7 @@ class CfgVehicles
 								0.5,
 								
 								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
 								}
 							},
 							
@@ -413,7 +413,7 @@ class CfgVehicles
 								0.30000001,
 								
 								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
 								}
 							},
 							
@@ -935,7 +935,7 @@ class CfgVehicles
 								0.5,
 								
 								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
 								}
 							},
 							
@@ -943,7 +943,7 @@ class CfgVehicles
 								0.30000001,
 								
 								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
 								}
 							},
 							
@@ -1452,7 +1452,7 @@ class CfgVehicles
 								0.5,
 								
 								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+									"DZ\gear\camping\data\fence_pile_of_planks_worn.rvmat"
 								}
 							},
 							
@@ -1460,7 +1460,7 @@ class CfgVehicles
 								0.30000001,
 								
 								{
-									"BasicDoors\Data\Window Barricade\data\dmg\Plank_with_nails_dmg.rvmat"
+									"DZ\gear\camping\data\fence_pile_of_planks_bdamage.rvmat"
 								}
 							},
 							
