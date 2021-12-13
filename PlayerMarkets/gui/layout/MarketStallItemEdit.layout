@@ -214,7 +214,7 @@ ImageWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     text "List"
+     text "#@ui_list"
      font "PlayerMarkets/gui/fonts/Pangolin"
      "exact text" 0
      "text halign" center
@@ -244,7 +244,7 @@ ImageWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     text "Cancel"
+     text "#@ui_cancel"
      font "PlayerMarkets/gui/fonts/AmaticSCBold"
      "text halign" center
      "text valign" center

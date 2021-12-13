@@ -84,7 +84,7 @@ FrameWidgetClass rootFrame {
      vexactpos 1
      hexactsize 0
      vexactsize 1
-     text "Inventory"
+     text "#@ui_inventory"
      font "PlayerMarkets/gui/fonts/Pangolin"
      "text halign" center
      "text valign" center
@@ -152,7 +152,7 @@ FrameWidgetClass rootFrame {
      vexactpos 1
      hexactsize 0
      vexactsize 1
-     text "Items For Sale"
+     text "#@ui_iems_for_sale"
      font "PlayerMarkets/gui/fonts/Pangolin"
      "text halign" center
      "text valign" center

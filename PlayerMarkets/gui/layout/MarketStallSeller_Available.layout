@@ -30,7 +30,7 @@ PanelWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     text "List"
+     text "#@ui_list"
      "text halign" center
      "text valign" center
     }

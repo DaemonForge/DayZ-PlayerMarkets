@@ -85,7 +85,7 @@ FrameWidgetClass rootFrame {
        vexactpos 0
        hexactsize 0
        vexactsize 0
-       text "Delist"
+       text "#@ui_delist"
        font "PlayerMarkets/gui/fonts/AmaticSCBold"
        "text halign" center
        "text valign" center
