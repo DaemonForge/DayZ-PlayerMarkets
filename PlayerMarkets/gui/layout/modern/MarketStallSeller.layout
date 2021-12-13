@@ -13,7 +13,7 @@ FrameWidgetClass rootFrame {
    ignorepointer 1
    color 0 0 0 0.9412
    position 0 0
-   size 1280 720
+   size 1280 1000
    halign center_ref
    valign center_ref
    hexactpos 0
@@ -25,9 +25,8 @@ FrameWidgetClass rootFrame {
     FrameWidgetClass Inventory {
      visible 1
      ignorepointer 1
-     position 0.01 0.02
-     size 0.48 0.95
-     valign bottom_ref
+     position 0.01 0.1
+     size 0.48 0.75
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -35,7 +34,7 @@ FrameWidgetClass rootFrame {
      {
       FrameWidgetClass InventoryFrame {
        ignorepointer 1
-       size 1 640
+       size 1 689
        halign center_ref
        valign bottom_ref
        hexactpos 0
@@ -77,8 +76,8 @@ FrameWidgetClass rootFrame {
       }
       TextWidgetClass IventoryTitle {
        ignorepointer 1
-       position 0 -20
-       size 1 68
+       position 0 0
+       size 1 50
        halign center_ref
        hexactpos 1
        vexactpos 1
@@ -86,6 +85,8 @@ FrameWidgetClass rootFrame {
        vexactsize 1
        text "#@ui_inventory"
        font "PlayerMarkets/gui/fonts/modern/regular22"
+       "size to text h" 0
+       "size to text v" 1
        "text halign" center
        "text valign" center
       }
@@ -93,10 +94,9 @@ FrameWidgetClass rootFrame {
     }
     FrameWidgetClass Stall {
      ignorepointer 1
-     position 0.01 0.02
-     size 0.48 0.95
+     position 0.01 0.1
+     size 0.48 0.75
      halign right_ref
-     valign bottom_ref
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -105,7 +105,7 @@ FrameWidgetClass rootFrame {
       FrameWidgetClass StallItemsFrame {
        ignorepointer 1
        position 0 0
-       size 1 640
+       size 1 690
        halign center_ref
        valign bottom_ref
        hexactpos 0
@@ -148,8 +148,8 @@ FrameWidgetClass rootFrame {
       }
       TextWidgetClass StallItemsTitle {
        ignorepointer 1
-       position 0 -20
-       size 1 68
+       position 0 0
+       size 1 50
        halign center_ref
        hexactpos 1
        vexactpos 1
@@ -165,11 +165,12 @@ FrameWidgetClass rootFrame {
     PanelWidgetClass divisor {
      ignorepointer 1
      color 0.749 0.3725 0.3725 1
+     position 0 0
      size 1 0.75
      halign center_ref
      valign center_ref
-     hexactpos 1
-     vexactpos 1
+     hexactpos 0
+     vexactpos 0
      hexactsize 1
      vexactsize 0
      style rover_sim_colorable
@@ -187,24 +188,172 @@ FrameWidgetClass rootFrame {
      vexactsize 0
      style Outline_1px
     }
+    FrameWidgetClass WithdrawFrame {
+     ignorepointer 1
+     position 0.01 0.01
+     size 1280 90
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     {
+      ButtonWidgetClass Withdraw {
+       color 0.749 0.3725 0.3725 1
+       size 200 50
+       valign bottom_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 1
+       vexactsize 1
+       style Colorable
+       {
+        TextWidgetClass text {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         text "#@ui_withdraw"
+         font "PlayerMarkets/gui/fonts/modern/regular22"
+         "text halign" center
+         "text valign" center
+        }
+        PanelWidgetClass oultine_ {
+         ignorepointer 1
+         color 0.9961 1 1 1
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 0
+         style Outline_1px
+        }
+       }
+      }
+      TextWidgetClass Withdraw_Text {
+       ignorepointer 1
+       position 0 0.02
+       size 800 30
+       hexactpos 0
+       vexactpos 0
+       hexactsize 1
+       vexactsize 1
+       text "#@ui_withdraw_available"
+       font "PlayerMarkets/gui/fonts/modern/regular18"
+       "exact text" 0
+       "text valign" center
+      }
+     }
+    }
+    GridSpacerWidgetClass CurrencySelectionFrame {
+     ignorepointer 1
+     position 0.01 0.01
+     size 1280 90
+     halign right_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     Padding 0
+     Margin 0
+     "Size To Content H" 1
+     content_halign right
+     Columns 1
+     Rows 2
+     {
+      ButtonWidgetClass CurrencyUsed {
+       visible 1
+       color 0.749 0.3725 0.3725 1
+       size 200 50
+       halign right_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 1
+       vexactsize 1
+       style Colorable
+       {
+        TextWidgetClass CurrencyUsed_label {
+         ignorepointer 1
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 0
+         text "Coins"
+         font "PlayerMarkets/gui/fonts/modern/regular22"
+         "text halign" center
+         "text valign" center
+        }
+        PanelWidgetClass oultine_0 {
+         ignorepointer 1
+         color 0.9961 1 1 1
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 0
+         style Outline_1px
+        }
+       }
+      }
+      FrameWidgetClass RemainingSlotsFrame {
+       ignorepointer 1
+       size 400 30
+       halign right_ref
+       valign bottom_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 1
+       vexactsize 1
+       {
+        TextWidgetClass RemainingSlots {
+         ignorepointer 1
+         size 1 1
+         halign right_ref
+         valign bottom_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         text "0/24 Slots Used"
+         font "PlayerMarkets/gui/fonts/modern/regular18"
+         "size to text h" 1
+         "size to text v" 1
+         "text halign" right
+        }
+       }
+      }
+     }
+    }
+    TextWidgetClass Title {
+     ignorepointer 1
+     position 0 0.02
+     size 0.6 64
+     halign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 1
+     style Normal
+     text "MARKET"
+     font "PlayerMarkets/gui/fonts/modern/bold40"
+     "exact text" 0
+     "size to text h" 1
+     "text halign" center
+     "text valign" center
+    }
    }
-  }
-  TextWidgetClass Title {
-   ignorepointer 1
-   position 0 0.05
-   size 0.6 64
-   halign center_ref
-   hexactpos 0
-   vexactpos 0
-   hexactsize 0
-   vexactsize 1
-   style Normal
-   text "MARKET"
-   font "PlayerMarkets/gui/fonts/modern/bold40"
-   "exact text" 0
-   "size to text h" 1
-   "text halign" center
-   "text valign" center
   }
   FrameWidgetClass TitleFrame {
    visible 0
@@ -216,149 +365,6 @@ FrameWidgetClass rootFrame {
    vexactpos 0
    hexactsize 0
    vexactsize 0
-  }
-  FrameWidgetClass WithdrawFrame {
-   ignorepointer 1
-   position 0 0.08
-   size 1280 90
-   halign center_ref
-   valign bottom_ref
-   hexactpos 0
-   vexactpos 0
-   hexactsize 1
-   vexactsize 1
-   {
-    ButtonWidgetClass Withdraw {
-     color 0.749 0.3725 0.3725 1
-     size 200 50
-     valign bottom_ref
-     hexactpos 0
-     vexactpos 0
-     hexactsize 1
-     vexactsize 1
-     style Colorable
-     {
-      TextWidgetClass text {
-       ignorepointer 1
-       position 0 0
-       size 1 1
-       halign center_ref
-       valign center_ref
-       hexactpos 0
-       vexactpos 0
-       hexactsize 0
-       vexactsize 0
-       text "#@ui_withdraw"
-       font "PlayerMarkets/gui/fonts/modern/regular22"
-       "text halign" center
-       "text valign" center
-      }
-      PanelWidgetClass oultine_ {
-       ignorepointer 1
-       color 0.9961 1 1 1
-       size 1 1
-       halign center_ref
-       valign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 0
-       vexactsize 0
-       style Outline_1px
-      }
-     }
-    }
-    TextWidgetClass Withdraw_Text {
-     ignorepointer 1
-     position 0 0.02
-     size 800 30
-     hexactpos 0
-     vexactpos 0
-     hexactsize 1
-     vexactsize 1
-     text "#@ui_withdraw_available"
-     font "PlayerMarkets/gui/fonts/modern/regular18"
-     "exact text" 0
-     "text valign" center
-    }
-   }
-  }
-  FrameWidgetClass CurrencySelectionFrame {
-   ignorepointer 1
-   position 0 0.08
-   size 1280 90
-   halign center_ref
-   hexactpos 0
-   vexactpos 0
-   hexactsize 1
-   vexactsize 1
-   {
-    ButtonWidgetClass CurrencyUsed {
-     color 0.749 0.3725 0.3725 1
-     size 200 50
-     halign right_ref
-     hexactpos 0
-     vexactpos 0
-     hexactsize 1
-     vexactsize 1
-     style Colorable
-     {
-      TextWidgetClass CurrencyUsed_label {
-       ignorepointer 1
-       size 1 1
-       halign center_ref
-       valign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 0
-       vexactsize 0
-       text "Coins"
-       font "PlayerMarkets/gui/fonts/modern/regular22"
-       "text halign" center
-       "text valign" center
-      }
-      PanelWidgetClass oultine_0 {
-       ignorepointer 1
-       color 0.9961 1 1 1
-       size 1 1
-       halign center_ref
-       valign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 0
-       vexactsize 0
-       style Outline_1px
-      }
-     }
-    }
-    FrameWidgetClass RemainingSlotsFrame {
-     ignorepointer 1
-     size 400 30
-     halign right_ref
-     valign bottom_ref
-     hexactpos 0
-     vexactpos 0
-     hexactsize 1
-     vexactsize 1
-     {
-      TextWidgetClass RemainingSlots {
-       ignorepointer 1
-       size 1 1
-       halign right_ref
-       valign bottom_ref
-       hexactpos 0
-       vexactpos 0
-       hexactsize 0
-       vexactsize 0
-       text "0/24 Slots Used"
-       font "PlayerMarkets/gui/fonts/modern/regular18"
-       "size to text h" 1
-       "size to text v" 1
-       "text halign" right
-       "text valign" center
-      }
-     }
-    }
-   }
   }
  }
 }

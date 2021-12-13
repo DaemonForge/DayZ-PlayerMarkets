@@ -23,18 +23,55 @@ FrameWidgetClass rootFrame {
    hexactsize 0
    vexactsize 0
    style rover_sim_colorable
+   {
+    TextWidgetClass Balance {
+     ignorepointer 1
+     position 0.01 0.01
+     size 1011 40
+     valign bottom_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     text "#@ui_on_you"
+     font "PlayerMarkets/gui/fonts/modern/regular18"
+     "size to text h" 1
+     "size to text v" 1
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass ShopTitle {
+     ignorepointer 1
+     color 0.8745 0.8941 0.9373 1
+     position 0 0.02
+     size 1 64
+     halign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 1
+     text "DaemonForge's Shop"
+     font "PlayerMarkets/gui/fonts/modern/bold40"
+     "text color" 0.6549 0.8745 0.8745 1
+     "exact text" 0
+     "size to text h" 1
+     "size to text v" 1
+     "text halign" center
+     "text valign" center
+    }
+   }
   }
   FrameWidgetClass ItemsListed {
    clipchildren 1
    ignorepointer 1
-   position 0 0.02
-   size 0.95 0.83
+   position 0 0.08
+   size 0.95 640
    halign center_ref
    valign bottom_ref
    hexactpos 0
    vexactpos 0
    hexactsize 0
-   vexactsize 0
+   vexactsize 1
    {
     ScrollWidgetClass Scroll {
      clipchildren 0
@@ -70,38 +107,18 @@ FrameWidgetClass rootFrame {
    }
   }
   FrameWidgetClass Header {
+   visible 0
    ignorepointer 1
    position 0 15
-   size 0.9 0.12
+   size 958 64
    halign center_ref
    hexactpos 1
    vexactpos 1
-   hexactsize 0
-   vexactsize 0
-   {
-    TextWidgetClass ShopTitle {
-     ignorepointer 1
-     color 0.8745 0.8941 0.9373 1
-     size 1 1
-     halign center_ref
-     valign center_ref
-     hexactpos 1
-     vexactpos 1
-     hexactsize 0
-     vexactsize 0
-     text "DaemonForge's Shop"
-     font "PlayerMarkets/gui/fonts/modern/bold40"
-     "text color" 0.6549 0.8745 0.8745 1
-     "exact text" 0
-     "size to text h" 0
-     "size to text v" 0
-     "text halign" center
-     "text valign" center
-    }
-   }
+   hexactsize 1
+   vexactsize 1
   }
   PanelWidgetClass PlayerBalanceFrame {
-   visible 1
+   visible 0
    clipchildren 0
    ignorepointer 1
    color 0 0 0 0.9412
@@ -125,19 +142,6 @@ FrameWidgetClass rootFrame {
      hexactsize 0
      vexactsize 0
      style Outline_1px
-    }
-    TextWidgetClass Balance {
-     ignorepointer 1
-     size 0.95 0.85
-     halign center_ref
-     valign center_ref
-     hexactpos 1
-     vexactpos 1
-     hexactsize 0
-     vexactsize 0
-     text "#@ui_on_you"
-     font "PlayerMarkets/gui/fonts/modern/regular18"
-     "text valign" center
     }
    }
   }
