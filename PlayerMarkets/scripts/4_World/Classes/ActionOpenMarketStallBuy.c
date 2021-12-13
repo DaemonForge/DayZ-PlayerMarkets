@@ -17,7 +17,7 @@ class ActionOpenMarketStallBuy: ActionInteractBase
 	
 	override string GetText()
 	{
-		return "Buy";
+		return "#@ui_buy";
 	}
 
 	override bool ActionCondition( PlayerBase player, ActionTarget target, ItemBase item )
