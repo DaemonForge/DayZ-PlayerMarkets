@@ -1,5 +1,5 @@
 class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
-	protected const string ITEM_LAYOUT_PATH = "PlayerMarkets/gui/layout/SimpleSetPrice.layout";
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/SimpleSetPrice.layout","PlayerMarkets/gui/layout/Modern/SimpleSetPrice.layout"};
 	
 	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;
@@ -12,7 +12,7 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	
 	
 	void MarketStallSetPriceWidget(Widget parent, EntityAI item, MarketStallSellerMenu menu ){
-		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
+		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
 		m_parent = MarketStallSellerMenu.Cast(menu);
 		Class.CastTo(m_Item,item);
 		

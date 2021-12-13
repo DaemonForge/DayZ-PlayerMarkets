@@ -1,7 +1,7 @@
 ref MarketStallMenu m_MarketStallMenu;
 class MarketStallMenu extends UIScriptedMenu {
 	
-	protected const string ROOT_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStall.layout";
+	protected static  autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStall.layout","PlayerMarkets/gui/layout/Modern/MarketStall.layout"};
 	protected TextWidget m_ShopTitle;
 	protected GridSpacerWidget m_ItemGrid;
 	protected TextWidget m_Balance;
@@ -14,14 +14,17 @@ class MarketStallMenu extends UIScriptedMenu {
 	protected autoptr MarketStallItemView m_MarketStallItemView;
 	protected bool m_AwaitingRefresh = false;
 	
+	
 	override Widget Init()
     {
-		layoutRoot 		= Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH));
+		layoutRoot 		= Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH[GetPMConfig().GUIOption]));
 		m_ItemsListed 	= Widget.Cast(layoutRoot.FindAnyWidget("ItemsListed"));
 		m_ShopTitle 	= TextWidget.Cast(layoutRoot.FindAnyWidget("ShopTitle"));
 		m_ItemGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("ItemGrid"));
 		m_Balance		= TextWidget.Cast(layoutRoot.FindAnyWidget("Balance"));
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 900,true);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1600,true);
+		GetGame().GetMission().GetHud().Show(false);
+    	PPEffects.SetBlurInventory(0.5);
 		return layoutRoot;
 	}
 	
@@ -29,6 +32,8 @@ class MarketStallMenu extends UIScriptedMenu {
 		if (m_Stand) {
 			m_Stand.SetIsInUse(false);
 		}
+		GetGame().GetMission().GetHud().Show(true);
+    	PPEffects.SetBlurInventory(0);
 		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
 		MSUnLockControls();
 	}
@@ -67,8 +72,8 @@ class MarketStallMenu extends UIScriptedMenu {
 		}
 		PlayerBase player;
 		if (Class.CastTo(player, GetGame().GetPlayer())){
-			m_PlayerBalance = player.UGetPlayerBalance("Coins");
-			m_Balance.SetText("On You: $" +  UUtil.ConvertIntToNiceString(m_PlayerBalance));
+			m_PlayerBalance = player.UGetPlayerBalance(m_Stand.GetCurrencyUsed());
+			m_Balance.SetText(m_Stand.GetCurrencyUsed() + " on you: $" +  UUtil.ConvertIntToNiceString(m_PlayerBalance));
 		}
 	}
 	

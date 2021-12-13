@@ -1,5 +1,5 @@
 class MarketStallItemView  extends ScriptedWidgetEventHandler {
-	protected const string ITEM_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStallItemView.layout";
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallItemView.layout","PlayerMarkets/gui/layout/Modern/MarketStallItemView.layout"};
 	protected autoptr PlayerMarketItemDetails m_ItemDetails;
 	
 	private vector              m_PreviewWidgetOrientation;	
@@ -19,6 +19,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected TextWidget m_State;
 	protected TextWidget m_Price;
 	protected TextWidget m_Weight;
+	protected TextWidget m_LiquidType;
 	protected Widget m_ItemStateFrame;
 	protected ImageWidget m_ItemState;
 	
@@ -26,7 +27,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected ButtonWidget m_Cancel;
 	
 	void MarketStallItemView(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
-		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
+		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
 		m_parent = MarketStallMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
 		
@@ -42,6 +43,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		m_Weight = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Weight"));
 		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
 		m_ItemState = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
+		m_LiquidType = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("LiquidType"));
 		
 		m_Buy = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Buy"));
 		m_Cancel = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Cancel"));
@@ -181,6 +183,65 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	}
 	
 	
+	void UpdateLiquidType(int type){			
+		switch(type)
+		{
+			case LIQUID_WATER:
+			{
+				m_LiquidType.SetText("#inv_inspect_water");//Colors.COLOR_LIQUID);
+				break;
+			}
+				
+			case LIQUID_RIVERWATER:
+			{
+				m_LiquidType.SetText("#inv_inspect_river_water");//Colors.COLOR_LIQUID);
+				break;
+			}
+				
+			case LIQUID_VODKA:
+			{
+				m_LiquidType.SetText("#inv_inspect_vodka");//Colors.COLOR_LIQUID);
+				break;
+			}
+			
+			case LIQUID_BEER:
+			{
+				m_LiquidType.SetText("#inv_inspect_beer");//Colors.COLOR_LIQUID);
+				break;
+			}
+		
+			case LIQUID_GASOLINE:
+			{
+				m_LiquidType.SetText("#inv_inspect_gasoline");//Colors.COLOR_LIQUID);
+				break;
+			}
+			
+			case LIQUID_DIESEL:
+			{
+				m_LiquidType.SetText("#inv_inspect_diesel");//Colors.COLOR_LIQUID);
+				break;
+			}
+			
+			case LIQUID_DISINFECTANT:
+			{
+				m_LiquidType.SetText("#inv_inspect_disinfectant");// Colors.COLOR_LIQUID);
+				break;
+			}
+
+			case LIQUID_SALINE:
+			{
+				m_LiquidType.SetText("#inv_inspect_saline");// Colors.COLOR_LIQUID);
+				break;
+			}
+			
+			default:
+			{
+				m_LiquidType.SetText("ERROR");// Colors.COLOR_LIQUID);
+				break;
+			}
+		}
+	}
+	
 	void UpdateQuanity(EntityAI item){
 		Magazine mag;
 		if (Class.CastTo(mag, item)){
@@ -193,6 +254,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		if (!Class.CastTo(itemB, item) || !itemB.HasQuantity()){
 			return;
 		}
+		UpdateLiquidType(itemB.GetLiquidType());
 		string text = itemB.GetQuantity().ToString();
 		string units = itemB.ConfigGetString("stackedUnit");
 		if ((units == "percent" || units == "w") && itemB.GetQuantityMax() > 0){

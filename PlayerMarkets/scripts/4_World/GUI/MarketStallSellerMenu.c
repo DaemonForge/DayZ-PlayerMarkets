@@ -1,11 +1,15 @@
 ref MarketStallSellerMenu m_MarketStallSellerMenu;
 class MarketStallSellerMenu extends UIScriptedMenu {
 	
-	protected const string ROOT_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStallSeller.layout";
+	protected const autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller.layout","PlayerMarkets/gui/layout/Modern/MarketStallSeller.layout"};
 	protected GridSpacerWidget m_StallItemsGrid;
 	protected GridSpacerWidget m_InventoryGrid;
 	protected ButtonWidget m_Withdraw;
+	protected ButtonWidget m_CurrencyUsed;
 	protected TextWidget m_Withdraw_label;
+	protected TextWidget m_Withdraw_Text;
+	protected TextWidget m_RemainingSlots;
+	protected TextWidget m_CurrencyUsed_label;
 	
 	protected autoptr array<autoptr MarketStallItemSellerWidget> m_ItemWidgets;
 	protected autoptr array<autoptr MarketStallAvailableItemWidget> m_AvailableItemWidgets;
@@ -14,16 +18,28 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	protected bool m_AwaitingRefresh = false;
 	protected MarketStandBase m_Stand;
 	
+	protected int m_CurrencyUsedIdx = -1;
+	
 	override Widget Init()
     {
-		layoutRoot 			= Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH));
+		layoutRoot 				= Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH[GetPMConfig().GUIOption]));
 		
-		m_StallItemsGrid 	= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("StallItemsGrid"));
-		m_InventoryGrid 	= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("InventoryGrid"));
+		m_StallItemsGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("StallItemsGrid"));
+		m_InventoryGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("InventoryGrid"));
 		
-		m_Withdraw 			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("Withdraw"));
-		m_Withdraw_label 	= TextWidget.Cast(layoutRoot.FindAnyWidget("Withdraw_label"));
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 900,true);
+		m_Withdraw 				= ButtonWidget.Cast(layoutRoot.FindAnyWidget("Withdraw"));
+		m_Withdraw_label 		= TextWidget.Cast(layoutRoot.FindAnyWidget("Withdraw_label"));
+		
+		m_Withdraw_Text 		= TextWidget.Cast(layoutRoot.FindAnyWidget("Withdraw_Text"));
+		m_RemainingSlots 		= TextWidget.Cast(layoutRoot.FindAnyWidget("RemainingSlots"));
+		m_CurrencyUsed 			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("CurrencyUsed"));
+		m_CurrencyUsed_label 	= TextWidget.Cast(layoutRoot.FindAnyWidget("CurrencyUsed_label"));
+		
+		
+		
+		GetGame().GetMission().GetHud().Show(false);
+    	PPEffects.SetBlurInventory(0.5);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1600,true);
 		return layoutRoot;
 	}
 	
@@ -31,6 +47,8 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		if (m_Stand){
 			m_Stand.SetIsInUse(false);
 		}
+		GetGame().GetMission().GetHud().Show(true);
+    	PPEffects.SetBlurInventory(0);
 		//if (m_AwaitingRefresh){
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
 		//}
@@ -40,14 +58,41 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	void SetStall(MarketStandBase stand){
 		if (Class.CastTo(m_Stand, stand)){
 			RefreshGUI();
+			if (GetPMConfig().Currencies.Count() == 1){
+				m_CurrencyUsed.Show(false);
+				m_Withdraw_label.SetText(GetPMConfig().Currencies.Get(0).CurrencyName);
+				m_Stand.SetCurrencyUsed(GetPMConfig().Currencies.Get(0).CurrencyName);
+			} else {
+				m_CurrencyUsed_label.SetText(m_Stand.GetCurrencyUsed());
+				m_CurrencyUsedIdx = GetPMConfig().GetCurrencyIdx(m_Stand.GetCurrencyUsed());
+				if (m_CurrencyUsedIdx == -1){
+					Error2("[PLAYER MARKETS]","Currency Index is out of bounds");
+					m_CurrencyUsedIdx = 0;
+					m_CurrencyUsed_label.SetText("ERROR");
+				}
+			}
 			MSLockControls();
 		}
 	}
 	
+	protected int m_NextClickTimer = 0;
 	override bool OnClick(Widget w, int x, int y, int button){
+		int curTime = GetGame().GetTime();
 		
-		if (w == m_Withdraw && m_Stand){
+		if (w == m_Withdraw && m_Stand && curTime > m_NextClickTimer){
+			m_NextClickTimer = curTime + 1500;
 			m_Stand.RequestWithdraw();
+			return true;
+		}
+		
+		if (w == m_CurrencyUsed && GetPMConfig().Currencies.Count() > 1 && m_Stand && curTime > m_NextClickTimer && GetStand().GetMoneyBalance() == 0){
+			m_NextClickTimer = curTime + 1500;
+			m_CurrencyUsedIdx++;
+			if (m_CurrencyUsedIdx >= GetPMConfig().Currencies.Count()){
+				m_CurrencyUsedIdx = 0;
+			}
+			m_CurrencyUsed_label.SetText(GetPMConfig().Currencies.Get(m_CurrencyUsedIdx).CurrencyName);
+			m_Stand.SetCurrencyUsed(GetPMConfig().Currencies.Get(m_CurrencyUsedIdx).CurrencyName);
 			return true;
 		}
 		
@@ -126,6 +171,11 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		foreach (EntityAI item : availableItems){
 			m_AvailableItemWidgets.Insert(new MarketStallAvailableItemWidget(m_InventoryGrid, item, this));
 		}
-		m_Withdraw_label.SetText("Withdraw: " + UUtil.ConvertIntToNiceString(GetStand().GetMoneyBalance()));
+		m_Withdraw_Text.SetText("#@ui_withdraw_available " + UUtil.ConvertIntToNiceString(GetStand().GetMoneyBalance()));
+		if (m_Stand.GetMaxItemsForSale() < 0){
+			m_RemainingSlots.Show(false);
+		} else {
+			m_RemainingSlots.SetText(m_Stand.GetItemsForSaleCount().ToString() + "/" + m_Stand.GetMaxItemsForSale() + " Items for sale");
+		}
 	}
 }

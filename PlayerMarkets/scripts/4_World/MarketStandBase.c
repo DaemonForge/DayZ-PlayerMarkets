@@ -1,8 +1,8 @@
 class PM_Merchant_Base extends ItemBase {
 	
 }
- //m_OwnerGUID, m_StandName, m_MoneyBalance, m_AuthorizedSellers, m_ItemsArray
-typedef Param5<string, string,int, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>> PM_RPCSyncData;
+ //m_OwnerGUID, m_StandName, m_MoneyBalance, m_AuthorizedSellers, m_ItemsArray,m_CurrencyUsed
+typedef Param6<string, string,int, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>,string> PM_RPCSyncData;
 
 typedef Param1<PlayerMarketItemDetails> PM_RPCItemData;
 
@@ -36,6 +36,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	protected string m_OwnerGUID = "";
 	protected string m_StandName = "";
+	protected string m_CurrencyUsed = "Coins";
 	
 	protected int m_MoneyBalance = 0;
 	
@@ -93,9 +94,22 @@ class MarketStandBase extends BaseBuildingBase  {
 		return m_MoneyBalance;
 	}
 	
+	string GetCurrencyUsed(){
+		return m_CurrencyUsed;
+	}
+	
+	void SetCurrencyUsed(string currency){
+		m_CurrencyUsed = currency;
+		if (GetGame().IsClient()){
+			RPCSingleParam(PLAYER_MARKET_EDIT,new Param1<string>(m_CurrencyUsed),true);
+		} else {
+			SyncPMData();
+		}
+	}
+	
 	void WithdrawBalance(PlayerBase player){
 		if (!player){return;}
-		player.UAddMoney("Coins", m_MoneyBalance);
+		player.UAddMoney(m_CurrencyUsed, m_MoneyBalance);
 		ResetMoneyBalance();
 	}
 	
@@ -107,6 +121,17 @@ class MarketStandBase extends BaseBuildingBase  {
 	protected void ResetMoneyBalance(){
 		m_MoneyBalance = 0;
 		SyncPMData();
+	}
+	
+	int GetItemsForSaleCount(){
+		if (!GetItemsArray()){
+			return 0;
+		}
+		return GetItemsArray().Count();
+	}
+	
+	int GetMaxItemsForSale(){
+		return -1;
 	}
 	
 	void InitStandData(){
@@ -241,7 +266,7 @@ class MarketStandBase extends BaseBuildingBase  {
 			UUtil.SendNotification("Warning", "Error Getting Item Details from server", player.GetIdentity());
 			return false;
 		}
-		if (player.UGetPlayerBalance("Coins") < details.GetPrice()){
+		if (player.UGetPlayerBalance(m_CurrencyUsed) < details.GetPrice()){
 			
 			UUtil.SendNotification("Warning", "Not Enought Money", player.GetIdentity());
 			return false;
@@ -265,7 +290,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		}
 		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
 			int price = details.GetPrice();
-			player.URemoveMoney("Coins", price);
+			player.URemoveMoney(m_CurrencyUsed, price);
 			m_ItemsArray.RemoveItem(details);
 			IncreaseMoneyBalance(price);
 			SyncPMData();
@@ -386,7 +411,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsClient()) {
 			PM_RPCSyncData syncData;
 			if (ctx.Read(syncData)){
-				OnSyncClient(syncData.param1, syncData.param2,syncData.param3, syncData.param4, syncData.param5);
+				OnSyncClient(syncData.param1, syncData.param2,syncData.param3, syncData.param4, syncData.param5, syncData.param6);
 			}
 			return;
 		}
@@ -407,6 +432,13 @@ class MarketStandBase extends BaseBuildingBase  {
 			}
 			return;
 		}
+		if (rpc_type == PLAYER_MARKET_EDIT && GetGame().IsServer() && sender ) {
+			Param1<string> editType;
+			if (ctx.Read(editType) && IsOwner(sender)){
+				SetCurrencyUsed(editType.param1);
+			}
+			
+		}
 		PM_RPCItemData marketData;
 		array<EntityAI> items;
 		autoptr PlayerMarketItemDetails details;
@@ -419,17 +451,6 @@ class MarketStandBase extends BaseBuildingBase  {
 					}
 				}
 			}
-		}
-		if (rpc_type == PLAYER_MARKET_EDIT && GetGame().IsServer() && sender && ctx.Read(marketData)) {
-			if (Class.CastTo(details, marketData.param1)){
-				items = GetItemsForSale();
-				foreach (EntityAI itemE : items){
-					if (details.CheckAndSetItem(itemE)){
-						break;
-					}
-				}
-			}
-			
 		}
 		if (rpc_type == PLAYER_MARKET_DELIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
 			if (Class.CastTo(details, marketData.param1)){
@@ -459,10 +480,11 @@ class MarketStandBase extends BaseBuildingBase  {
 	--------------------------------------------------------------------------------------------
 	*/
 	
-	void OnSyncClient(string owner, string standname, int balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails){
+	void OnSyncClient(string owner, string standname, int balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
 		m_OwnerGUID = owner;
 		m_StandName = standname;
 		m_MoneyBalance = balance;
+		m_CurrencyUsed = currencyUsed;
 		if (!m_AuthorizedSellers){ m_AuthorizedSellers = new TStringIntMap; }
 		
 		m_AuthorizedSellers.Copy(sellers);
@@ -484,7 +506,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (GetGame().IsClient()){
 			RPCSingleParam(PLAYER_MARKET_SYNC, NULL, true);
 		} else {
-			RPCSingleParam(PLAYER_MARKET_SYNC, new PM_RPCSyncData(m_OwnerGUID,m_StandName, m_MoneyBalance, m_AuthorizedSellers,m_ItemsArray), true, player);
+			RPCSingleParam(PLAYER_MARKET_SYNC, new PM_RPCSyncData(m_OwnerGUID,m_StandName, m_MoneyBalance, m_AuthorizedSellers,m_ItemsArray,m_CurrencyUsed), true, player);
 		}
 	}
 	
@@ -514,6 +536,9 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (!ctx.Read( m_MoneyBalance )) {
 			return false;
 		}
+		if (!ctx.Read( m_CurrencyUsed )) {
+			return false;
+		}
 		if (!ctx.Read( m_Notes )) {
 			return false;
 		}
@@ -538,6 +563,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		ctx.Write( m_OwnerGUID );
 		ctx.Write( m_StandName );
 		ctx.Write( m_MoneyBalance );
+		ctx.Write( m_CurrencyUsed );
 		ctx.Write( m_Notes );
 		ctx.Write( m_AuthorizedSellers );
 		ctx.Write( m_ItemsArray );

@@ -197,9 +197,9 @@ FrameWidgetClass rootFrame {
      {
       ButtonWidgetClass Withdraw {
        color 0 0.1255 0.502 0.4039
-       position 0 0
        size 1 0.5
-       valign center_ref
+       halign center_ref
+       valign bottom_ref
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -216,9 +216,88 @@ FrameWidgetClass rootFrame {
          vexactpos 0
          hexactsize 0
          vexactsize 0
-         text "Withdraw: $100"
+         text "Withdraw"
          font "gui/fonts/etelkatextpro16"
          "exact text" 1
+         "text halign" center
+         "text valign" center
+        }
+       }
+      }
+      TextWidgetClass Withdraw_Text {
+       ignorepointer 1
+       position 0 0
+       size 1 0.5
+       halign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       text "Amount: $100"
+       font "gui/fonts/etelkatextpro16"
+       "text halign" center
+       "text valign" center
+      }
+     }
+    }
+    FrameWidgetClass RemainingSlotsFrame {
+     ignorepointer 1
+     size 0.18 0.4
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     {
+      TextWidgetClass RemainingSlots {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       text "0/24 Slots Used"
+       font "gui/fonts/metron22"
+       "text halign" right
+       "text valign" center
+      }
+     }
+    }
+    FrameWidgetClass CurrencySelectionFrame {
+     ignorepointer 1
+     position 0 4
+     size 0.15 0.5
+     halign right_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     {
+      ButtonWidgetClass CurrencyUsed {
+       color 0.251 0 0.502 0.4863
+       size 0.95 0.95
+       halign center_ref
+       valign center_ref
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style Colorable
+       {
+        TextWidgetClass CurrencyUsed_label {
+         ignorepointer 1
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 0
+         text "Coins"
          "text halign" center
          "text valign" center
         }

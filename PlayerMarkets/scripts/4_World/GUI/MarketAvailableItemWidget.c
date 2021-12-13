@@ -1,5 +1,5 @@
 class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
-	protected const string ITEM_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketStallSeller_Available.layout";
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller_Available.layout","PlayerMarkets/gui/layout/Modern/MarketStallSeller_Available.layout"};
 	
 	protected autoptr MarketStallSellerMenu m_parent;
 	protected Widget m_LayoutRoot;
@@ -19,7 +19,7 @@ class MarketStallAvailableItemWidget  extends ScriptedWidgetEventHandler {
 	protected EntityAI m_Item;
 	
 	void MarketStallAvailableItemWidget(Widget parent, EntityAI item, MarketStallSellerMenu menu ){
-		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
+		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
 		m_parent = MarketStallSellerMenu.Cast(menu);
 		
 		m_ItemPreview = ItemPreviewWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemPreview"));

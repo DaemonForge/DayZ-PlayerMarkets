@@ -1,5 +1,5 @@
 class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
-	protected const string ITEM_LAYOUT_PATH = "PlayerMarkets/gui/layout/MarketItem.layout";
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketItem.layout","PlayerMarkets/gui/layout/Modern/MarketItem.layout"};
 	protected autoptr PlayerMarketItemDetails m_ItemDetails;
 	
 	protected autoptr MarketStallMenu m_parent;
@@ -19,7 +19,7 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 	
 	
 	void MarketStallItemWidget(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
-		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH,parent));
+		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
 		m_parent = MarketStallMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
 		m_BG = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("BG"));

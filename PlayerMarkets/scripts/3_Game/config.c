@@ -8,6 +8,10 @@ class PlayerMarketsConfig extends Managed {
 	ref array<ref PMCurrencyMap> Currencies = new array<autoptr PMCurrencyMap>;
 	ref TStringArray BlackList = {"PM_GoldCoin", "PM_SilverCoin", "PM_CopperCoin"};
 	int GUIOption = 0;
+	int MarketTableSaleSlots = 8;
+	int MarketStallLv1SaleSlots = 16;
+	int MarketStallLv2SaleSlots = 32;
+	
 	bool ManagedTypesFile = true;
 	
 	void Load(){
@@ -40,6 +44,14 @@ class PlayerMarketsConfig extends Managed {
 	}
 	
 	
+	int GetCurrencyIdx(string currencyName){
+		for (int i = 0; i < Currencies.Count(); i++){
+			if (Currencies.Get(i).CurrencyName == currencyName){
+				return i;
+			}
+		}
+		return -1;
+	}
 	
 }
 
