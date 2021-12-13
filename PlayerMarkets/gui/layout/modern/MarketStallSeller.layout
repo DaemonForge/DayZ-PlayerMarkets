@@ -83,7 +83,7 @@ FrameWidgetClass rootFrame {
        vexactpos 1
        hexactsize 0
        vexactsize 1
-       text "@ui_inventory"
+       text "#@ui_inventory"
        font "PlayerMarkets/gui/fonts/modern/regular22"
        "text halign" center
        "text valign" center
@@ -151,7 +151,7 @@ FrameWidgetClass rootFrame {
        vexactpos 1
        hexactsize 0
        vexactsize 1
-       text "@ui_iems_for_sale"
+       text "#@ui_iems_for_sale"
        font "PlayerMarkets/gui/fonts/modern/regular22"
        "text halign" center
        "text valign" center
@@ -217,7 +217,7 @@ FrameWidgetClass rootFrame {
        vexactpos 0
        hexactsize 0
        vexactsize 0
-       text "@ui_withdraw"
+       text "#@ui_withdraw"
        font "PlayerMarkets/gui/fonts/modern/regular22"
        "text halign" center
        "text valign" center
@@ -243,7 +243,7 @@ FrameWidgetClass rootFrame {
      vexactpos 0
      hexactsize 1
      vexactsize 1
-     text "@ui_withdraw_available"
+     text "#@ui_withdraw_available"
      font "PlayerMarkets/gui/fonts/modern/regular18"
      "exact text" 0
      "text valign" center

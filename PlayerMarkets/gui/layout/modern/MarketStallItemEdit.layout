@@ -219,7 +219,7 @@ PanelWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     text "@ui_list"
+     text "#@ui_list"
      font "PlayerMarkets/gui/fonts/modern/regular20"
      "exact text" 0
      "text halign" center
@@ -262,7 +262,7 @@ PanelWidgetClass rootFrame {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     text "@ui_cancel"
+     text "#@ui_cancel"
      font "PlayerMarkets/gui/fonts/modern/regular20"
      "text halign" center
      "text valign" center

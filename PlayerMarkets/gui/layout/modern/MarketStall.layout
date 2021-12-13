@@ -131,7 +131,7 @@ FrameWidgetClass rootFrame {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     text "@ui_on_you"
+     text "#@ui_on_you"
      font "PlayerMarkets/gui/fonts/modern/regular18"
      "text valign" center
     }
