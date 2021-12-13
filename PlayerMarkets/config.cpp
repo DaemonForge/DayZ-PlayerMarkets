@@ -4,6 +4,7 @@ class CfgPatches
 	{
 		requiredVersion=0.1;
 		requiredAddons[]={ 
+			"UniversalApi",
 			"DZ_Gear_Camping",
 			"DZ_Weapons_Melee"
 		};

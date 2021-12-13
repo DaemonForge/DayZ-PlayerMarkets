@@ -171,7 +171,7 @@ FrameWidgetClass rootFrame {
    "Size To Content V" 1
    Columns 1
    {
-    TextWidgetClass ItemName {
+    TextWidgetClass DisplayName {
      ignorepointer 1
      size 300 30
      hexactpos 1
