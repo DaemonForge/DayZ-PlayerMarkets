@@ -159,9 +159,9 @@ FrameWidgetClass rootFrame {
   }
   GridSpacerWidgetClass DetailsFrame {
    ignorepointer 1
-   position 0.1 0.11
-   size 600 0.8
-   hexactpos 0
+   position 144 0.11
+   size 300 0.8
+   hexactpos 1
    vexactpos 0
    hexactsize 1
    vexactsize 0
@@ -173,7 +173,7 @@ FrameWidgetClass rootFrame {
    {
     TextWidgetClass ItemName {
      ignorepointer 1
-     size 600 30
+     size 300 30
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -185,7 +185,7 @@ FrameWidgetClass rootFrame {
     PanelWidgetClass Details {
      ignorepointer 1
      position 0 12
-     size 600 44
+     size 300 44
      valign bottom_ref
      hexactpos 1
      vexactpos 1
