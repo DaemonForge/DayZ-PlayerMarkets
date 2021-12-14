@@ -64,6 +64,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	const float MAX_FLOOR_VERTICAL_DISTANCE 		= 0.5;
 	
+	protected bool ENABLE_DEBUG_STALLS = true;
 	
 	const float MIN_ACTION_DETECTION_ANGLE_RAD 		= 0.35;		//0.35 RAD = 20 DEG
 	const float MAX_ACTION_DETECTION_DISTANCE 		= 2.0;		//meters
@@ -113,6 +114,11 @@ class MarketStandBase extends BaseBuildingBase  {
 		RegisterProxyItem("Headgear", "PM_Merchant_Headgear");
 		RegisterProxyItem("Pistol", "PM_Merchant_Pistol");
 		RegisterProxyItem("StallMag", "PM_Merchant_Magazine");
+		RegisterProxyItem("StallFood", "PM_Merchant_StallFood");
+		RegisterProxyItem("Belt_Left", "PM_Merchant_StallCanteen");
+		RegisterProxyItem("tripWireAttachment", "PM_Merchant_Grenade");
+		RegisterProxyItem("Melee", "PM_Merchant_Melee");
+		RegisterProxyItem("StallWater", "PM_Merchant_StallWater");
 	} 
 	
 	
@@ -366,18 +372,24 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (entity.GetHierarchyRoot() == this){
 			this.GetInventory().DropEntity(InventoryMode.SERVER, this, entity);
 			player.GetHumanInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, entity);
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,300, false, entity,player);
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,350, false, entity,player);
 		}
 		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
 			int price = details.GetPrice();
-			player.URemoveMoney(m_CurrencyUsed, price);
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(player.URemoveMoney, 200, false, m_CurrencyUsed, price);
 			m_ItemsArray.RemoveItem(details);
 			IncreaseMoneyBalance(price);
 			SyncPMData();
 			UUtil.SendNotification("Player Markets", entity.GetDisplayName() + " Bought", player.GetIdentity());
+			OnItemSold(entity, price);
 			return true;
 		}
 		return false;
+	}
+	
+	void OnItemSold(EntityAI item, int price){
+		string name =  Widget.TranslateString(item.GetDisplayName());
+		UApi().ds().UserSend(m_OwnerGUID, "You Successfully Sold " + name + " for $" + price);
 	}
 	
 	void CheckIfOnGround(EntityAI entity, PlayerBase player){
@@ -692,7 +704,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	override bool CanDisplayAttachmentCategory(string category_name) {
         if (category_name  == "Attachments" && GetGame().IsClient() ) {
-            return false;
+            return ENABLE_DEBUG_STALLS;
 		}
 		
 		if ( category_name == "Table" && !HasBase() )
