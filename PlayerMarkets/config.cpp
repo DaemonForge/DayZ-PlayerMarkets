@@ -1736,12 +1736,6 @@ class CfgNonAIVehicles
         InventorySlot="Shoulder";
         model="\DZ\gear\tools\steak_knife.p3d";
     };
-    class ProxyBoonieHat_g : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Shoulder";
-        model="\DZ\characters\headgear\BoonieHat_g";
-    };
     class ProxyGunSlot : ProxyAttachment
     {
         scope = 2;

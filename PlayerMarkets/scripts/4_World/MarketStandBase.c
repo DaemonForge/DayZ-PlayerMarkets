@@ -1,5 +1,44 @@
 class PM_Merchant_Base extends ItemBase {
 	
+	protected autoptr map<string, int> m_MerchantSlots = new map<string,int>;
+	
+	void PM_Merchant_Base(){
+		TStringArray attachmentSlots = new TStringArray;
+		GetAttachmentSlots(this, attachmentSlots);
+		for (int i = 0; i < attachmentSlots.Count(); i++){
+			m_MerchantSlots.Set(attachmentSlots.Get(i), InventorySlots.GetSlotIdFromString(attachmentSlots.Get(i)));
+		}
+	}
+	
+	void ~PM_Merchant_Base(){
+	}
+	
+	//--- ATTACHMENT SLOTS
+	void GetAttachmentSlots( EntityAI entity, out array<string> attachment_slots )
+	{
+		string config_path = "CfgVehicles" + " " + entity.GetType() + " " + "attachments";
+		if ( GetGame().ConfigIsExisting( config_path ) )
+		{
+			GetGame().ConfigGetTextArray( config_path, attachment_slots );
+		}
+	}
+	
+	override void EEItemDetached(EntityAI item, string slot_name)
+	{
+		super.EEItemDetached(item,slot_name);
+		
+		bool shouldDelete = true;
+		if (m_MerchantSlots.Count() > 1){
+			for (int i = 0; i < m_MerchantSlots.Count(); i++){
+				if (GetInventory().FindAttachment(m_MerchantSlots.GetElement(i)) != NULL){
+					shouldDelete = false;
+				}
+			}
+		}
+		if (shouldDelete){
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(GetGame().ObjectDelete,this);
+		}
+	}
 }
  //m_OwnerGUID, m_StandName, m_MoneyBalance, m_AuthorizedSellers, m_ItemsArray,m_CurrencyUsed
 typedef Param6<string, string,int, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>,string> PM_RPCSyncData;
@@ -52,16 +91,25 @@ class MarketStandBase extends BaseBuildingBase  {
 	protected bool m_IsInUse = false;
 	protected autoptr map<string, int> m_MerchantSlots = new map<string,int>;
 	
+	
+	autoptr map<string,string> m_AvailableProxies = new map<string,string>;
+	
 	void MarketStandBase(){
 		RegisterNetSyncVariableBool("m_IsBuilt");
 		RegisterNetSyncVariableBool("m_IsInUse");
+		InitMarketData();
+	}
+	
+	protected void InitMarketData(){
 		TStringArray attachmentSlots = new TStringArray;
 		GetAttachmentSlots(this, attachmentSlots);
 		
 		for (int i = 0; i < attachmentSlots.Count(); i++){
 			m_MerchantSlots.Set(attachmentSlots.Get(i), InventorySlots.GetSlotIdFromString(attachmentSlots.Get(i)));
 		}
+		
 	}
+	
 	
 	/*
 	--------------------------------------------------------------------------------------------	
@@ -72,7 +120,29 @@ class MarketStandBase extends BaseBuildingBase  {
 	--------------------------------------------------------------------------------------------	
 	*/	
 	
+	void RegisterProxyItem(string slot_name, string itemType){
+		if (!m_AvailableProxies){m_AvailableProxies = new map<string,string>;}
+		m_AvailableProxies.Set(slot_name, itemType);
+	}
 	
+	
+	bool FindAndAttachSuitableProxy(EntityAI item){
+		TStringArray slots = new TStringArray;
+		UUtil.GetConfigTStringArray(item.GetType(), "inventorySlot", slots);
+		foreach (string slotname : slots){
+			Print(slotname);
+			string itemType = "";
+			if (m_AvailableProxies.Find(slotname, itemType)){
+				PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachment(itemType));
+				if (attachment){
+					if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 	
 	bool CanOpenSellMenu(PlayerBase player){
 		return IsBuilt() && IsPlayerInside(player,"") && IsOwner(player);
@@ -192,8 +262,10 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
 		}
 		m_ItemsArray.Insert(new PlayerMarketItemDetails(EntityAI.Cast(item),price, this));
-		if (GetMerchantStorage()){
-			GetMerchantStorage().ServerTakeEntityToCargo(item);
+		if (!FindAndAttachSuitableProxy(item)){
+			if (GetMerchantStorage()){
+				GetMerchantStorage().ServerTakeEntityToCargo(item);
+			}
 		}
 		SyncPMData();
 		return true;
