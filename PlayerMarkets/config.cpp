@@ -6,7 +6,8 @@ class CfgPatches
 		requiredAddons[]={ 
 			"UniversalApi",
 			"DZ_Gear_Camping",
-			"DZ_Weapons_Melee"
+			"DZ_Weapons_Melee",
+			"DZ_Weapons_Magazines"
 		};
 	};
 };
@@ -721,11 +722,20 @@ class CfgVehicles
 			"Merchant_SlotLarge2",
 			"Merchant_SlotLarge3",
 			"Merchant_SlotLarge4",
+			"Merchant_SlotLarge5",
+			"Merchant_SlotLarge6",
+			"Merchant_SlotLarge7",
 			"Merchant_SlotSmall1",
 			"Merchant_SlotSmall2",
 			"Merchant_SlotSmall3",
 			"Merchant_SlotSmall4",
 			"Merchant_SlotSmall5",
+			"Merchant_SlotSmall6",
+			"Merchant_SlotSmall7",
+			"Merchant_SlotSmall8",
+			"Merchant_SlotSmall9",
+			"Merchant_SlotSmall10",
+			"Merchant_SlotSmall11",
 			"Merchant_Storage"
 		};
 		class DamageSystem
@@ -1032,11 +1042,20 @@ class CfgVehicles
 					"Merchant_SlotLarge2",
 					"Merchant_SlotLarge3",
 					"Merchant_SlotLarge4",
+					"Merchant_SlotLarge5",
+					"Merchant_SlotLarge6",
+					"Merchant_SlotLarge7",
 					"Merchant_SlotSmall1",
 					"Merchant_SlotSmall2",
 					"Merchant_SlotSmall3",
 					"Merchant_SlotSmall4",
 					"Merchant_SlotSmall5",
+					"Merchant_SlotSmall6",
+					"Merchant_SlotSmall7",
+					"Merchant_SlotSmall8",
+					"Merchant_SlotSmall9",
+					"Merchant_SlotSmall10",
+					"Merchant_SlotSmall11",
 					"Merchant_Storage"
 				};
 				icon="set:dayz_inventory image:cat_bb_attachments";
@@ -1236,13 +1255,10 @@ class CfgVehicles
 			"Material_WoodenPlanks",
 			"Merchant_SlotLarge1",
 			"Merchant_SlotLarge2",
-			"Merchant_SlotLarge3",
-			"Merchant_SlotLarge4",
 			"Merchant_SlotSmall1",
 			"Merchant_SlotSmall2",
 			"Merchant_SlotSmall3",
 			"Merchant_SlotSmall4",
-			"Merchant_SlotSmall5",
 			"Merchant_Storage"
 		};
 		class DamageSystem
@@ -1550,13 +1566,10 @@ class CfgVehicles
 				{
 					"Merchant_SlotLarge1",
 					"Merchant_SlotLarge2",
-					"Merchant_SlotLarge3",
-					"Merchant_SlotLarge4",
 					"Merchant_SlotSmall1",
 					"Merchant_SlotSmall2",
 					"Merchant_SlotSmall3",
 					"Merchant_SlotSmall4",
-					"Merchant_SlotSmall5",
 					"Merchant_Storage"
 				};
 				icon="";
@@ -1686,6 +1699,14 @@ class CfgVehicles
 		model = "PlayerMarkets\data\SlotItems\HeadgearSlot.p3d";
 		attachments[] = { "Headgear" };
 	};
+	class PM_Merchant_Magazine: PM_Merchant_Base
+	{
+		scope = 2;
+		displayName  = "Merchant Item Slot Mag";
+		descriptionShort = "";
+		model = "PlayerMarkets\data\SlotItems\MagSlot.p3d";
+		attachments[] = { "StallMag" };
+	};
 	class PM_MarketStorage : PM_Merchant_Base 
 	{
 		scope = 2;
@@ -1715,6 +1736,14 @@ class CfgWeapons
 		inventorySlot[] = {"Pistol","Pistol1","Pistol2","Pistol3","Pistol4"};
 	};
 };
+class CfgMagazines
+{
+	class DefaultMagazine;
+	class Magazine_Base: DefaultMagazine
+	{
+		inventorySlot[] = {"magazine","magazine2","magazine3","StallMag"};
+	};
+};
 class CfgNonAIVehicles
 {
     class ProxyAttachment;
@@ -1723,6 +1752,18 @@ class CfgNonAIVehicles
         scope = 2;
         InventorySlot="Shoulder1";
         model="\DZ\weapons\firearms\mosin9130\mosin9130.p3d";
+    }; 
+	class ProxyBoonieHat_g : ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Headgear";
+        model="\DZ\characters\headgear\BoonieHat_g";
+    };
+	class Proxykitchenknife : ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Knife";
+        model="\DZ\gear\tools\kitchenknife";
     };
     class Proxy1911 : ProxyAttachment
     {
@@ -1730,11 +1771,11 @@ class CfgNonAIVehicles
         InventorySlot="Pistol1";
         model="\DZ\weapons\pistols\1911\1911.p3d";
     };
-    class Proxysteak_knife : ProxyAttachment
+    class Proxymagazine_ak74_30rnd : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Shoulder";
-        model="\DZ\gear\tools\steak_knife.p3d";
+        InventorySlot="StallMag";
+        model="\DZ\weapons\attachments\magazine\magazine_ak74_30rnd";
     };
     class ProxyGunSlot : ProxyAttachment
     {
@@ -1820,6 +1861,30 @@ class CfgNonAIVehicles
         InventorySlot="Merchant_SlotSmall7";
         model="\PlayerMarkets\data\SlotItems\PistolSlot7.p3d";
     };
+    class ProxyPistolSlot8 : ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Merchant_SlotSmall8";
+        model="\PlayerMarkets\data\SlotItems\PistolSlot8.p3d";
+    };
+    class ProxyPistolSlot9 : ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Merchant_SlotSmall9";
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot.p3d";
+    };
+    class ProxyPistolSlot10 : ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Merchant_SlotSmall10";
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot2.p3d";
+    };
+    class ProxyPistolSlot11: ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Merchant_SlotSmall11";
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot3.p3d";
+    };
 };
 class CfgSlots
 {
@@ -1829,7 +1894,12 @@ class CfgSlots
 		displayName = "Market Storage";
 		ghostIcon = "book";
 	};
-	
+	class Slot_StallMag
+	{
+		name = "StallMag";
+		displayName = "Market Storage";
+		ghostIcon = "book";
+	};
 	class Slot_Pistol1
 	{
 		name = "Pistol1";
@@ -1923,6 +1993,30 @@ class CfgSlots
 	class Slot_Merchant_SlotSmall7
 	{
 		name = "Merchant_SlotSmall7";
+		displayName = "Merchant_Slot";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_SlotSmall8
+	{
+		name = "Merchant_SlotSmall8";
+		displayName = "Merchant_Slot";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_SlotSmall9
+	{
+		name = "Merchant_SlotSmall9";
+		displayName = "Merchant_Slot";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_SlotSmall10
+	{
+		name = "Merchant_SlotSmall10";
+		displayName = "Merchant_Slot";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_SlotSmall11
+	{
+		name = "Merchant_SlotSmall11";
 		displayName = "Merchant_Slot";
 		ghostIcon = "book";
 	};

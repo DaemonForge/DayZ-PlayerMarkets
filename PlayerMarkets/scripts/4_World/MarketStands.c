@@ -4,10 +4,6 @@ class PM_MarketStand extends MarketStandBase
 	
 	protected void InitMarketData(){
 		super.InitMarketData();
-		RegisterProxyItem("Shoulder1", "PM_Merchant_Guns");
-		RegisterProxyItem("Knife", "PM_Merchant_Knife");
-		RegisterProxyItem("Headgear", "PM_Merchant_Headgear");
-		RegisterProxyItem("Pistol", "PM_Merchant_Pistol");
 	}
 	
 	int GetMaxItemsForSale(){
@@ -50,6 +46,10 @@ class PM_TraderTable extends MarketStandBase
 {
 	int GetMaxItemsForSale(){
 		return GetPMConfig().MarketTableSaleSlots;
+	}
+	
+	protected void InitMarketData(){
+		super.InitMarketData();
 	}
 	
 	override string GetConstructionKitType()

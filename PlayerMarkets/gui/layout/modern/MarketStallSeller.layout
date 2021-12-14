@@ -208,7 +208,7 @@ FrameWidgetClass rootFrame {
        vexactsize 1
        style Colorable
        {
-        TextWidgetClass text {
+        TextWidgetClass Withdraw_label {
          ignorepointer 1
          position 0 0
          size 1 1

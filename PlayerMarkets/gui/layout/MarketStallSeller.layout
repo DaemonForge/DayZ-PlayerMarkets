@@ -225,6 +225,7 @@ FrameWidgetClass rootFrame {
        }
       }
       TextWidgetClass Withdraw_Text {
+       clipchildren 0
        ignorepointer 1
        position 0 0
        size 1 0.5

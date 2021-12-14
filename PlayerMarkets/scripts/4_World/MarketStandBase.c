@@ -108,7 +108,12 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_MerchantSlots.Set(attachmentSlots.Get(i), InventorySlots.GetSlotIdFromString(attachmentSlots.Get(i)));
 		}
 		
-	}
+		RegisterProxyItem("Shoulder1", "PM_Merchant_Guns");
+		RegisterProxyItem("Knife", "PM_Merchant_Knife");
+		RegisterProxyItem("Headgear", "PM_Merchant_Headgear");
+		RegisterProxyItem("Pistol", "PM_Merchant_Pistol");
+		RegisterProxyItem("StallMag", "PM_Merchant_Magazine");
+	} 
 	
 	
 	/*
@@ -125,24 +130,6 @@ class MarketStandBase extends BaseBuildingBase  {
 		m_AvailableProxies.Set(slot_name, itemType);
 	}
 	
-	
-	bool FindAndAttachSuitableProxy(EntityAI item){
-		TStringArray slots = new TStringArray;
-		UUtil.GetConfigTStringArray(item.GetType(), "inventorySlot", slots);
-		foreach (string slotname : slots){
-			Print(slotname);
-			string itemType = "";
-			if (m_AvailableProxies.Find(slotname, itemType)){
-				PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachment(itemType));
-				if (attachment){
-					if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
 	
 	bool CanOpenSellMenu(PlayerBase player){
 		return IsBuilt() && IsPlayerInside(player,"") && IsOwner(player);
@@ -253,6 +240,26 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	array<autoptr PlayerMarketItemDetails> GetItemsArray(){
 		return m_ItemsArray;
+	}
+	
+	
+	bool FindAndAttachSuitableProxy(EntityAI item){
+		TStringArray slots = new TStringArray;
+		UUtil.GetConfigTStringArray(item.GetType(), "inventorySlot", slots);
+		foreach (string slotname : slots){
+			string itemType = "";
+			if (m_AvailableProxies.Find(slotname, itemType)){
+				PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachment(itemType));
+				if (attachment){
+					if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
+						return true;
+					} else {
+						GetGame().ObjectDelete(attachment);
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	bool AddItemForSale(EntityAI item, int price, PlayerBase player){

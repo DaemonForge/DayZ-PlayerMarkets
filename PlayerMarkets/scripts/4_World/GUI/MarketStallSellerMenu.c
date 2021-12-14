@@ -60,7 +60,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 			RefreshGUI();
 			if (GetPMConfig().Currencies.Count() == 1){
 				m_CurrencyUsed.Show(false);
-				m_Withdraw_label.SetText(GetPMConfig().Currencies.Get(0).CurrencyName);
+				m_Withdraw_label.SetText("#@ui_withdraw " + GetPMConfig().Currencies.Get(0).CurrencyName);
 				m_Stand.SetCurrencyUsed(GetPMConfig().Currencies.Get(0).CurrencyName);
 			} else {
 				m_CurrencyUsed_label.SetText(m_Stand.GetCurrencyUsed());
