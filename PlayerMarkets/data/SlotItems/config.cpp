@@ -24,7 +24,7 @@ class CfgVehicles
 		itemSize[] = {11,11};
 		weight = 280;
 		itemBehaviour = 1;
-		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotLarge5","Merchant_SlotLarge6","Merchant_SlotLarge7","Merchant_SlotSmall1","Merchant_SlotSmall2","Merchant_SlotSmall3","Merchant_SlotSmall4","Merchant_SlotSmall5","Merchant_SlotSmall6","Merchant_SlotSmall7","Merchant_SlotSmall8","Merchant_SlotSmall9","Merchant_SlotSmall10","Merchant_SlotSmall11" };
+		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotLarge5","Merchant_SlotLarge6","Merchant_SlotLarge7","Merchant_SlotSmall1","Merchant_SlotSmall2","Merchant_SlotSmall3","Merchant_SlotSmall4","Merchant_SlotSmall5","Merchant_SlotSmall6","Merchant_SlotSmall7","Merchant_SlotSmall8","Merchant_SlotSmall9","Merchant_SlotSmall10"};
 	};
 	class PM_Merchant_Guns: PM_Merchant_Base
 	{
@@ -315,24 +315,18 @@ class CfgNonAIVehicles
     {
         scope = 2;
         InventorySlot="Merchant_SlotSmall8";
-        model="\PlayerMarkets\data\SlotItems\PistolSlot8.p3d";
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot.p3d";
     };
     class ProxyPistolSlot9 : ProxyAttachment
     {
         scope = 2;
         InventorySlot="Merchant_SlotSmall9";
-        model="\PlayerMarkets\data\SlotItems\KnifeSlot.p3d";
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot2.p3d";
     };
-    class ProxyPistolSlot10 : ProxyAttachment
+    class ProxyPistolSlot10: ProxyAttachment
     {
         scope = 2;
         InventorySlot="Merchant_SlotSmall10";
-        model="\PlayerMarkets\data\SlotItems\KnifeSlot2.p3d";
-    };
-    class ProxyPistolSlot11: ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Merchant_SlotSmall11";
         model="\PlayerMarkets\data\SlotItems\KnifeSlot3.p3d";
     };
 };
@@ -473,12 +467,6 @@ class CfgSlots
 	class Slot_Merchant_SlotSmall10
 	{
 		name = "Merchant_SlotSmall10";
-		displayName = "Merchant_Slot";
-		ghostIcon = "book";
-	};
-	class Slot_Merchant_SlotSmall11
-	{
-		name = "Merchant_SlotSmall11";
 		displayName = "Merchant_Slot";
 		ghostIcon = "book";
 	};
