@@ -64,7 +64,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	const float MAX_FLOOR_VERTICAL_DISTANCE 		= 0.5;
 	
-	protected bool ENABLE_DEBUG_STALLS = true;
+	protected bool ENABLE_DEBUG_STALLS = false;
 	
 	const float MIN_ACTION_DETECTION_ANGLE_RAD 		= 0.35;		//0.35 RAD = 20 DEG
 	const float MAX_ACTION_DETECTION_DISTANCE 		= 2.0;		//meters
@@ -119,6 +119,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		RegisterProxyItem("tripWireAttachment", "PM_Merchant_Grenade");
 		RegisterProxyItem("Melee", "PM_Merchant_Melee");
 		RegisterProxyItem("StallWater", "PM_Merchant_StallWater");
+		RegisterProxyItem("StallFoodAlt", "PM_Merchant_StallFoodAlt");
 	} 
 	
 	
@@ -253,14 +254,18 @@ class MarketStandBase extends BaseBuildingBase  {
 		TStringArray slots = new TStringArray;
 		UUtil.GetConfigTStringArray(item.GetType(), "inventorySlot", slots);
 		foreach (string slotname : slots){
-			string itemType = "";
-			if (m_AvailableProxies.Find(slotname, itemType)){
-				PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachment(itemType));
-				if (attachment){
-					if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
-						return true;
-					} else {
-						GetGame().ObjectDelete(attachment);
+			if (slotname == "Melee" && (!item.IsMeleeWeapon() || item.IsInherited(Weapon_Base))){ //Temp fix for guns not going in the right slot
+				
+			} else {
+				string itemType = "";
+				if (m_AvailableProxies.Find(slotname, itemType)){
+					PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachment(itemType));
+					if (attachment){
+						if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
+							return true;
+						} else {
+							GetGame().ObjectDelete(attachment);
+						}
 					}
 				}
 			}
@@ -705,6 +710,9 @@ class MarketStandBase extends BaseBuildingBase  {
 	override bool CanDisplayAttachmentCategory(string category_name) {
         if (category_name  == "Attachments" && GetGame().IsClient() ) {
             return ENABLE_DEBUG_STALLS;
+		}
+        if (category_name  == "Signs" && GetGame().IsClient() ) {
+            return true;
 		}
 		
 		if ( category_name == "Table" && !HasBase() )

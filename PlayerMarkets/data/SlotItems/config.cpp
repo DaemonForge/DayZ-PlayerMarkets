@@ -6,7 +6,8 @@ class CfgPatches
 		requiredAddons[]={ 
 			"DZ_Gear_Camping",
 			"DZ_Weapons_Melee",
-			"DZ_Weapons_Magazines"
+			"DZ_Weapons_Magazines",
+			"UniversalApi",
 		};
 	};
 };
@@ -83,6 +84,14 @@ class CfgVehicles
 		model = "PlayerMarkets\data\SlotItems\Food.p3d";
 		attachments[] = { "StallFood" };
 	};
+	class PM_Merchant_StallFoodAlt: PM_Merchant_Base
+	{
+		scope = 2;
+		displayName  = "Merchant Item Slot Food";
+		descriptionShort = "";
+		model = "PlayerMarkets\data\SlotItems\FoodAlt.p3d";
+		attachments[] = { "StallFoodAlt" };
+	};
 	class PM_Merchant_StallCanteen: PM_Merchant_Base
 	{
 		scope = 2;
@@ -126,6 +135,15 @@ class CfgVehicles
 	};
 	
 	
+	
+	class Edible_Base: Inventory_Base
+	{
+		inventorySlot[] = {"StallFood"};
+	};
+	class Rice: Edible_Base
+	{
+		inventorySlot[] = {"StallFoodAlt"};
+	};
 	class WaterBottle: Bottle_Base
 	{
 		inventorySlot[] = {"StallWater"};
@@ -135,33 +153,12 @@ class CfgVehicles
 	{
 		inventorySlot[] = {"StallWater"};
 	}
+	class SodaCan_ColorBase: Edible_Base
+	{
+		inventorySlot[] = {"StallFoodAlt"};
+	};
 	
 	
-	class Edible_Base: Inventory_Base
-	{
-		inventorySlot[] = {"StallFood"};
-	};
-};
-class CfgWeapons
-{
-	class RifleCore;
-	class Rifle_Base: RifleCore
-	{
-		inventorySlot[] = {"Shoulder1","Shoulder","Melee","Shoulder2","Shoulder3","Shoulder4","Shoulder5","Shoulder6","Shoulder7","Shoulder8","Shoulder9","Shoulder10","Shoulder11","Shoulder12","Shoulder13","Shoulder14","Shoulder15","Shoulder16","Shoulder17","Shoulder18","Shoulder19","Shoulder20","Shoulder21","Shoulder22","Shoulder23","Shoulder24","Shoulder25","Shoulder26","Shoulder27","Shoulder28","Shoulder29","Shoulder30"};
-	};
-	class PistolCore;
-	class Pistol_Base: PistolCore
-	{
-		inventorySlot[] = {"Pistol","Pistol1","Pistol2","Pistol3","Pistol4"};
-	};
-};
-class CfgMagazines
-{
-	class DefaultMagazine;
-	class Magazine_Base: DefaultMagazine
-	{
-		inventorySlot[] = {"magazine","magazine2","magazine3","StallMag"};
-	};
 };
 
 class CfgNonAIVehicles
@@ -202,6 +199,12 @@ class CfgNonAIVehicles
         scope = 2;
         InventorySlot="StallWater";
         model="\DZ\gear\drinks\waterbottle.p3d";
+    };
+    class Proxysodacan : ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="StallFoodAlt";
+        model="\DZ\gear\drinks\sodacan.p3d";
     };
     class Proxycanteen : ProxyAttachment
     {
@@ -329,6 +332,16 @@ class CfgNonAIVehicles
         InventorySlot="Merchant_SlotSmall10";
         model="\PlayerMarkets\data\SlotItems\KnifeSlot3.p3d";
     };
+	
+	
+	
+    class ProxyPaperSignModel: ProxyAttachment
+    {
+        scope = 2;
+        InventorySlot="Merchant_Sign1";
+        model="\PlayerMarkets\data\Signs\Tier1\PaperSignModel.p3d";
+    };
+	
 };
 class CfgSlots
 {
@@ -474,6 +487,30 @@ class CfgSlots
 	{
 		name = "StallFood";
 		displayName = "Stall Food";
+		ghostIcon = "book";
+	};
+	class Slot_StallFoodAlt
+	{
+		name = "StallFoodAlt";
+		displayName = "Stall Food";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_Sign1
+	{
+		name = "Merchant_Sign1";
+		displayName = "Merchant Sign";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_Sign2
+	{
+		name = "Merchant_Sign2";
+		displayName = "Merchant Sign";
+		ghostIcon = "book";
+	};
+	class Slot_Merchant_Sign3
+	{
+		name = "Merchant_Sign3";
+		displayName = "Merchant Sign";
 		ghostIcon = "book";
 	};
 };

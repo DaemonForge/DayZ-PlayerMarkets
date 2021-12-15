@@ -22,10 +22,7 @@ class CfgVehicles
 		itemSize[] = {1,2};
 		weight = 280;
 		itemBehaviour=1;
-		attachments[]=
-		{
-			""
-		};
+		inventorySlot[]={ "Merchant_Sign1","Merchant_Sign2","Merchant_Sign3" };
 		hiddenSelections[]=
 		{
 			"Paper"
@@ -52,5 +49,5 @@ class CfgVehicles
 		{
 			"PlayerMarkets\data\Signs\Tier1\Data\empty textures\tier_1_paper.rvmat"
 		};
-	}
+	};
 };
