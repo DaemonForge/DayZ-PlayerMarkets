@@ -25,7 +25,7 @@ class CfgVehicles
 		inventorySlot[]={ "Merchant_Sign1","Merchant_Sign2","Merchant_Sign3" };
 		hiddenSelections[]=
 		{
-			"Paper"
+			"Boards"
 		};
 		hiddenSelectionsTextures[]=
 		{
@@ -36,7 +36,7 @@ class CfgVehicles
 			"playermarkets\data\signs\Tier2\data\Empty Textures\Boards.rvmat"
 		};
 	};
-	class PM_GA_WoodSign : PM_BlankPaperSign
+	class PM_GA_WoodSign : PM_BlankWoodSign
 	{
 		scope = 2;
 		displayName = "Guns & Ammo Paper sign";
