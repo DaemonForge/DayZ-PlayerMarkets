@@ -116,8 +116,6 @@ class CfgVehicles
 		model = "PlayerMarkets\data\SlotItems\Bottle.p3d";
 		attachments[] = { "StallWater" };
 	};
-	
-	
 	class PM_MarketStorage : PM_Merchant_Base 
 	{
 		scope = 2;
@@ -134,8 +132,6 @@ class CfgVehicles
 		};
 	};
 	
-	
-	
 	class Edible_Base: Inventory_Base
 	{
 		inventorySlot[] = {"StallFood"};
@@ -147,18 +143,15 @@ class CfgVehicles
 	class WaterBottle: Bottle_Base
 	{
 		inventorySlot[] = {"StallWater"};
-	}
-	
+	};
 	class Vodka: Bottle_Base
 	{
 		inventorySlot[] = {"StallWater"};
-	}
+	};
 	class SodaCan_ColorBase: Edible_Base
 	{
 		inventorySlot[] = {"StallFoodAlt"};
 	};
-	
-	
 };
 
 class CfgNonAIVehicles
@@ -218,18 +211,12 @@ class CfgNonAIVehicles
         InventorySlot="StallMag";
         model="\DZ\weapons\attachments\magazine\magazine_ak74_30rnd.p3d";
     };
-	
-	
     class Proxyfirefighteraxe : ProxyAttachment
     {
         scope = 2;
         InventorySlot="Melee";
         model="\DZ\weapons\melee\blade\firefighteraxe.p3d";
-    };
-	
-	
-	
-	
+    };	
     class ProxyGunSlot : ProxyAttachment
     {
         scope = 2;
@@ -332,16 +319,12 @@ class CfgNonAIVehicles
         InventorySlot="Merchant_SlotSmall10";
         model="\PlayerMarkets\data\SlotItems\KnifeSlot3.p3d";
     };
-	
-	
-	
     class ProxyPaperSignModel: ProxyAttachment
     {
         scope = 2;
         InventorySlot="Merchant_Sign1";
         model="\PlayerMarkets\data\Signs\Tier1\PaperSignModel.p3d";
-    };
-	
+    };	
 };
 class CfgSlots
 {
@@ -514,4 +497,3 @@ class CfgSlots
 		ghostIcon = "book";
 	};
 };
-
