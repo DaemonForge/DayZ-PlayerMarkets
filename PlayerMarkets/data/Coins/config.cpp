@@ -26,7 +26,7 @@ class cfgvehicles
 		varQuantityMax = 100;
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
-		weight=2;
+		weight=4;
 	};
 	class PM_SilverCoin: Inventory_Base
 	{
@@ -40,7 +40,7 @@ class cfgvehicles
 		varQuantityMax = 50;
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
-		weight=10;
+		weight=20;
 	};
 	class PM_GoldCoin: Inventory_Base
 	{
@@ -54,6 +54,6 @@ class cfgvehicles
 		varQuantityMax = 20;
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
-		weight=40;
+		weight=100;
 	};
 };

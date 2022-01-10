@@ -1,6 +1,5 @@
 class PM_MarketKit extends PM_MarketKitBase
 {
-	
 	override string GetMarketStandClass(){
 		return "PM_MarketStand";
 	}
