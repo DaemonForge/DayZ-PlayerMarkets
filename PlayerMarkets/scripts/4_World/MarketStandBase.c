@@ -350,6 +350,12 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (!m_ItemsArray || !player || !item){
 			return false;
 		}
+		if (player.GetIdentity()){
+			if (player.GetIdentity().GetId() == m_OwnerGUID){				
+				UUtil.SendNotification("Warning", "Can't buy your own items", player.GetIdentity());
+				return false;
+			}
+		}
 		int b1, b2, b3, b4;
 		item.GetIds(b1, b2, b3, b4);
 		PlayerMarketItemDetails details = GetRightDetails(b1, b2, b3, b4);
@@ -376,7 +382,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		}
 		if (entity.GetHierarchyRoot() == this){
 			this.GetInventory().DropEntity(InventoryMode.SERVER, this, entity);
-			player.GetHumanInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, entity);
+			player.GetHumanInventory().TakeEntityToInventory(InventoryMode.SERVER, FindInventoryLocationType.ANY, entity);
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,350, false, entity,player);
 		}
 		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
@@ -386,24 +392,28 @@ class MarketStandBase extends BaseBuildingBase  {
 			IncreaseMoneyBalance(price);
 			SyncPMData();
 			UUtil.SendNotification("Player Markets", entity.GetDisplayName() + " Bought", player.GetIdentity());
-			OnItemSold(entity, price);
+			OnItemSold(entity, price,player);
 			return true;
 		}
 		return false;
 	}
 	
-	void OnItemSold(EntityAI item, int price){
+	void OnItemSold(EntityAI item, int price, PlayerBase player){
 		string name =  Widget.TranslateString(item.GetDisplayName());
 		UApi().ds().UserSend(m_OwnerGUID, "You Successfully Sold " + name + " for $" + price);
+		if (GetPMConfig().LoggingChannel != "" && player && player.GetIdentity()){
+			string adminMessage = GetStandName() + "(" + m_OwnerGUID + ") sold " + name + " for $" + price + " to " + player.GetIdentity().GetName() + " (" + player.GetIdentity().GetId() + ")";
+			UApi().ds().ChannelSend(GetPMConfig().LoggingChannel, adminMessage); 
+		}
 	}
 	
 	void CheckIfOnGround(EntityAI entity, PlayerBase player){
 		if (entity.GetHierarchyRoot() == entity){
+			entity.SetPosition(player.GetPosition());
 			entity.PlaceOnSurface();
 			UUtil.SendNotification("Warning", entity.GetDisplayName() + " Placed on Ground", player.GetIdentity());
 		}
 	}
-	
 	
 	
 	PM_Merchant_Base GetMerchantStorage(){

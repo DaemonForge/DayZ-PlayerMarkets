@@ -11,6 +11,7 @@ class PlayerMarketsConfig extends Managed {
 	int MarketTableSaleSlots = 8;
 	int MarketStallLv1SaleSlots = 16;
 	int MarketStallLv2SaleSlots = 32;
+	string LoggingChannel = "";
 	
 	bool ManagedTypesFile = true;
 	
