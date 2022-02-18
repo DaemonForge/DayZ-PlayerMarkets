@@ -7,6 +7,7 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	protected EditBoxWidget m_Price;
 	protected ButtonWidget m_Set;
 	protected ButtonWidget m_Close;
+	protected TextWidget m_Tax;
 	
 	protected EntityAI m_Item
 	
@@ -19,6 +20,13 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 		m_Price 	= EditBoxWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
 		m_Set 		= ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Set"));
 		m_Close 	= ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Close"));
+		m_Tax 		= TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Tax"));
+		
+		if (GetPMConfig().SaleTaxAmount > 0 && m_Tax){
+			m_Tax.Show(true);
+			int tax = Math.Round(GetPMConfig().SaleTaxAmount * 100);
+			m_Tax.SetText("+" + tax.ToString() + "% Tax");
+		}
 		
 		m_LayoutRoot.SetHandler(this);
 	}

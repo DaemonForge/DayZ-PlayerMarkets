@@ -41,7 +41,7 @@ class PM_Merchant_Base extends ItemBase {
 	}
 }
  //m_OwnerGUID, m_StandName, m_MoneyBalance, m_AuthorizedSellers, m_ItemsArray,m_CurrencyUsed
-typedef Param6<string, string,int, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>,string> PM_RPCSyncData;
+typedef Param6<string, string,autoptr TIntIntMap, autoptr TStringIntMap, autoptr array<autoptr PlayerMarketItemDetails>,string> PM_RPCSyncData;
 
 typedef Param1<PlayerMarketItemDetails> PM_RPCItemData;
 
@@ -77,8 +77,9 @@ class MarketStandBase extends BaseBuildingBase  {
 	protected string m_OwnerGUID = "";
 	protected string m_StandName = "";
 	protected string m_CurrencyUsed = "Coins";
+	protected int m_LastTaxedDate = 0;
 	
-	protected int m_MoneyBalance = 0;
+	protected autoptr TIntIntMap m_MoneyBalance = new TIntIntMap;
 	
 	protected autoptr TStringIntMap m_AuthorizedSellers = new TStringIntMap;
 	
@@ -155,7 +156,15 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	int GetMoneyBalance(){
-		return m_MoneyBalance;
+		if (!m_MoneyBalance || m_MoneyBalance.Count() == 0){
+			return 0;
+		}
+		TIntArray balance = m_MoneyBalance.GetValueArray();
+		int total;
+		foreach (int subtotal : balance){
+			total+= subtotal;
+		}
+		return total;
 	}
 	
 	string GetCurrencyUsed(){
@@ -173,18 +182,42 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	void WithdrawBalance(PlayerBase player){
 		if (!player){return;}
-		player.UAddMoney(m_CurrencyUsed, m_MoneyBalance);
+		player.UAddMoney(m_CurrencyUsed, GetMoneyBalance());
 		ResetMoneyBalance();
 	}
 	
 	void IncreaseMoneyBalance(int amount){
-		m_MoneyBalance += amount;
+		int date = UUtil.GetUnixInt();
+		int subtotal = 0;
+		m_MoneyBalance.Find(date,subtotal);
+		subtotal += amount;
+		m_MoneyBalance.Set(date,subtotal);
 		SyncPMData();
 	}
 	
 	protected void ResetMoneyBalance(){
-		m_MoneyBalance = 0;
+		m_MoneyBalance = new TIntIntMap;
 		SyncPMData();
+	}
+	
+	protected void DoTaxation(){
+		int date = UUtil.GetUnixInt();
+		if (m_LastTaxedDate >= date || m_MoneyBalance.Count() > 0) return;
+		
+		for (int i = 0; i < m_MoneyBalance.Count();i++){
+			int theDate = m_MoneyBalance.GetKey(i);
+			if ((theDate + GetPMConfig().FreeTaxDays) > date){
+				int subtotal = m_MoneyBalance.GetElement(i);
+				int tax = Math.Ceil(subtotal * GetPMConfig().DailyTaxAmmount);
+				subtotal -= tax;
+				if (subtotal > 0){
+					m_MoneyBalance.Set(theDate,subtotal);
+				} else {
+					m_MoneyBalance.Remove(theDate);
+				}
+			}
+		}
+		
 	}
 	
 	int GetItemsForSaleCount(){
@@ -205,13 +238,24 @@ class MarketStandBase extends BaseBuildingBase  {
 		
 		array<EntityAI> items = GetItemsForSale();
 		if (GetGame().IsServer()){
+			DoTaxation();
+			TIntArray ruinedItemIndexes = new TIntArray;
 			for (int i = 0; i < m_ItemsArray.Count(); i++){ 
 				PlayerMarketItemDetails detail = PlayerMarketItemDetails.Cast(m_ItemsArray.Get(i));
 				foreach (EntityAI item : items){
 					if (detail.CheckAndSetItem(item)){
+						if (item.IsRuined()){
+							ruinedItemIndexes.Insert(i);
+						}
 						items.RemoveItem(item);//Remove it from array to improve performance on adding more items
 						break;
 					}
+				}
+			}
+			if (ruinedItemIndexes.Count() > 0){
+				int max = ruinedItemIndexes.Count() - 1;
+				for (int j = max; max >= 0; j--){
+					m_ItemsArray.RemoveOrdered(ruinedItemIndexes.Get(j));
 				}
 			}
 		}
@@ -352,7 +396,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		}
 		if (player.GetIdentity()){
 			if (player.GetIdentity().GetId() == m_OwnerGUID){				
-				UUtil.SendNotification("Warning", "Can't buy your own items", player.GetIdentity());
+				UUtil.SendNotification("Warning", "#CANTBUYOWN", player.GetIdentity());
 				return false;
 			}
 		}
@@ -386,8 +430,12 @@ class MarketStandBase extends BaseBuildingBase  {
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,350, false, entity,player);
 		}
 		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
+			int pricewTax = details.GetPrice();
 			int price = details.GetPrice();
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(player.URemoveMoney, 200, false, m_CurrencyUsed, price);
+			if (GetPMConfig().SaleTaxAmount > 0){
+				pricewTax+= pricewTax * GetPMConfig().SaleTaxAmount;
+			}
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(player.URemoveMoney, 200, false, m_CurrencyUsed, pricewTax);
 			m_ItemsArray.RemoveItem(details);
 			IncreaseMoneyBalance(price);
 			SyncPMData();
@@ -587,7 +635,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	--------------------------------------------------------------------------------------------
 	*/
 	
-	void OnSyncClient(string owner, string standname, int balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
+	void OnSyncClient(string owner, string standname, TIntIntMap balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
 		m_OwnerGUID = owner;
 		m_StandName = standname;
 		m_MoneyBalance = balance;
@@ -661,6 +709,9 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (!ctx.Read( m_Vists )) {
 			return false;
 		}
+		if (!ctx.Read( m_LastTaxedDate )) {
+			return false;
+		}
 		return true;
 	}
 	
@@ -676,6 +727,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		ctx.Write( m_ItemsArray );
 		ctx.Write( m_Visitors );
 		ctx.Write( m_Vists );
+		ctx.Write( m_LastTaxedDate );
 	}
 	
 	override void AfterStoreLoad()

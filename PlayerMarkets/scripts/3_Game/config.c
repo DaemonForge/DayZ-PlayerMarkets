@@ -15,6 +15,10 @@ class PlayerMarketsConfig extends Managed {
 	
 	bool ManagedTypesFile = true;
 	
+	float SaleTaxAmount = 0.05;
+	int FreeTaxDays = 3;
+	float DailyTaxAmmount = 0.03;
+	
 	void Load(){
 		if (GetGame().IsServer()){
 			if (FileExist(ConfigPATH)){ // If config exist load File

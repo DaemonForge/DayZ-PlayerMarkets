@@ -51,7 +51,12 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		EntityAI item = m_ItemDetails.GetItem();
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4 = ruined
 		m_DisplayName.SetText(item.GetDisplayName());
-		m_Price.SetText("$" + UUtil.ConvertIntToNiceString(m_ItemDetails.GetPrice()));
+		
+		int price = details.GetPrice();
+		if (GetPMConfig().SaleTaxAmount > 0){
+			price+= price * GetPMConfig().SaleTaxAmount;
+		}
+		m_Price.SetText("$" + UUtil.ConvertIntToNiceString(price));
 		string description = "";
 		UUtil.GetConfigString(item.GetType(),"descriptionShort",description );
 		m_Description.SetText(description);

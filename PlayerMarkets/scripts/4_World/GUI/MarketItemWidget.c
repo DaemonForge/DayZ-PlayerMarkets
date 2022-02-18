@@ -34,8 +34,12 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 		m_ItemState = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		
 		
+		int price = details.GetPrice();
+		if (GetPMConfig().SaleTaxAmount > 0){
+			price+= price * GetPMConfig().SaleTaxAmount;
+		}
 		
-		m_Cost.SetText("$" + UUtil.ConvertIntToNiceString(m_ItemDetails.GetPrice()));
+		m_Cost.SetText("$" + UUtil.ConvertIntToNiceString(price));
 		
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4
 		EntityAI item = m_ItemDetails.GetItem();
