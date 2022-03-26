@@ -96,7 +96,7 @@ class CfgVehicles
 	class PM_MarketV2Kit: Inventory_Base
 	{
 		scope = 2;
-		displayName = "Market Stall V2 Kit";
+		displayName = "Large Market Stall Kit";
 		descriptionShort = "Market Stall V2 Kit, Place to make a stall";
 		model = "PlayerMarkets\data\MarketStand\MarketStandV2Kit.p3d";
 		rotationFlags = 17;
@@ -609,7 +609,7 @@ class CfgVehicles
 			{
 				class base
 				{
-					name="Trader Table";
+					name="Market Table";
 					is_base=1;
 					id=1;
 					required_parts[]={};
@@ -688,7 +688,7 @@ class CfgVehicles
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=12;
+							quantity=8;
 						};
 					};
 				};
@@ -704,7 +704,7 @@ class CfgVehicles
 	class PM_MarketStandV2 : MarketStandBase 
 	{
 		scope = 2;
-		displayName  = "Market Stand V2";
+		displayName  = "Large Market Stand";
 		descriptionShort = "A place where players can sell there items";
 		model = "PlayerMarkets\data\MarketStand\MarketStandV2.p3d";
 		bounding="BSphere";
@@ -1175,7 +1175,7 @@ class CfgVehicles
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=32;
+							quantity=24;
 						};
 					};
 				};
@@ -1233,7 +1233,7 @@ class CfgVehicles
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=24;
+							quantity=12;
 						};
 					};
 				};
@@ -1672,7 +1672,7 @@ class CfgVehicles
 						{
 							type="Nail";
 							slot_name="Material_Nails";
-							quantity=20;
+							quantity=16;
 						};
 					};
 				};
