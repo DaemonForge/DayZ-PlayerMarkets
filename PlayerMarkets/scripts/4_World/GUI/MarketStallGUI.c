@@ -1,4 +1,4 @@
-ref MarketStallMenu m_MarketStallMenu;
+static ref MarketStallMenu m_MarketStallMenu;
 class MarketStallMenu extends UIScriptedMenu {
 	
 	protected static  autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStall.layout","PlayerMarkets/gui/layout/modern/MarketStall.layout"};

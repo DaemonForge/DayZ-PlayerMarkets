@@ -187,7 +187,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	void IncreaseMoneyBalance(int amount){
-		int date = UUtil.GetUnixInt();
+		int date = UUtil.GetDateInt();
 		int subtotal = 0;
 		m_MoneyBalance.Find(date,subtotal);
 		subtotal += amount;
@@ -201,10 +201,12 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	protected void DoTaxation(){
-		int date = UUtil.GetUnixInt();
-		if (m_LastTaxedDate >= date || m_MoneyBalance.Count() > 0) return;
-		
-		for (int i = 0; i < m_MoneyBalance.Count();i++){
+		int date = UUtil.GetDateInt();
+		if (m_LastTaxedDate >= date || m_MoneyBalance.Count() == 0) return;
+		m_LastTaxedDate = date;
+		TIntArray DatestoRemove = {};
+		int i = 0;
+		for (i = 0; i < m_MoneyBalance.Count();i++){
 			int theDate = m_MoneyBalance.GetKey(i);
 			if ((theDate + GetPMConfig().FreeTaxDays) > date){
 				int subtotal = m_MoneyBalance.GetElement(i);
@@ -213,8 +215,13 @@ class MarketStandBase extends BaseBuildingBase  {
 				if (subtotal > 0){
 					m_MoneyBalance.Set(theDate,subtotal);
 				} else {
-					m_MoneyBalance.Remove(theDate);
+					DatestoRemove.Insert(theDate);
 				}
+			}
+		}
+		if (DatestoRemove.Count() > 0){
+			for (i = 0; i < DatestoRemove.Count();  i++){
+				m_MoneyBalance.Remove(DatestoRemove.Get(i));
 			}
 		}
 		
