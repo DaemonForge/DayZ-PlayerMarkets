@@ -1,4 +1,4 @@
-ref MarketStallSellerMenu m_MarketStallSellerMenu;
+static ref MarketStallSellerMenu m_MarketStallSellerMenu;
 class MarketStallSellerMenu extends UIScriptedMenu {
 	
 	protected const autoptr TStringArray ROOT_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller.layout","PlayerMarkets/gui/layout/modern/MarketStallSeller.layout"};
@@ -177,5 +177,10 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		} else {
 			m_RemainingSlots.SetText(m_Stand.GetItemsForSaleCount().ToString() + "/" + m_Stand.GetMaxItemsForSale() + " Items for sale");
 		}
+	}
+	
+	
+	void EditPrice(PlayerMarketItemDetails itemDetails){
+		
 	}
 }

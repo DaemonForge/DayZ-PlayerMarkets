@@ -208,7 +208,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		int i = 0;
 		for (i = 0; i < m_MoneyBalance.Count();i++){
 			int theDate = m_MoneyBalance.GetKey(i);
-			if ((theDate + GetPMConfig().FreeTaxDays) > date){
+			if ((theDate + GetPMConfig().FreeTaxDays) < date){
 				int subtotal = m_MoneyBalance.GetElement(i);
 				int tax = Math.Ceil(subtotal * GetPMConfig().DailyTaxAmmount);
 				subtotal -= tax;

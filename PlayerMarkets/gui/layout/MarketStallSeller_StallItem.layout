@@ -35,7 +35,7 @@ FrameWidgetClass rootFrame {
    vexactsize 1
    {
     ButtonWidgetClass Edit {
-     visible 0
+     visible 1
      color 0.2667 0.1529 0 1
      position 0 2
      size 1 0.46
@@ -246,6 +246,20 @@ FrameWidgetClass rootFrame {
        hexactsize 1
        vexactsize 1
        text "Quanity"
+       font "PlayerMarkets/gui/fonts/AmaticSCBold"
+      }
+      TextWidgetClass Price {
+       ignorepointer 1
+       color 0 0 0 1
+       size 48 48
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       text "$100"
+       "text color" 0 0 0 1
+       "size to text h" 1
        font "PlayerMarkets/gui/fonts/AmaticSCBold"
       }
      }

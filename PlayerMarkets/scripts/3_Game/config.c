@@ -18,6 +18,8 @@ class PlayerMarketsConfig extends Managed {
 	float SaleTaxAmount = 0.05;
 	int FreeTaxDays = 3;
 	float DailyTaxAmmount = 0.03;
+	float DeListFee = 0.05;
+	float DeListFeeMin = 100;
 	
 	void Load(){
 		if (GetGame().IsServer()){

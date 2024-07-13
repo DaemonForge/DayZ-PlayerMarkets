@@ -12,6 +12,8 @@ class PlayerMarketItemDetailsBase extends Managed {
 	protected int m_Price = -1;
 	protected int m_MaxPrice = -1;
 	
+	[NonSerialized()]
+	protected int LastEditDate = -1;
 	
 	protected string m_ListerGUID = "";
 	
@@ -32,6 +34,14 @@ class PlayerMarketItemDetailsBase extends Managed {
 	
 	void SetPrice(int price){
 		m_Price = price;
+		m_MaxPrice = Math.Max(m_MaxPrice,m_Price);
+	}
+	
+	int GetDeListFee(){
+		if (m_MaxPrice < 0 || m_MaxPrice < GetPMConfig().DeListFeeMin){
+			return 0;
+		}
+		return m_MaxPrice * GetPMConfig().DeListFee;
 	}
 	
 	string GetLister(){

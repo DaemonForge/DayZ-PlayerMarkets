@@ -13,6 +13,7 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 	protected Widget m_ItemState;
 	protected TextWidget m_QuanityAmount;
 	protected TextWidget m_QuanityMax;
+	protected TextWidget m_Price;
 	
 	protected ButtonWidget m_Edit;
 	protected ButtonWidget m_Delist;
@@ -29,11 +30,15 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
 		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
-		m_ItemState = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
+		
+		m_Price = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
+		
+		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
 		
 		m_Edit = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Edit"));
 		m_Delist = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Delist"));
 		
+		m_Price.SetText("$" + UUtil.ConvertIntToNiceString(m_ItemDetails.GetPrice()));
 		
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4
 		EntityAI item = m_ItemDetails.GetItem();
@@ -98,8 +103,11 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 		
 		if (w == m_Delist && m_parent){
 			m_parent.GetStand().RequestDeList(m_ItemDetails);
-			m_parent.RequestRefresh();
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(m_parent.RequestRefresh,100);
 			return true;
+		}
+		if (w == m_Edit && m_parent){
+			
 		}
 		
 		return super.OnClick(w,x,y,button);
