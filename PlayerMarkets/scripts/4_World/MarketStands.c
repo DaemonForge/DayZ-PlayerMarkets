@@ -2,11 +2,11 @@ class PM_MarketStand extends MarketStandBase
 {
 	
 	
-	protected void InitMarketData(){
+	override protected void InitMarketData(){
 		super.InitMarketData();
 	}
 	
-	int GetMaxItemsForSale(){
+	override int GetMaxItemsForSale(){
 		return GetPMConfig().MarketStallLv1SaleSlots;
 	}
 	
@@ -19,7 +19,7 @@ class PM_MarketStand extends MarketStandBase
 }
 class PM_MarketStandV2 extends MarketStandBase
 {
-	int GetMaxItemsForSale(){
+	override int GetMaxItemsForSale(){
 		return GetPMConfig().MarketStallLv2SaleSlots;
 	}
 	
@@ -44,11 +44,11 @@ class PM_MarketStandV2 extends MarketStandBase
 }
 class PM_TraderTable extends MarketStandBase
 {
-	int GetMaxItemsForSale(){
+	override int GetMaxItemsForSale(){
 		return GetPMConfig().MarketTableSaleSlots;
 	}
 	
-	protected void InitMarketData(){
+	override protected void InitMarketData(){
 		super.InitMarketData();
 	}
 	

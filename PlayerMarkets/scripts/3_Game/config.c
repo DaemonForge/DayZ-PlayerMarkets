@@ -24,7 +24,7 @@ class PlayerMarketsConfig extends Managed {
 	void Load(){
 		if (GetGame().IsServer()){
 			if (FileExist(ConfigPATH)){ // If config exist load File
-			    UApiJSONHandler<PlayerMarketsConfig>.FromFile(ConfigPATH, this);
+			    UJSONHandler<PlayerMarketsConfig>.FromFile(ConfigPATH, this);
 				if (!BlackList){
 					BlackList = {"PM_GoldCoin", "PM_SilverCoin", "PM_CopperCoin"};
 					Save();
@@ -41,7 +41,7 @@ class PlayerMarketsConfig extends Managed {
 	}
 	
 	void Save(){
-		UApiJSONHandler<PlayerMarketsConfig>.ToFile(ConfigPATH, this);
+		UJSONHandler<PlayerMarketsConfig>.ToFile(ConfigPATH, this);
 	}
 	
 	void LoadCurrencys(){

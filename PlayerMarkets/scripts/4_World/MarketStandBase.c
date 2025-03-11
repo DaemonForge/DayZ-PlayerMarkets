@@ -455,10 +455,10 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	void OnItemSold(EntityAI item, int price, PlayerBase player){
 		string name =  Widget.TranslateString(item.GetDisplayName());
-		UApi().ds().UserSend(m_OwnerGUID, "You Successfully Sold " + name + " for $" + price);
+		U().ds().UserSend(m_OwnerGUID, "You Successfully Sold " + name + " for $" + price);
 		if (GetPMConfig().LoggingChannel != "" && player && player.GetIdentity()){
 			string adminMessage = GetStandName() + "(" + m_OwnerGUID + ") sold " + name + " for $" + price + " to " + player.GetIdentity().GetName() + " (" + player.GetIdentity().GetId() + ")";
-			UApi().ds().ChannelSend(GetPMConfig().LoggingChannel, adminMessage); 
+			U().ds().ChannelSend(GetPMConfig().LoggingChannel, adminMessage); 
 		}
 	}
 	
@@ -642,7 +642,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	--------------------------------------------------------------------------------------------
 	*/
 	
-	void OnSyncClient(string owner, string standname, TIntIntMap balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
+	void OnSyncClient(string owner, string standname, TIntIntMap balance, TStringIntMap sellers, array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
 		m_OwnerGUID = owner;
 		m_StandName = standname;
 		m_MoneyBalance = balance;
@@ -805,7 +805,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		return super.CanDisplayCargo();
 	}
 	
-	ItemBase FoldBaseBuildingObject()
+	override ItemBase FoldBaseBuildingObject()
 	{
 		ItemBase item = CreateConstructionKit();
 		DestroyConstruction();
@@ -820,7 +820,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	//--- CONSTRUCTION KIT
-	ItemBase CreateConstructionKit()
+	override ItemBase CreateConstructionKit()
 	{
 		ItemBase construction_kit = ItemBase.Cast( GetGame().CreateObject( GetConstructionKitType(), GetKitSpawnPosition() ) );
 		if ( m_ConstructionKitHealth > 0 )

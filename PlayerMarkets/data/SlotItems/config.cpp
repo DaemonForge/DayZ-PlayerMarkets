@@ -7,7 +7,7 @@ class CfgPatches
 			"DZ_Gear_Camping",
 			"DZ_Weapons_Melee",
 			"DZ_Weapons_Magazines",
-			"UniversalApi",
+			"UFramework",
 		};
 	};
 };

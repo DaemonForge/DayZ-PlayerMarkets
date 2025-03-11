@@ -99,20 +99,20 @@ class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
 	
 	}
 	
-	bool OnMouseEnter(Widget w, int x, int y){
+	override bool OnMouseEnter(Widget w, int x, int y){
 		if (w == m_LayoutRoot){
 			m_BG.SetSize(1.05,1.05);
 		}
 		return super.OnMouseEnter(w,x,y);
 	}
-	bool OnMouseLeave(Widget w, Widget enterW, int x, int y){
+	override bool OnMouseLeave(Widget w, Widget enterW, int x, int y){
 		if (w == m_LayoutRoot){
 			m_BG.SetSize(1,1);
 			
 		}
 		return super.OnMouseLeave(w,enterW,x,y);
 	}
-	bool OnMouseButtonUp(Widget w, int x, int y, int button){
+	override bool OnMouseButtonUp(Widget w, int x, int y, int button){
 		if (w == m_LayoutRoot && m_parent){
 			m_parent.OpenViewItem(m_ItemDetails);
 			return true;
