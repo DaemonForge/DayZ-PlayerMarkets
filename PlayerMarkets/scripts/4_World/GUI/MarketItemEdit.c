@@ -101,25 +101,25 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		UpdateItemPreviw(item);
 		
 		m_LayoutRoot.SetHandler(this);
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.OnUpdate,400, true);
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.UpdateItemView,400, true);
 	}
 	
 	
 	void ~MarketStallItemView(){
 		m_LayoutRoot.Show(false);
 		GetGame().GetDragQueue().RemoveCalls(this);
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.OnUpdate);
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.UpdateItemView);
 		delete m_LayoutRoot;
 	}
 	
-    bool OnMouseButtonDown(Widget w, int x, int y, int button)
+    override bool OnMouseButtonDown(Widget w, int x, int y, int button)
 	{
 		super.OnMouseButtonDown(w, x, y, button);
 		
 		if (w == m_ItemPreview)
 		{
 			GetGame().GetDragQueue().Call(this, "UpdateRotation");
-			g_Game.GetMousePos(m_PreviewWidgetRotationX, m_PreviewWidgetRotationY);
+			GetMousePos(m_PreviewWidgetRotationX, m_PreviewWidgetRotationY);
 			return true;
 		}
 		return false;
@@ -161,7 +161,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		m_LayoutRoot.Show(false);
 	}	
 	
-	void OnUpdate()
+	void UpdateItemView()
 	{
 		if (m_parent){
 			if (m_parent.GetPlayerBalance() < m_ItemDetails.GetPrice()){
