@@ -642,7 +642,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	--------------------------------------------------------------------------------------------
 	*/
 	
-	void OnSyncClient(string owner, string standname, TIntIntMap balance, TStringIntMap sellers, autoptr array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
+	void OnSyncClient(string owner, string standname, TIntIntMap balance, TStringIntMap sellers, array<autoptr PlayerMarketItemDetails> itemDetails, string currencyUsed){
 		m_OwnerGUID = owner;
 		m_StandName = standname;
 		m_MoneyBalance = balance;
@@ -651,8 +651,8 @@ class MarketStandBase extends BaseBuildingBase  {
 		
 		m_AuthorizedSellers.Copy(sellers);
 		array<EntityAI> items = GetItemsForSale();
-		array<autoptr PlayerMarketItemDetails> idetals = array<autoptr PlayerMarketItemDetails>.Cast(itemDetails);
-		m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
+		array<ref PlayerMarketItemDetails> idetals = itemDetails;
+		m_ItemsArray = new array<ref PlayerMarketItemDetails>;
 		foreach (PlayerMarketItemDetails detail : idetals){
 			foreach (EntityAI item : items){
 				if (detail.CheckAndSetItem(item)){
@@ -805,7 +805,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		return super.CanDisplayCargo();
 	}
 	
-	ItemBase FoldBaseBuildingObject()
+	override ItemBase FoldBaseBuildingObject()
 	{
 		ItemBase item = CreateConstructionKit();
 		DestroyConstruction();
@@ -820,7 +820,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	//--- CONSTRUCTION KIT
-	ItemBase CreateConstructionKit()
+	override ItemBase CreateConstructionKit()
 	{
 		ItemBase construction_kit = ItemBase.Cast( GetGame().CreateObject( GetConstructionKitType(), GetKitSpawnPosition() ) );
 		if ( m_ConstructionKitHealth > 0 )
