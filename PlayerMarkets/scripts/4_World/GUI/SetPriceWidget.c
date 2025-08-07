@@ -54,7 +54,7 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	}
 	
 	
-	bool OnChange(Widget w, int x, int y, bool finished){
+	override bool OnChange(Widget w, int x, int y, bool finished){
 		
 		if (w == m_Price){
 			string number = CheckInput(m_Price.GetText());
