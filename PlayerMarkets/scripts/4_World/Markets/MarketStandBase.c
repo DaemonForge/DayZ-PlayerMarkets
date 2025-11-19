@@ -651,8 +651,8 @@ class MarketStandBase extends BaseBuildingBase  {
 		
 		m_AuthorizedSellers.Copy(sellers);
 		array<EntityAI> items = GetItemsForSale();
-		array<autoptr PlayerMarketItemDetails> idetals = array<autoptr PlayerMarketItemDetails>.Cast(itemDetails);
-		m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
+		array<ref PlayerMarketItemDetails> idetals = itemDetails;
+		m_ItemsArray = new array<ref PlayerMarketItemDetails>;
 		foreach (PlayerMarketItemDetails detail : idetals){
 			foreach (EntityAI item : items){
 				if (detail.CheckAndSetItem(item)){
