@@ -1,4 +1,5 @@
-class ActionOpenMarketStallSell: ActionInteractBase
+
+class ActionOpenMarketStallBuy: ActionInteractBase
 {
 	void ActionMapLinkOpenOnAny()
 	{
@@ -16,18 +17,18 @@ class ActionOpenMarketStallSell: ActionInteractBase
 	
 	override string GetText()
 	{
-		return "#@ui_sell";
+		return "#@ui_buy";
 	}
 
 	override bool ActionCondition( PlayerBase player, ActionTarget target, ItemBase item )
 	{
 		if ( !target || !player) 
 			return false;
-		
 		MarketStandBase stall;
-		if ((Class.CastTo(stall, target.GetObject()) || Class.CastTo(stall, target.GetParent())) && stall.CanOpenSellMenu(player)){
+		if ((Class.CastTo(stall, target.GetObject()) || Class.CastTo(stall, target.GetParent())) && stall.CanOpenBuyMenu(player)){
 			return true;
 		}
+		
 		return false;
 	}
 	
@@ -42,15 +43,16 @@ class ActionOpenMarketStallSell: ActionInteractBase
 		if ( !action_data )
 			return;
 		
-		MarketStandBase stall;
+		
+		MarketStandBase theTarget;
 		PlayerBase thePlayer;
-		if ((Class.CastTo(stall, action_data.m_Target.GetObject()) || Class.CastTo(stall, action_data.m_Target.GetParent())) && Class.CastTo(thePlayer, action_data.m_Player)){
-			
-			if (stall.CanOpenSellMenu(thePlayer)){
-				m_MarketStallSellerMenu = MarketStallSellerMenu.Cast(GetGame().GetUIManager().EnterScriptedMenu(PLAYER_MARKET_MENU_SELL, NULL));
-				m_MarketStallSellerMenu.SetStall(stall);
+		if ((Class.CastTo(theTarget, action_data.m_Target.GetObject()) || Class.CastTo(theTarget, action_data.m_Target.GetParent())) && Class.CastTo(thePlayer, action_data.m_Player)){
+			if (theTarget.CanOpenBuyMenu(thePlayer)){ //Double check
+				m_MarketStallMenu = MarketStallMenu.Cast(g_Game.GetUIManager().EnterScriptedMenu(PLAYER_MARKET_MENU_BUY, NULL));
+				m_MarketStallMenu.SetStall(theTarget);
 			}
 		}
+		
 	}
 	
 }

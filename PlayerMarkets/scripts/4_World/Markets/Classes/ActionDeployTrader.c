@@ -9,7 +9,7 @@ modded class ActionDeployObject
 				return false;
 			
 			//Client
-			if ( !GetGame().IsDedicatedServer() )
+			if ( !g_Game.IsDedicatedServer() )
 			{
 				if ( player.IsPlacingLocal() )
 				{

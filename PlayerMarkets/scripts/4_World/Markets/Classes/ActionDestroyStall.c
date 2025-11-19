@@ -28,7 +28,7 @@ class ActionDestroyPM_MarketPart: ActionContinuousBase
 		
 	override string GetText()
 	{
-		PlayerBase player = PlayerBase.Cast( GetGame().GetPlayer() );
+		PlayerBase player = PlayerBase.Cast( g_Game.GetPlayer() );
 		if ( player )
 		{
 			ConstructionActionData construction_action_data = player.GetConstructionActionData();
@@ -107,7 +107,7 @@ class ActionDestroyPM_MarketPart: ActionContinuousBase
 						//Camera check (client-only)
 						if ( camera_check )
 						{
-							if ( GetGame() && ( !GetGame().IsMultiplayer() || GetGame().IsClient() ) )
+							if ( g_Game && ( !g_Game.IsMultiplayer() || g_Game.IsClient() ) )
 							{
 								if ( !base_building.IsFacingCamera( part_name ) )
 								{

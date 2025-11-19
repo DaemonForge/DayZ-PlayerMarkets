@@ -27,7 +27,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	protected ButtonWidget m_Cancel;
 	
 	void MarketStallItemView(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
-		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
+		m_LayoutRoot = Widget.Cast(g_Game.GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
 		m_parent = MarketStallMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
 		
@@ -101,14 +101,14 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		UpdateItemPreviw(item);
 		
 		m_LayoutRoot.SetHandler(this);
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.PMOnUpdate, 400, true);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.PMOnUpdate, 400, true);
 	}
 	
 	
 	void ~MarketStallItemView(){
 		m_LayoutRoot.Show(false);
-		GetGame().GetDragQueue().RemoveCalls(this);
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.PMOnUpdate);
+		g_Game.GetDragQueue().RemoveCalls(this);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.PMOnUpdate);
 		delete m_LayoutRoot;
 	}
 	
@@ -118,7 +118,7 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		
 		if (w == m_ItemPreview)
 		{
-			GetGame().GetDragQueue().Call(this, "UpdateRotation");
+			g_Game.GetDragQueue().Call(this, "UpdateRotation");
 			GetMousePos(m_PreviewWidgetRotationX, m_PreviewWidgetRotationY);
 			return true;
 		}

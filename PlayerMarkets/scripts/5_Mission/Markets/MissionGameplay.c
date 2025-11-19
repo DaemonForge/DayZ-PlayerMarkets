@@ -3,7 +3,7 @@ modded class MissionGameplay
 	override void OnMissionStart(){
 		super.OnMissionStart();
 		GetRPCManager().AddRPC( "PlayerMarkets", "RPCPlayerMarketsConfig", this, SingeplayerExecutionType.Both );
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RequestPMConfig, Math.RandomInt(200,600));
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RequestPMConfig, Math.RandomInt(200,600));
 	}
 	
 	void RequestPMConfig(){

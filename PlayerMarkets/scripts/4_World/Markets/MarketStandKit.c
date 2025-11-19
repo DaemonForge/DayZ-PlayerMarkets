@@ -24,7 +24,7 @@ class PM_MarketKitBase extends ItemBase
 	{
 		super.EEInit();
 		
-		GetGame().GetCallQueue( CALL_CATEGORY_GAMEPLAY ).Call( AssembleKit );
+		g_Game.GetCallQueue( CALL_CATEGORY_GAMEPLAY ).Call( AssembleKit );
 	}
 
 	override bool CanReceiveAttachment(EntityAI attachment, int slotId)
@@ -57,7 +57,7 @@ class PM_MarketKitBase extends ItemBase
 			return;
 		}
 		
-		EntityAI newRope = EntityAI.Cast(GetGame().CreateObjectEx(rope.GetType(), GetPosition(), ECE_PLACE_ON_SURFACE));
+		EntityAI newRope = EntityAI.Cast(g_Game.CreateObjectEx(rope.GetType(), GetPosition(), ECE_PLACE_ON_SURFACE));
 		
 		if (newRope)
 			MiscGameplayFunctions.TransferItemProperties(this, newRope);
@@ -68,7 +68,7 @@ class PM_MarketKitBase extends ItemBase
 	{
 		if (!IsHologram())
 		{
-			ItemBase stick = ItemBase.Cast(GetGame().CreateObjectEx("WoodenStick",GetPosition(),ECE_PLACE_ON_SURFACE));
+			ItemBase stick = ItemBase.Cast(g_Game.CreateObjectEx("WoodenStick",GetPosition(),ECE_PLACE_ON_SURFACE));
 			MiscGameplayFunctions.TransferItemProperties(this, stick);
 			stick.SetQuantity(4);
 			Rope rope = Rope.Cast(item);
@@ -85,7 +85,7 @@ class PM_MarketKitBase extends ItemBase
 		
 		if (item && slot_name == "Rope")
 		{
-			if (GetGame().IsServer())
+			if (g_Game.IsServer())
 			{
 				DisassembleKit(ItemBase.Cast(item));
 				Delete();
@@ -105,11 +105,11 @@ class PM_MarketKitBase extends ItemBase
 	{
 		super.OnPlacementComplete( player, position, orientation );
 		
-		if ( GetGame().IsServer() )
+		if ( g_Game.IsServer() )
 		{
 			PlayerBase player_base = PlayerBase.Cast( player );
 
-			ItemBase MarketStall = ItemBase.Cast( GetGame().CreateObjectEx(GetMarketStandClass(), GetPosition(), ECE_PLACE_ON_SURFACE ) );
+			ItemBase MarketStall = ItemBase.Cast( g_Game.CreateObjectEx(GetMarketStandClass(), GetPosition(), ECE_PLACE_ON_SURFACE ) );
 			
 			MarketStall.SetPosition( position);
 			MarketStall.SetOrientation( orientation );

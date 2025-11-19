@@ -18,9 +18,9 @@ class PlayerMarketItemDetails extends PlayerMarketItemDetailsBase {
 		int b1,b2,b3,b4;
 		ItemBase itemB = ItemBase.Cast(item);
 		Weapon_Base itemW = Weapon_Base.Cast(item);
-		if (itemB && GetGame().IsClient()){
+		if (itemB && g_Game.IsClient()){
 			itemB.GetSyncedPersistantsId(b1,b2,b3,b4);
-		} else if (itemW && GetGame().IsClient()) {
+		} else if (itemW && g_Game.IsClient()) {
 			itemW.GetSyncedPersistantsId(b1,b2,b3,b4);
 		} else {
 			item.GetPersistentID(b1,b2,b3,b4);
@@ -40,9 +40,9 @@ class PlayerMarketItemDetails extends PlayerMarketItemDetailsBase {
 		ItemBase itemB = ItemBase.Cast(item);
 		Weapon_Base itemW = Weapon_Base.Cast(item);
 		int b1,b2,b3,b4;
-		if (itemB && GetGame().IsClient()){
+		if (itemB && g_Game.IsClient()){
 			itemB.GetSyncedPersistantsId(b1,b2,b3,b4);
-		} else if (itemW && GetGame().IsClient()) {
+		} else if (itemW && g_Game.IsClient()) {
 			itemW.GetSyncedPersistantsId(b1,b2,b3,b4);
 		} else {
 			item.GetPersistentID(b1,b2,b3,b4);

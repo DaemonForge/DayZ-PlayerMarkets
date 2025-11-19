@@ -17,13 +17,13 @@ class MarketStallMenu extends UIScriptedMenu {
 	
 	override Widget Init()
     {
-		layoutRoot 		= Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH[GetPMConfig().GUIOption]));
+		layoutRoot 		= Widget.Cast(g_Game.GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH[GetPMConfig().GUIOption]));
 		m_ItemsListed 	= Widget.Cast(layoutRoot.FindAnyWidget("ItemsListed"));
 		m_ShopTitle 	= TextWidget.Cast(layoutRoot.FindAnyWidget("ShopTitle"));
 		m_ItemGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("ItemGrid"));
 		m_Balance		= TextWidget.Cast(layoutRoot.FindAnyWidget("Balance"));
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1600,true);
-		GetGame().GetMission().GetHud().Show(false);
+		g_Game.GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1600,true);
+		g_Game.GetMission().GetHud().Show(false);
     	PPEffects.SetBlurInventory(0.5);
 		return layoutRoot;
 	}
@@ -32,9 +32,9 @@ class MarketStallMenu extends UIScriptedMenu {
 		if (m_Stand) {
 			m_Stand.SetIsInUse(false);
 		}
-		GetGame().GetMission().GetHud().Show(true);
+		g_Game.GetMission().GetHud().Show(true);
     	PPEffects.SetBlurInventory(0);
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
+		g_Game.GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
 		MSUnLockControls();
 	}
 	
@@ -49,7 +49,7 @@ class MarketStallMenu extends UIScriptedMenu {
 		m_ItemsListed.Show(true);
 		m_MarketStallItemView = NULL;
 		m_AwaitingRefresh = true;
-		//GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+		//g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
 	}
 	
 	void OpenViewItem(PlayerMarketItemDetails item){
@@ -64,14 +64,14 @@ class MarketStallMenu extends UIScriptedMenu {
 	override void Update( float timeslice )
 	{
 		super.Update( timeslice );
-		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !InspectIsOpen()) {
-			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
+		if ( g_Game.GetInput().LocalPress( "UAUIBack", false ) && !InspectIsOpen()) {
+			g_Game.GetUIManager().CloseMenu(PLAYER_MARKET_MENU_BUY);
 		}
-		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && InspectIsOpen()) {
+		if ( g_Game.GetInput().LocalPress( "UAUIBack", false ) && InspectIsOpen()) {
 			m_MarketStallItemView.Close();
 		}
 		PlayerBase player;
-		if (Class.CastTo(player, GetGame().GetPlayer())){
+		if (Class.CastTo(player, g_Game.GetPlayer())){
 			m_PlayerBalance = player.UGetPlayerBalance(m_Stand.GetCurrencyUsed());
 			m_Balance.SetText(m_Stand.GetCurrencyUsed() + " on you: $" +  UUtil.ConvertIntToNiceString(m_PlayerBalance));
 		}
@@ -104,13 +104,13 @@ class MarketStallMenu extends UIScriptedMenu {
 	}
 	
 	protected void MSLockControls() {
-        GetGame().GetMission().PlayerControlDisable(INPUT_EXCLUDE_INVENTORY);
-        GetGame().GetUIManager().ShowUICursor(true);
+        g_Game.GetMission().PlayerControlDisable(INPUT_EXCLUDE_INVENTORY);
+        g_Game.GetUIManager().ShowUICursor(true);
     }
 
     protected void MSUnLockControls() {
-        GetGame().GetMission().PlayerControlEnable(false);
-        GetGame().GetInput().ResetGameFocus();
-        GetGame().GetUIManager().ShowUICursor(false);
+        g_Game.GetMission().PlayerControlEnable(false);
+        g_Game.GetInput().ResetGameFocus();
+        g_Game.GetUIManager().ShowUICursor(false);
     }
 }

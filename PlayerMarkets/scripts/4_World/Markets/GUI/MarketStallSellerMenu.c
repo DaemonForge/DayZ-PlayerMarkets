@@ -22,7 +22,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	
 	override Widget Init()
     {
-		layoutRoot 				= Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH[GetPMConfig().GUIOption]));
+		layoutRoot 				= Widget.Cast(g_Game.GetWorkspace().CreateWidgets(ROOT_LAYOUT_PATH[GetPMConfig().GUIOption]));
 		
 		m_StallItemsGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("StallItemsGrid"));
 		m_InventoryGrid 		= GridSpacerWidget.Cast(layoutRoot.FindAnyWidget("InventoryGrid"));
@@ -37,9 +37,9 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		
 		
 		
-		GetGame().GetMission().GetHud().Show(false);
+		g_Game.GetMission().GetHud().Show(false);
     	PPEffects.SetBlurInventory(0.5);
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1200,true);
+		g_Game.GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.RefreshGUI, 1200,true);
 		return layoutRoot;
 	}
 	
@@ -47,10 +47,10 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 		if (m_Stand){
 			m_Stand.SetIsInUse(false);
 		}
-		GetGame().GetMission().GetHud().Show(true);
+		g_Game.GetMission().GetHud().Show(true);
     	PPEffects.SetBlurInventory(0);
 		//if (m_AwaitingRefresh){
-			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
+			g_Game.GetCallQueue(CALL_CATEGORY_GUI).Remove(this.RefreshGUI);
 		//}
 		MSUnLockControls();
 	}
@@ -77,7 +77,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	
 	protected int m_NextClickTimer = 0;
 	override bool OnClick(Widget w, int x, int y, int button){
-		int curTime = GetGame().GetTime();
+		int curTime = g_Game.GetTime();
 		
 		if (w == m_Withdraw && m_Stand && curTime > m_NextClickTimer){
 			m_NextClickTimer = curTime + 1500;
@@ -103,7 +103,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	void CloseSetPrice(){
 		m_MarketStallSetPriceWidget = NULL;
 		m_AwaitingRefresh = true;
-		//GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+		//g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
 	}
 	
 	void OpenSetPrice(EntityAI item){
@@ -113,10 +113,10 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	override void Update( float timeslice )
 	{
 		super.Update( timeslice );
-		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && !EditIsOpen()) {
-			GetGame().GetUIManager().CloseMenu(PLAYER_MARKET_MENU_SELL);
+		if ( g_Game.GetInput().LocalPress( "UAUIBack", false ) && !EditIsOpen()) {
+			g_Game.GetUIManager().CloseMenu(PLAYER_MARKET_MENU_SELL);
 		}
-		if ( GetGame().GetInput().LocalPress( "UAUIBack", false ) && EditIsOpen()) {
+		if ( g_Game.GetInput().LocalPress( "UAUIBack", false ) && EditIsOpen()) {
 			CloseSetPrice();
 		}
 	}
@@ -130,20 +130,20 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	}
 	
 	protected void MSLockControls() {
-        GetGame().GetMission().PlayerControlDisable(INPUT_EXCLUDE_INVENTORY);
-        GetGame().GetUIManager().ShowUICursor(true);
+        g_Game.GetMission().PlayerControlDisable(INPUT_EXCLUDE_INVENTORY);
+        g_Game.GetUIManager().ShowUICursor(true);
     }
 
     protected void MSUnLockControls() {
-        GetGame().GetMission().PlayerControlEnable(false);
-        GetGame().GetInput().ResetGameFocus();
-        GetGame().GetUIManager().ShowUICursor(false);
+        g_Game.GetMission().PlayerControlEnable(false);
+        g_Game.GetInput().ResetGameFocus();
+        g_Game.GetUIManager().ShowUICursor(false);
     }
 	
 	void RequestRefresh(){
 		if (!m_AwaitingRefresh){
 			m_AwaitingRefresh = true;
-			//GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
+			//g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.RefreshGUI, 900);
 		}
 	}
 	

@@ -17,9 +17,9 @@ class PM_Merchant_Base extends ItemBase {
 	void GetAttachmentSlots( EntityAI entity, out array<string> attachment_slots )
 	{
 		string config_path = "CfgVehicles" + " " + entity.GetType() + " " + "attachments";
-		if ( GetGame().ConfigIsExisting( config_path ) )
+		if ( g_Game.ConfigIsExisting( config_path ) )
 		{
-			GetGame().ConfigGetTextArray( config_path, attachment_slots );
+			g_Game.ConfigGetTextArray( config_path, attachment_slots );
 		}
 	}
 	
@@ -36,7 +36,7 @@ class PM_Merchant_Base extends ItemBase {
 			}
 		}
 		if (shouldDelete){
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(GetGame().ObjectDelete,this);
+			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Call(g_Game.ObjectDelete,this);
 		}
 	}
 }
@@ -47,8 +47,8 @@ typedef Param1<PlayerMarketItemDetails> PM_RPCItemData;
 
 class PM_MarketStorage extends PM_Merchant_Base {
 	void PM_MarketStorage(){
-		if (GetGame().IsClient()){ //Doing it based on the market storage cause it will ensure all the items are loaded client side first
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitMarketsClient);
+		if (g_Game.IsClient()){ //Doing it based on the market storage cause it will ensure all the items are loaded client side first
+			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitMarketsClient);
 		}
 	}
 	
@@ -173,7 +173,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	void SetCurrencyUsed(string currency){
 		m_CurrencyUsed = currency;
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_EDIT,new Param1<string>(m_CurrencyUsed),true);
 		} else {
 			SyncPMData();
@@ -244,7 +244,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		SyncPMData();
 		
 		array<EntityAI> items = GetItemsForSale();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			DoTaxation();
 			TIntArray ruinedItemIndexes = new TIntArray;
 			for (int i = 0; i < m_ItemsArray.Count(); i++){ 
@@ -315,7 +315,7 @@ class MarketStandBase extends BaseBuildingBase  {
 						if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
 							return true;
 						} else {
-							GetGame().ObjectDelete(attachment);
+							g_Game.ObjectDelete(attachment);
 						}
 					}
 				}
@@ -434,7 +434,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (entity.GetHierarchyRoot() == this){
 			this.GetInventory().DropEntity(InventoryMode.SERVER, this, entity);
 			player.GetHumanInventory().TakeEntityToInventory(InventoryMode.SERVER, FindInventoryLocationType.ANY, entity);
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,350, false, entity,player);
+			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckIfOnGround,350, false, entity,player);
 		}
 		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
 			int pricewTax = details.GetPrice();
@@ -442,7 +442,7 @@ class MarketStandBase extends BaseBuildingBase  {
 			if (GetPMConfig().SaleTaxAmount > 0){
 				pricewTax+= pricewTax * GetPMConfig().SaleTaxAmount;
 			}
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(player.URemoveMoney, 200, false, m_CurrencyUsed, pricewTax);
+			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(player.URemoveMoney, 200, false, m_CurrencyUsed, pricewTax);
 			m_ItemsArray.RemoveItem(details);
 			IncreaseMoneyBalance(price);
 			SyncPMData();
@@ -532,31 +532,31 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	
 	void RequestWithdraw(){
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_WITHDRAWN, NULL,true);
 		}
 	}
 	
 	void RequestBuy(PlayerMarketItemDetails details){
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_BUY, new PM_RPCItemData(details),true);
 		}
 	}
 	
 	void RequestDeList(PlayerMarketItemDetails details){
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_DELIST, new PM_RPCItemData(details),true);
 		}
 	}
 	
 	void RequestList(PlayerMarketItemDetails details){
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_LIST, new PM_RPCItemData(details),true);
 		}
 	}
 		
 	void SetIsInUse(bool state){
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_INUSE, new Param1<bool>(state),true);
 		} else {
 			m_IsInUse = state;
@@ -570,31 +570,31 @@ class MarketStandBase extends BaseBuildingBase  {
 	{
 		super.OnRPC(sender, rpc_type, ctx);
 		PlayerBase player;
-		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsClient()) {
+		if (rpc_type == PLAYER_MARKET_SYNC && g_Game.IsClient()) {
 			PM_RPCSyncData syncData;
 			if (ctx.Read(syncData)){
 				OnSyncClient(syncData.param1, syncData.param2,syncData.param3, syncData.param4, syncData.param5, syncData.param6);
 			}
 			return;
 		}
-		if (rpc_type == PLAYER_MARKET_SYNC && GetGame().IsServer() && sender) {
+		if (rpc_type == PLAYER_MARKET_SYNC && g_Game.IsServer() && sender) {
 			SyncPMData(sender);
 			return;
 		}
-		if (rpc_type == PLAYER_MARKET_WITHDRAWN && GetGame().IsServer() && sender) {
+		if (rpc_type == PLAYER_MARKET_WITHDRAWN && g_Game.IsServer() && sender) {
 			if ( IsOwner(sender) && Class.CastTo(player,UUtil.FindPlayerByIdentity(sender)) ){
 				WithdrawBalance(player);
 			}
 			return;
 		}
-		if (rpc_type == PLAYER_MARKET_INUSE && GetGame().IsServer() && sender) {
+		if (rpc_type == PLAYER_MARKET_INUSE && g_Game.IsServer() && sender) {
 			Param1<bool> inuseSet;
 			if (ctx.Read(inuseSet) && IsOwner(sender)){
 				SetIsInUse(inuseSet.param1);
 			}
 			return;
 		}
-		if (rpc_type == PLAYER_MARKET_EDIT && GetGame().IsServer() && sender ) {
+		if (rpc_type == PLAYER_MARKET_EDIT && g_Game.IsServer() && sender ) {
 			Param1<string> editType;
 			if (ctx.Read(editType) && IsOwner(sender)){
 				SetCurrencyUsed(editType.param1);
@@ -604,7 +604,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		PM_RPCItemData marketData;
 		array<EntityAI> items;
 		autoptr PlayerMarketItemDetails details;
-		if (rpc_type == PLAYER_MARKET_LIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_LIST && g_Game.IsServer() && sender && ctx.Read(marketData)) {
 			if (Class.CastTo(details, marketData.param1)){
 				items = GetItemsInCargo();
 				foreach (EntityAI itemL : items){
@@ -614,7 +614,7 @@ class MarketStandBase extends BaseBuildingBase  {
 				}
 			}
 		}
-		if (rpc_type == PLAYER_MARKET_DELIST && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_DELIST && g_Game.IsServer() && sender && ctx.Read(marketData)) {
 			if (Class.CastTo(details, marketData.param1)){
 				if (DelistItem(details, PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender)))){
 					
@@ -623,7 +623,7 @@ class MarketStandBase extends BaseBuildingBase  {
 				}
 			}
 		}
-		if (rpc_type == PLAYER_MARKET_BUY && GetGame().IsServer() && sender && ctx.Read(marketData)) {
+		if (rpc_type == PLAYER_MARKET_BUY && g_Game.IsServer() && sender && ctx.Read(marketData)) {
 			if (Class.CastTo(details, marketData.param1)){
 				if ( SellItem(details, PlayerBase.Cast(UUtil.FindPlayerByIdentity(sender))) ){
 					
@@ -665,7 +665,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	void SyncPMData(PlayerIdentity player = NULL){
-		if (GetGame().IsClient()){
+		if (g_Game.IsClient()){
 			RPCSingleParam(PLAYER_MARKET_SYNC, NULL, true);
 		} else {
 			RPCSingleParam(PLAYER_MARKET_SYNC, new PM_RPCSyncData(m_OwnerGUID,m_StandName, m_MoneyBalance, m_AuthorizedSellers,m_ItemsArray,m_CurrencyUsed), true, player);
@@ -743,7 +743,7 @@ class MarketStandBase extends BaseBuildingBase  {
 		
 		UpdateVisuals();
 		
-		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitStandData);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.InitStandData);
 		if (IsBuilt()){
 			m_IsBuilt = true;
 		} else {
@@ -777,10 +777,10 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	override bool CanDisplayAttachmentCategory(string category_name) {
-        if (category_name  == "Attachments" && GetGame().IsClient() ) {
+        if (category_name  == "Attachments" && g_Game.IsClient() ) {
             return ENABLE_DEBUG_STALLS;
 		}
-        if (category_name  == "Signs" && GetGame().IsClient() ) {
+        if (category_name  == "Signs" && g_Game.IsClient() ) {
             return true;
 		}
 		
@@ -799,7 +799,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	
 	override bool CanDisplayCargo(){
-		if ((!m_IsBuilt || IsInUse()) && GetGame().IsClient() ){
+		if ((!m_IsBuilt || IsInUse()) && g_Game.IsClient() ){
 			return false;
 		}
 		return super.CanDisplayCargo();
@@ -822,7 +822,7 @@ class MarketStandBase extends BaseBuildingBase  {
 	//--- CONSTRUCTION KIT
 	override ItemBase CreateConstructionKit()
 	{
-		ItemBase construction_kit = ItemBase.Cast( GetGame().CreateObject( GetConstructionKitType(), GetKitSpawnPosition() ) );
+		ItemBase construction_kit = ItemBase.Cast( g_Game.CreateObject( GetConstructionKitType(), GetKitSpawnPosition() ) );
 		if ( m_ConstructionKitHealth > 0 )
 		{
 			construction_kit.SetHealth( m_ConstructionKitHealth );
@@ -867,9 +867,9 @@ class MarketStandBase extends BaseBuildingBase  {
 		//	return false;
 		
 		//manage action initiator (AT_ATTACH_TO_CONSTRUCTION)
-		if ( !GetGame().IsMultiplayer() || GetGame().IsClient() )
+		if ( !g_Game.IsMultiplayer() || g_Game.IsClient() )
 		{
-			PlayerBase player = PlayerBase.Cast( GetGame().GetPlayer() );
+			PlayerBase player = PlayerBase.Cast( g_Game.GetPlayer() );
 			if ( player )
 			{
 				ConstructionActionData construction_action_data = player.GetConstructionActionData();
@@ -1032,9 +1032,9 @@ class MarketStandBase extends BaseBuildingBase  {
 	override bool IsFacingCamera( string selection )
 	{
 		vector ref_dir = GetDirection();
-		vector cam_dir = GetGame().GetCurrentCameraDirection();
+		vector cam_dir = g_Game.GetCurrentCameraDirection();
 		
-		//ref_dir = GetGame().GetCurrentCameraPosition() - GetPosition();
+		//ref_dir = g_Game.GetCurrentCameraPosition() - GetPosition();
 		ref_dir.Normalize();
 		ref_dir[1] = 0;		//ignore height
 		

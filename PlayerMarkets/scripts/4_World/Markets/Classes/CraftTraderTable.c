@@ -150,7 +150,7 @@ class CraftTraderStallKit extends RecipeBase
 			return false;
 		#ifdef HEROESANDBANDITSMOD_V2
 		if (Math.AbsInt(player.HABLevel()) < 2)
-			return false
+			return false;
 		#endif
 		return true;
 	}
@@ -227,7 +227,7 @@ class CraftTraderStallV2Kit extends RecipeBase
 			return false;
 		#ifdef HEROESANDBANDITSMOD_V2
 		if (Math.AbsInt(player.HABLevel()) < 4)
-			return false
+			return false;
 		#endif
 		return true;
 	}

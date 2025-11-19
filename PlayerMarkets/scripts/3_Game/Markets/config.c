@@ -22,7 +22,7 @@ class PlayerMarketsConfig extends Managed {
 	float DeListFeeMin = 100;
 	
 	void Load(){
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			if (FileExist(ConfigPATH)){ // If config exist load File
 			    UJSONHandler<PlayerMarketsConfig>.FromFile(ConfigPATH, this);
 				if (!BlackList){
@@ -80,7 +80,7 @@ class PMCurrencyMap extends Managed {
 //Helper function to return Config
 static PlayerMarketsConfig GetPMConfig()
 {
-	if ( GetGame().IsServer() ){
+	if ( g_Game.IsServer() ){
 		if (!PlayerMarketsConfig.m_Config)
 		{
 			PlayerMarketsConfig.m_Config = new PlayerMarketsConfig;

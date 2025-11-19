@@ -14,7 +14,7 @@ modded class ItemBase extends InventoryItem {
 
 	override void EEInit(){
 		super.EEInit();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
 			SetSynchDirty();
 		}
@@ -22,7 +22,7 @@ modded class ItemBase extends InventoryItem {
 	
 	override void EEOnAfterLoad(){
 		super.EEOnAfterLoad();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
 			SetSynchDirty();
 		}
@@ -32,7 +32,7 @@ modded class ItemBase extends InventoryItem {
 	override void AfterStoreLoad()
 	{    
 		super.AfterStoreLoad();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
 			SetSynchDirty();
 		}
@@ -52,7 +52,7 @@ modded class Weapon_Base extends Weapon {
 	
 	override void EEInit(){
 		super.EEInit();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
 			SetSynchDirty();
 		}
@@ -60,7 +60,7 @@ modded class Weapon_Base extends Weapon {
 	
 	override void EEOnAfterLoad(){
 		super.EEOnAfterLoad();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
 			SetSynchDirty();
 		}
@@ -70,7 +70,7 @@ modded class Weapon_Base extends Weapon {
 	override void AfterStoreLoad()
 	{    
 		super.AfterStoreLoad();
-		if (GetGame().IsServer()){
+		if (g_Game.IsServer()){
 			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
 			SetSynchDirty();
 		}

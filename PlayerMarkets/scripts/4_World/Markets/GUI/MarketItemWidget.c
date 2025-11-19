@@ -1,48 +1,49 @@
-class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
-	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketStallSeller_StallItem.layout","PlayerMarkets/gui/layout/modern/MarketStallSeller_StallItem.layout"};
+class MarketStallItemWidget  extends ScriptedWidgetEventHandler {
+	protected const autoptr TStringArray ITEM_LAYOUT_PATH = {"PlayerMarkets/gui/layout/MarketItem.layout","PlayerMarkets/gui/layout/modern/MarketItem.layout"};
 	protected autoptr PlayerMarketItemDetails m_ItemDetails;
 	
-	protected autoptr MarketStallSellerMenu m_parent;
+	protected autoptr MarketStallMenu m_parent;
 	protected Widget m_LayoutRoot;
 	
 	protected ItemPreviewWidget m_ItemPreview;
-	protected TextWidget m_DisplayName;
+	protected TextWidget m_ItemName;
+	protected TextWidget m_Cost;
 	protected Widget m_QuanityFrame;
+	protected TextWidget m_QuanityAmount;
+	protected TextWidget m_QuanityMax;
 	protected TextWidget m_Quanity;
 	protected Widget m_ItemStateFrame;
 	protected Widget m_ItemState;
-	protected TextWidget m_QuanityAmount;
-	protected TextWidget m_QuanityMax;
-	protected TextWidget m_Price;
 	
-	protected ButtonWidget m_Edit;
-	protected ButtonWidget m_Delist;
+	protected ImageWidget m_BG;
 	
-	void MarketStallItemSellerWidget(Widget parent, PlayerMarketItemDetails details, MarketStallSellerMenu menu ){
-		m_LayoutRoot = Widget.Cast(GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
-		m_parent = MarketStallSellerMenu.Cast(menu);
+	
+	void MarketStallItemWidget(Widget parent, PlayerMarketItemDetails details, MarketStallMenu menu ){
+		m_LayoutRoot = Widget.Cast(g_Game.GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
+		m_parent = MarketStallMenu.Cast(menu);
 		m_ItemDetails = PlayerMarketItemDetails.Cast(details);
-		
+		m_BG = ImageWidget.Cast(m_LayoutRoot.FindAnyWidget("BG"));
 		m_ItemPreview = ItemPreviewWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemPreview"));
-		m_DisplayName = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("DisplayName"));
+		m_ItemName = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("ItemName"));
+		m_Cost = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Cost"));
 		m_QuanityFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("QuanityFrame"));
 		m_QuanityAmount = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityAmount"));
 		m_Quanity = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Quanity"));
 		m_QuanityMax = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("QuanityMax"));
 		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
+		m_ItemState = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemState"));
 		
-		m_Price = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
 		
-		m_ItemStateFrame = Widget.Cast(m_LayoutRoot.FindAnyWidget("ItemStateFrame"));
+		int price = details.GetPrice();
+		if (GetPMConfig().SaleTaxAmount > 0){
+			price+= price * GetPMConfig().SaleTaxAmount;
+		}
 		
-		m_Edit = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Edit"));
-		m_Delist = ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Delist"));
-		
-		m_Price.SetText("$" + UUtil.ConvertIntToNiceString(m_ItemDetails.GetPrice()));
+		m_Cost.SetText("$" + UUtil.ConvertIntToNiceString(price));
 		
 		//0 = pristine, 1 = worn, 2 = damaged, 3 = badly damaged, 4
 		EntityAI item = m_ItemDetails.GetItem();
-		m_DisplayName.SetText(item.GetDisplayName());
+		m_ItemName.SetText(item.GetDisplayName());
 		int healthLevel = item.GetHealthLevel("");
 		switch  (healthLevel) {
 			case GameConstants.STATE_RUINED:
@@ -78,13 +79,47 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 		UpdateQuanity(item);
 		UpdateItemPreviw(item);
 		
+		
 		m_LayoutRoot.SetHandler(this);
 	}
 	
-	void ~MarketStallItemSellerWidget(){
+	
+	void ~MarketStallItemWidget(){
 		m_LayoutRoot.Show(false);
 		delete m_LayoutRoot;
 	}
+	
+	override bool OnClick(Widget w, int x, int y, int button){
+		if (w == m_LayoutRoot && m_parent){
+			m_parent.OpenViewItem(m_ItemDetails);
+			return true;
+		}
+		
+		return super.OnClick(w,x,y,button);
+	
+	}
+	
+	override bool OnMouseEnter(Widget w, int x, int y){
+		if (w == m_LayoutRoot){
+			m_BG.SetSize(1.05,1.05);
+		}
+		return super.OnMouseEnter(w,x,y);
+	}
+	override bool OnMouseLeave(Widget w, Widget enterW, int x, int y){
+		if (w == m_LayoutRoot){
+			m_BG.SetSize(1,1);
+			
+		}
+		return super.OnMouseLeave(w,enterW,x,y);
+	}
+	override bool OnMouseButtonUp(Widget w, int x, int y, int button){
+		if (w == m_LayoutRoot && m_parent){
+			m_parent.OpenViewItem(m_ItemDetails);
+			return true;
+		}
+		return super.OnMouseButtonUp(w,x,y, button);
+	}
+	
 	
 	void UpdateItemPreviw(EntityAI item){
 		InventoryItem iItem = InventoryItem.Cast(item);
@@ -99,20 +134,6 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 	}
 	
 	
-	override bool OnClick(Widget w, int x, int y, int button){
-		
-		if (w == m_Delist && m_parent){
-			m_parent.GetStand().RequestDeList(m_ItemDetails);
-			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(m_parent.RequestRefresh,100);
-			return true;
-		}
-		if (w == m_Edit && m_parent){
-			
-		}
-		
-		return super.OnClick(w,x,y,button);
-	
-	}
 	
 	void UpdateQuanity(EntityAI item){
 		Magazine mag;
@@ -141,6 +162,4 @@ class MarketStallItemSellerWidget  extends ScriptedWidgetEventHandler {
 			m_QuanityMax.SetText(text);
 		}
 	}
-	
-		
 }
