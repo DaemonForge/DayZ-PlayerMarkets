@@ -9,13 +9,14 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	protected ButtonWidget m_Close;
 	protected TextWidget m_Tax;
 	
-	protected EntityAI m_Item
+	protected EntityAI m_Item;
+	protected PlayerMarketItemDetails m_EditDetails;
 	
 	
 	void MarketStallSetPriceWidget(Widget parent, EntityAI item, MarketStallSellerMenu menu ){
 		m_LayoutRoot = Widget.Cast(g_Game.GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption],parent));
 		m_parent = MarketStallSellerMenu.Cast(menu);
-		Class.CastTo(m_Item,item);
+		Class.CastTo(m_Item, item);
 		
 		m_Price 	= EditBoxWidget.Cast(m_LayoutRoot.FindAnyWidget("Price"));
 		m_Set 		= ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Set"));
@@ -28,7 +29,19 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 			m_Tax.SetText("+" + tax.ToString() + "% Tax");
 		}
 		
+		if (m_EditDetails && m_Price){
+			m_Price.SetText(m_EditDetails.GetPrice().ToString());
+		}
+		
 		m_LayoutRoot.SetHandler(this);
+	}
+	
+	void SetEditDetails(PlayerMarketItemDetails details){
+		m_EditDetails = details;
+		Class.CastTo(m_Item, details.GetItem());
+		if (m_Price){
+			m_Price.SetText(details.GetPrice().ToString());
+		}
 	}
 	
 	void ~MarketStallSetPriceWidget(){
@@ -37,11 +50,16 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 	
 	
 	override bool OnClick(Widget w, int x, int y, int button){
-		Print(m_Item);
 		if (w == m_Set && m_parent && m_parent.GetStand() && m_Item){
 			string number = CheckInput(m_Price.GetText());
-			m_parent.GetStand().RequestList(new PlayerMarketItemDetails(m_Item, number.ToInt(), NULL));
-			
+			int newPrice = number.ToInt();
+			if (newPrice <= 0) { return true; }
+			if (m_EditDetails){
+				m_EditDetails.SetPrice(newPrice);
+				m_parent.GetStand().RequestEditPrice(m_EditDetails);
+			} else {
+				m_parent.GetStand().RequestList(new PlayerMarketItemDetails(m_Item, newPrice, NULL));
+			}
 			Close();
 			return true;
 		}

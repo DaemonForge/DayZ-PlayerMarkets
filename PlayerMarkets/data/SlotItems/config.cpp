@@ -32,8 +32,8 @@ class CfgVehicles
 		scope = 2;
 		displayName  = "Merchant Item Slot Guns";
 		model = "PlayerMarkets\data\SlotItems\GunSlot.p3d";
-		attachments[] = { "Shoulder1" };
-		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotLarge5","Merchant_SlotLarge6","Merchant_SlotLarge7"};
+		attachments[] = { "PM_Weapon" };
+		inventorySlot[] += {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotLarge5","Merchant_SlotLarge6","Merchant_SlotLarge7"};
 	};
 	class PM_Merchant_Melee: PM_Merchant_Base
 	{
@@ -41,7 +41,7 @@ class CfgVehicles
 		displayName  = "Merchant Item Slot Guns";
 		model = "PlayerMarkets\data\SlotItems\Melee.p3d";
 		attachments[] = { "Melee" };
-		inventorySlot[] = {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotLarge5","Merchant_SlotLarge6","Merchant_SlotLarge7"};
+		inventorySlot[] += {"Merchant_SlotLarge1","Merchant_SlotLarge2","Merchant_SlotLarge3","Merchant_SlotLarge4","Merchant_SlotLarge5","Merchant_SlotLarge6","Merchant_SlotLarge7"};
 	};
 	class PM_Merchant_Pistol: PM_Merchant_Base
 	{
@@ -49,7 +49,7 @@ class CfgVehicles
 		displayName  = "Merchant Item Slot Pistol";
 		descriptionShort = "A kit to place a player market";
 		model = "PlayerMarkets\data\SlotItems\PistolSlot.p3d";
-		attachments[] = { "Pistol1" };
+		attachments[] = { "PM_Pistol" };
 
 	};
 	class PM_Merchant_Knife: PM_Merchant_Base
@@ -131,198 +131,135 @@ class CfgVehicles
 			allowOwnedCargoManipulation = 1;
 		};
 	};
-	
-	class Edible_Base: Inventory_Base
-	{
-		inventorySlot[] = {"StallFood"};
-	};
-	class Rice: Edible_Base
-	{
-		inventorySlot[] = {"StallFoodAlt"};
-	};
-	class WaterBottle: Bottle_Base
-	{
-		inventorySlot[] = {"StallWater"};
-	};
-	class Vodka: Bottle_Base
-	{
-		inventorySlot[] = {"StallWater"};
-	};
-	class SodaCan_ColorBase: Edible_Base
-	{
-		inventorySlot[] = {"StallFoodAlt"};
-	};
 };
 
 class CfgNonAIVehicles
 {
     class ProxyAttachment;
-    class Proxymosin9130 : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Shoulder1";
-        model="\DZ\weapons\firearms\mosin9130\mosin9130.p3d";
-    }; 
-	class ProxyBoonieHat_g : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Headgear";
-        model="\DZ\characters\headgear\BoonieHat_g.p3d";
-    };
-	class Proxykitchenknife : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Knife";
-        model="\DZ\gear\tools\kitchenknife.p3d";
-    };
-    class Proxy1911 : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Pistol1";
-        model="\DZ\weapons\pistols\1911\1911.p3d";
-    };
-    class Proxyfood_can : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="StallFood";
-        model="\DZ\gear\food\food_can.p3d";
-    };
-    class Proxywaterbottle : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="StallWater";
-        model="\DZ\gear\drinks\waterbottle.p3d";
-    };
-    class Proxysodacan : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="StallFoodAlt";
-        model="\DZ\gear\drinks\sodacan.p3d";
-    };
-    class Proxycanteen : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Belt_Left";
-        model="\DZ\gear\drinks\canteen.p3d";
-    };
-    class Proxymagazine_ak74_30rnd : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="StallMag";
-        model="\DZ\weapons\attachments\magazine\magazine_ak74_30rnd.p3d";
-    };
-    class Proxyfirefighteraxe : ProxyAttachment
-    {
-        scope = 2;
-        InventorySlot="Melee";
-        model="\DZ\weapons\melee\blade\firefighteraxe.p3d";
-    };	
     class ProxyGunSlot : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge1";
+        inventorySlot[] += {"Merchant_SlotLarge1"};
         model="\PlayerMarkets\data\SlotItems\GunSlot.p3d";
     };
     class ProxyGunSlot2 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge2";
+        inventorySlot[] += {"Merchant_SlotLarge2"};
         model="\PlayerMarkets\data\SlotItems\GunSlot2.p3d";
     };
     class ProxyGunSlot3 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge3";
+        inventorySlot[] += {"Merchant_SlotLarge3"};
         model="\PlayerMarkets\data\SlotItems\GunSlot3.p3d";
     };
     class ProxyGunSlot4 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge4";
+        inventorySlot[] += {"Merchant_SlotLarge4"};
         model="\PlayerMarkets\data\SlotItems\GunSlot4.p3d";
     };
     class ProxyGunSlot5 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge5";
+        inventorySlot[] += {"Merchant_SlotLarge5"};
         model="\PlayerMarkets\data\SlotItems\GunSlot5.p3d";
     };
     class ProxyGunSlot6 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge6";
+        inventorySlot[] += {"Merchant_SlotLarge6"};
         model="\PlayerMarkets\data\SlotItems\GunSlot6.p3d";
     };
     class ProxyGunSlot7 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotLarge7";
+        inventorySlot[] += {"Merchant_SlotLarge7"};
         model="\PlayerMarkets\data\SlotItems\GunSlot7.p3d";
     };
     class ProxyPistolSlot : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall1";
+        inventorySlot[] += {"Merchant_SlotSmall1"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot.p3d";
     };
     class ProxyPistolSlot2 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall2";
+        inventorySlot[] += {"Merchant_SlotSmall2"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot2.p3d";
     };
     class ProxyPistolSlot3 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall3";
+        inventorySlot[] += {"Merchant_SlotSmall3"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot3.p3d";
     };
     class ProxyPistolSlot4 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall4";
+        inventorySlot[] += {"Merchant_SlotSmall4"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot4.p3d";
     };
     class ProxyPistolSlot5 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall5";
+        inventorySlot[] += {"Merchant_SlotSmall5"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot5.p3d";
     };
     class ProxyPistolSlot6 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall6";
+        inventorySlot[] += {"Merchant_SlotSmall6"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot6.p3d";
     };
     class ProxyPistolSlot7 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall7";
+        inventorySlot[] += {"Merchant_SlotSmall7"};
         model="\PlayerMarkets\data\SlotItems\PistolSlot7.p3d";
     };
     class ProxyPistolSlot8 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall8";
-        model="\PlayerMarkets\data\SlotItems\KnifeSlot.p3d";
+        inventorySlot[] += {"Merchant_SlotSmall8"};
+        model="\PlayerMarkets\data\SlotItems\PistolSlot8.p3d";
     };
     class ProxyPistolSlot9 : ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall9";
-        model="\PlayerMarkets\data\SlotItems\KnifeSlot2.p3d";
+        inventorySlot[] += {"Merchant_SlotSmall9"};
+        model="\PlayerMarkets\data\SlotItems\PistolSlot9.p3d";
     };
     class ProxyPistolSlot10: ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_SlotSmall10";
+        inventorySlot[] += {"Merchant_SlotSmall10"};
+        model="\PlayerMarkets\data\SlotItems\PistolSlot10.p3d";
+    };
+    class ProxyKnifeSlot: ProxyAttachment
+    {
+        scope = 2;
+        inventorySlot[] += {"Merchant_SlotSmall1"};
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot.p3d";
+    };
+    class ProxyKnifeSlot2: ProxyAttachment
+    {
+        scope = 2;
+        inventorySlot[] += {"Merchant_SlotSmall3"};
+        model="\PlayerMarkets\data\SlotItems\KnifeSlot2.p3d";
+    };
+    class ProxyKnifeSlot3: ProxyAttachment
+    {
+        scope = 2;
+        inventorySlot[] += {"Merchant_SlotSmall5"};
         model="\PlayerMarkets\data\SlotItems\KnifeSlot3.p3d";
     };
     class ProxyPaperSignModel: ProxyAttachment
     {
         scope = 2;
-        InventorySlot="Merchant_Sign1";
+        inventorySlot[] += {"Merchant_Sign1"};
         model="\PlayerMarkets\data\Signs\Tier1\PaperSignModel.p3d";
     };	
 };
@@ -333,36 +270,6 @@ class CfgSlots
 		name = "Merchant_Storage";
 		displayName = "Market Storage";
 		ghostIcon = "book";
-	};
-	class Slot_StallMag
-	{
-		name = "StallMag";
-		displayName = "Market Storage";
-		ghostIcon = "book";
-	};
-	class Slot_StallCanteen
-	{
-		name = "StallCanteen";
-		displayName = "Market Storage";
-		ghostIcon = "book";
-	};
-	class Slot_StallWater
-	{
-		name = "StallWater";
-		displayName = "Market Storage";
-		ghostIcon = "book";
-	};
-	class Slot_Pistol1
-	{
-		name = "Pistol1";
-		displayName = "Pistol1";
-		ghostIcon = "pistol";
-	};
-	class Slot_Shoulder1
-	{
-		name = "Shoulder1";
-		displayName = "Shoulder1";
-		ghostIcon = "shoulderleft";
 	};
 	class Slot_Merchant_SlotLarge1
 	{
@@ -464,18 +371,6 @@ class CfgSlots
 	{
 		name = "Merchant_SlotSmall10";
 		displayName = "Merchant_Slot";
-		ghostIcon = "book";
-	};
-	class Slot_StallFood
-	{
-		name = "StallFood";
-		displayName = "Stall Food";
-		ghostIcon = "book";
-	};
-	class Slot_StallFoodAlt
-	{
-		name = "StallFoodAlt";
-		displayName = "Stall Food";
 		ghostIcon = "book";
 	};
 	class Slot_Merchant_Sign1

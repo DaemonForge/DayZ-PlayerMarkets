@@ -168,8 +168,10 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 			m_AvailableItemWidgets.Clear();
 		}
 		m_AvailableItemWidgets = new array<autoptr MarketStallAvailableItemWidget>;
-		foreach (EntityAI item : availableItems){
-			m_AvailableItemWidgets.Insert(new MarketStallAvailableItemWidget(m_InventoryGrid, item, this));
+		if (availableItems){
+			foreach (EntityAI item : availableItems){
+				m_AvailableItemWidgets.Insert(new MarketStallAvailableItemWidget(m_InventoryGrid, item, this));
+			}
 		}
 		m_Withdraw_Text.SetText("#@ui_withdraw_available " + UUtil.ConvertIntToNiceString(GetStand().GetMoneyBalance()));
 		if (m_Stand.GetMaxItemsForSale() < 0){
@@ -181,6 +183,7 @@ class MarketStallSellerMenu extends UIScriptedMenu {
 	
 	
 	void EditPrice(PlayerMarketItemDetails itemDetails){
-		
+		m_MarketStallSetPriceWidget = new MarketStallSetPriceWidget(layoutRoot, itemDetails.GetItem(), this);
+		m_MarketStallSetPriceWidget.SetEditDetails(itemDetails);
 	}
 }

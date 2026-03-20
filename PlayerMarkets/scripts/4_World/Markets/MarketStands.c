@@ -62,7 +62,7 @@ class PM_TraderTable extends MarketStandBase
 
 		if ( !HasProperDistance( "center", player ) && !HasProperDistance( "center2", player ) && !HasProperDistance( "center3", player ) )
 		{
-			return true;
+			return false;
 		}
 		
 		return true;
@@ -75,7 +75,7 @@ class PM_TraderTable extends MarketStandBase
 			float distance = vector.Distance( selection_pos, player.GetPosition() );
 			if ( distance >= 0.4 )
 			{
-				return true;
+				return false;
 			}
 		}
 			

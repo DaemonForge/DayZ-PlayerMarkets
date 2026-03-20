@@ -1,5 +1,15 @@
 modded class MissionServer extends MissionBase {
 
+	void MissionServer()
+	{
+		GetDayZGame().Event_OnRPC.Insert(HandlePMRPC);
+	}
+
+	void ~MissionServer()
+	{
+		GetDayZGame().Event_OnRPC.Remove(HandlePMRPC);
+	}
+
 	override void OnMissionStart()
 	{
 		super.OnMissionStart();
@@ -8,17 +18,25 @@ modded class MissionServer extends MissionBase {
 		//CopyXmlFile(Path + ModFile, ModFile);
 		Print("[PlayerMarkets] OnInit");
 		GetPMConfig();
-		GetRPCManager().AddRPC( "PlayerMarkets", "RPCPlayerMarketsConfig", this, SingeplayerExecutionType.Both );
 	}
 	
 	
 	
 	
-	void RPCPlayerMarketsConfig( CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target ) {
-		Print("RPCPlayerMarketsConfig");
-		PlayerIdentity RequestedBy = PlayerIdentity.Cast(sender); 
-		if (RequestedBy){
-			GetRPCManager().SendRPC("PlayerMarkets", "RPCPlayerMarketsConfig", new Param1< PlayerMarketsConfig >( GetPMConfig() ), true, RequestedBy);
+	void HandlePMRPC(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx)
+	{
+		if (rpc_type != PLAYER_MARKET_CONFIG || !g_Game.IsServer()) {
+			return;
+		}
+
+		Param1<bool> request;
+		if (!ctx.Read(request)) {
+			return;
+		}
+
+		Print("[PlayerMarkets][Server] Sending Config To Client");
+		if (sender) {
+			GetGame().RPCSingleParam(NULL, PLAYER_MARKET_CONFIG, new Param1<PlayerMarketsConfig>(GetPMConfig()), true, sender);
 		}
 	}
 	

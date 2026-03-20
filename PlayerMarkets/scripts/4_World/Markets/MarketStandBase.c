@@ -110,10 +110,10 @@ class MarketStandBase extends BaseBuildingBase  {
 			m_MerchantSlots.Set(attachmentSlots.Get(i), InventorySlots.GetSlotIdFromString(attachmentSlots.Get(i)));
 		}
 		
-		RegisterProxyItem("Shoulder1", "PM_Merchant_Guns");
+		RegisterProxyItem("PM_Weapon", "PM_Merchant_Guns");
 		RegisterProxyItem("Knife", "PM_Merchant_Knife");
 		RegisterProxyItem("Headgear", "PM_Merchant_Headgear");
-		RegisterProxyItem("Pistol", "PM_Merchant_Pistol");
+		RegisterProxyItem("PM_Pistol", "PM_Merchant_Pistol");
 		RegisterProxyItem("StallMag", "PM_Merchant_Magazine");
 		RegisterProxyItem("StallFood", "PM_Merchant_StallFood");
 		RegisterProxyItem("Belt_Left", "PM_Merchant_StallCanteen");
@@ -210,7 +210,7 @@ class MarketStandBase extends BaseBuildingBase  {
 			int theDate = m_MoneyBalance.GetKey(i);
 			if ((theDate + GetPMConfig().FreeTaxDays) < date){
 				int subtotal = m_MoneyBalance.GetElement(i);
-				int tax = Math.Ceil(subtotal * GetPMConfig().DailyTaxAmmount);
+				int tax = Math.Ceil(subtotal * GetPMConfig().DailyTaxAmount);
 				subtotal -= tax;
 				if (subtotal > 0){
 					m_MoneyBalance.Set(theDate,subtotal);
@@ -261,7 +261,7 @@ class MarketStandBase extends BaseBuildingBase  {
 			}
 			if (ruinedItemIndexes.Count() > 0){
 				int max = ruinedItemIndexes.Count() - 1;
-				for (int j = max; max >= 0; j--){
+				for (int j = max; j >= 0; j--){
 					m_ItemsArray.RemoveOrdered(ruinedItemIndexes.Get(j));
 				}
 			}
@@ -554,6 +554,12 @@ class MarketStandBase extends BaseBuildingBase  {
 			RPCSingleParam(PLAYER_MARKET_LIST, new PM_RPCItemData(details),true);
 		}
 	}
+	
+	void RequestEditPrice(PlayerMarketItemDetails details){
+		if (g_Game.IsClient()){
+			RPCSingleParam(PLAYER_MARKET_EDIT_PRICE, new PM_RPCItemData(details),true);
+		}
+	}
 		
 	void SetIsInUse(bool state){
 		if (g_Game.IsClient()){
@@ -629,6 +635,17 @@ class MarketStandBase extends BaseBuildingBase  {
 					
 				} else {
 					
+				}
+			}
+		}
+		if (rpc_type == PLAYER_MARKET_EDIT_PRICE && g_Game.IsServer() && sender && ctx.Read(marketData)) {
+			if (Class.CastTo(details, marketData.param1) && IsOwner(sender)){
+				int eb1, eb2, eb3, eb4;
+				details.GetIds(eb1, eb2, eb3, eb4);
+				PlayerMarketItemDetails existingDetails = GetRightDetails(eb1, eb2, eb3, eb4);
+				if (existingDetails){
+					existingDetails.SetPrice(details.GetPrice());
+					SyncPMData();
 				}
 			}
 		}

@@ -47,32 +47,3 @@ modded class ItemBase extends InventoryItem {
 	}
 	
 } 
-
-modded class Weapon_Base extends Weapon {
-	
-	override void EEInit(){
-		super.EEInit();
-		if (g_Game.IsServer()){
-			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
-			SetSynchDirty();
-		}
-	}
-	
-	override void EEOnAfterLoad(){
-		super.EEOnAfterLoad();
-		if (g_Game.IsServer()){
-			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
-			SetSynchDirty();
-		}
-	}
-	
-	
-	override void AfterStoreLoad()
-	{    
-		super.AfterStoreLoad();
-		if (g_Game.IsServer()){
-			GetPersistentID(m_b1,m_b2,m_b3,m_b4);
-			SetSynchDirty();
-		}
-	}
-}

@@ -60,44 +60,13 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		string description = "";
 		UUtil.GetConfigString(item.GetType(),"descriptionShort",description );
 		m_Description.SetText(description);
-		int healthLevel = item.GetHealthLevel("");
 		m_Weight.SetText(item.GetWeight().ToString() + "g");
 		if (item.GetWeight() > 1450){
 			float weight = Math.Round(item.GetWeight() / 100) / 10;
 			m_Weight.SetText(weight.ToString() + "kg");
 		}
-		switch  (healthLevel) {
-			case GameConstants.STATE_RUINED:
-				m_ItemStateFrame.Show(true);
-				m_ItemState.SetColor(Colors.COLOR_RUINED);
-				m_ItemState.SetAlpha(1);
-			break;
-			case GameConstants.STATE_BADLY_DAMAGED:
-				m_ItemStateFrame.Show(true);
-				m_ItemState.SetColor(Colors.COLOR_BADLY_DAMAGED);
-				m_ItemState.SetAlpha(1);
-			break;
-			case GameConstants.STATE_DAMAGED:
-				m_ItemStateFrame.Show(true);
-				m_ItemState.SetColor(Colors.COLOR_DAMAGED);
-				m_ItemState.SetAlpha(1);
-			break;
-			case GameConstants.STATE_WORN:
-				m_ItemStateFrame.Show(true);
-				m_ItemState.SetColor(Colors.COLOR_WORN);
-				m_ItemState.SetAlpha(1);
-			break;
-			case GameConstants.STATE_PRISTINE:
-				m_ItemStateFrame.Show(true);
-				m_ItemState.SetColor(Colors.COLOR_PRISTINE);
-				m_ItemState.SetAlpha(1);
-			break;
-			default:
-				m_ItemStateFrame.Show(false);
-			break;
-		}
-		m_Quanity.Show(false);
-		UpdateQuanity(item);
+		PMWidgetHelper.UpdateHealthState(m_ItemStateFrame, m_ItemState, item);
+		PMWidgetHelper.UpdateQuantity(m_Quanity, m_QuanityFrame, m_QuanityAmount, m_QuanityMax, item);
 		UpdateItemPreviw(item);
 		
 		m_LayoutRoot.SetHandler(this);
@@ -256,31 +225,10 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 	}
 	
 	void UpdateQuanity(EntityAI item){
-		Magazine mag;
-		if (Class.CastTo(mag, item)){
-			m_Quanity.Show(true);
-			m_Quanity.SetText( mag.GetAmmoCount().ToString() + "/" + mag.GetAmmoMax().ToString() );
-			return;
-		}
-		
+		PMWidgetHelper.UpdateQuantity(m_Quanity, m_QuanityFrame, m_QuanityAmount, m_QuanityMax, item);
 		ItemBase itemB;
-		if (!Class.CastTo(itemB, item) || !itemB.HasQuantity()){
-			return;
-		}
-		UpdateLiquidType(itemB.GetLiquidType());
-		string text = itemB.GetQuantity().ToString();
-		string units = itemB.ConfigGetString("stackedUnit");
-		if ((units == "percent" || units == "w") && itemB.GetQuantityMax() > 0){
-			float number = itemB.GetQuantity() / itemB.GetQuantityMax();
-			int num = number * 100;
-			text = num.ToString() + "%";
-			m_Quanity.Show(true);
-			m_Quanity.SetText( text );
-		} else if (units != ""){
-			m_QuanityFrame.Show(true);
-			m_QuanityAmount.SetText(itemB.GetQuantity().ToString() + units);
-			text = itemB.GetQuantityMax().ToString() + units;
-			m_QuanityMax.SetText(text);
+		if (Class.CastTo(itemB, item) && itemB.HasQuantity()){
+			UpdateLiquidType(itemB.GetLiquidType());
 		}
 	}
 	

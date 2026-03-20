@@ -4,7 +4,7 @@ class CfgPatches
 	{
 		requiredVersion=0.1;
 		requiredAddons[]={ 
-			"PlayerMarkets_Slots"
+			"PlayerMarkets_Proxies", "PlayerMarkets_Slots"
 		};
 	};
 };
@@ -163,7 +163,7 @@ class CfgVehicles
 	{
 		scope = 2;
 		displayName  = "Market Stand";
-		descriptionShort = "A place where players can sell there items";
+		descriptionShort = "A place where players can sell their items";
 		model = "PlayerMarkets\data\MarketStand\MarketStand.p3d";
 		bounding="BSphere";
 		overrideDrawArea="3.0";
@@ -705,7 +705,7 @@ class CfgVehicles
 	{
 		scope = 2;
 		displayName  = "Large Market Stand";
-		descriptionShort = "A place where players can sell there items";
+		descriptionShort = "A place where players can sell their items";
 		model = "PlayerMarkets\data\MarketStand\MarketStandV2.p3d";
 		bounding="BSphere";
 		overrideDrawArea="3.0";
@@ -737,7 +737,6 @@ class CfgVehicles
 			"Merchant_SlotSmall8",
 			"Merchant_SlotSmall9",
 			"Merchant_SlotSmall10",
-			"Merchant_SlotSmall11",
 			"Merchant_SlotLarge1",
 			"Merchant_SlotLarge2",
 			"Merchant_SlotLarge3",
@@ -1250,7 +1249,7 @@ class CfgVehicles
 	{
 		scope = 2;
 		displayName  = "Market Table";
-		descriptionShort = "A place where players can sell there items";
+		descriptionShort = "A place where players can sell their items";
 		model = "PlayerMarkets\data\MarketStand\Trader_Table.p3d";
 		bounding="BSphere";
 		overrideDrawArea="3.0";
@@ -1686,26 +1685,4 @@ class CfgVehicles
 		};
 	};
 	
-};
-
-class CfgWeapons
-{
-	class RifleCore;
-	class Rifle_Base: RifleCore
-	{
-		inventorySlot[] = {"Shoulder1","Shoulder","Melee","Shoulder2","Shoulder3","Shoulder4","Shoulder5","Shoulder6","Shoulder7","Shoulder8","Shoulder9","Shoulder10","Shoulder11","Shoulder12","Shoulder13","Shoulder14","Shoulder15","Shoulder16","Shoulder17","Shoulder18","Shoulder19","Shoulder20","Shoulder21","Shoulder22","Shoulder23","Shoulder24","Shoulder25","Shoulder26","Shoulder27","Shoulder28","Shoulder29","Shoulder30"};
-	};
-	class PistolCore;
-	class Pistol_Base: PistolCore
-	{
-		inventorySlot[] = {"Pistol","Pistol1","Pistol2","Pistol3","Pistol4"};
-	};
-};
-class CfgMagazines
-{
-	class DefaultMagazine;
-	class Magazine_Base: DefaultMagazine
-	{
-		inventorySlot[] = {"magazine","magazine2","magazine3","StallMag"};
-	};
 };

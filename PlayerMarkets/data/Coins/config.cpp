@@ -27,6 +27,26 @@ class cfgvehicles
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
 		weight=4;
+		class DamageSystem
+        {
+            class GlobalHealth
+            {
+                class Health
+                {
+                    hitpoints = 500;    
+                    transferToGlobalCoef = 0;
+                    transferToAttachmentsCoef = 0;
+                    healthLevels[] =
+                    {
+                        {1.0, { "PlayerMarkets\data\Coins\coins.rvmat" }},
+                        {0.7, { "PlayerMarkets\data\Coins\coins.rvmat" }},
+                        {0.5, { "PlayerMarkets\data\Coins\coins.rvmat" }},
+                        {0.3, { "PlayerMarkets\data\Coins\coins.rvmat" }},
+                        {0.0, { "PlayerMarkets\data\Coins\coins.rvmat" }}
+                    };
+                };
+            };
+        };
 	};
 	class PM_SilverCoin: Inventory_Base
 	{
@@ -41,6 +61,27 @@ class cfgvehicles
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
 		weight=20;
+		class DamageSystem
+        {
+            class GlobalHealth
+            {
+                class Health
+                {
+                    hitpoints = 1000;
+                    transferToGlobalCoef = 0;  
+                    transferToAttachmentsCoef = 0;
+                    healthLevels[] =
+                    {
+                        {1.0, { "PlayerMarkets\data\Coins\SilverCoin.rvmat" }},
+                        {0.7, { "PlayerMarkets\data\Coins\SilverCoin.rvmat" }},
+                        {0.5, { "PlayerMarkets\data\Coins\SilverCoin.rvmat" }},
+                        {0.3, { "PlayerMarkets\data\Coins\SilverCoin.rvmat" }},
+                        {0.0, { "PlayerMarkets\data\Coins\SilverCoin.rvmat" }}
+                    };
+                };
+            };
+        };
+
 	};
 	class PM_GoldCoin: Inventory_Base
 	{
@@ -55,5 +96,26 @@ class cfgvehicles
         canBeSplit=1;
         varQuantityDestroyOnMin=1;
 		weight=100;
+		class DamageSystem
+        {
+            class GlobalHealth
+            {
+                class Health
+                {
+                    hitpoints = 10000;    
+                    transferToGlobalCoef = 0;
+                    transferToAttachmentsCoef = 0;
+                    healthLevels[] =
+                    {
+                        {1.0, { "PlayerMarkets\data\Coins\GoldCoin.rvmat" }},
+                        {0.7, { "PlayerMarkets\data\Coins\GoldCoin.rvmat" }},
+                        {0.5, { "PlayerMarkets\data\Coins\GoldCoin.rvmat" }},
+                        {0.3, { "PlayerMarkets\data\Coins\GoldCoin.rvmat" }},
+                        {0.0, { "PlayerMarkets\data\Coins\GoldCoin.rvmat" }}
+                    };
+                };
+            };
+        };
+
 	};
 };
