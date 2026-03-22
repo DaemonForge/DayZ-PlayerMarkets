@@ -21,6 +21,8 @@ class PlayerMarketsConfig extends Managed {
 	float DeListFee = 0.05;
 	float DeListFeeMin = 100;
 	
+	ref array<ref PMMarketArea> MarketAreas = new array<ref PMMarketArea>;
+	
 	void Load(){ 
 		if (g_Game.IsServer()){
 			if (FileExist(ConfigPATH)){ // If config exist load File
@@ -34,6 +36,18 @@ class PlayerMarketsConfig extends Managed {
 			} else { // File does not exist create file	
 				MakeDirectory(ConfigDIR);
 				Currencies.Insert(new PMCurrencyMap);
+				
+				// Create default Novy Market area
+				PMMarketArea novyMarket = new PMMarketArea;
+				novyMarket.Name = "Novy Market";
+				novyMarket.CenterPosition = "6961.96 297.99 7689.1";
+				novyMarket.Radius = 65;
+				novyMarket.ConciergePosition = "6977.8 296.88 7703.3";
+				novyMarket.NPCClassName = "PM_ConciergeM_Mirek";
+				novyMarket.NPCGear = {"DressShirt_Beige", "SlacksPants_DarkGrey", "DressShoes_Black", "FlatCap_Grey"};
+				novyMarket.ConciergeDirection = 225.0;
+				MarketAreas.Insert(novyMarket);
+				
 				LoadCurrencys();
 				Save();
 			}

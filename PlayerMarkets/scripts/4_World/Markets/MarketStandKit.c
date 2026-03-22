@@ -114,6 +114,25 @@ class PM_MarketKitBase extends ItemBase
 			MarketStall.SetPosition( position);
 			MarketStall.SetOrientation( orientation );
 			
+			// Notify player if stall is inside a market area
+			if (player_base && player_base.GetIdentity())
+			{
+				PMMarketArea area = MarketAreaManager.GetInstance().GetMarketAreaAtPosition(position);
+				if (area)
+				{
+					string msg = "This stall is inside the " + area.Name + " market area";
+					if (area.TaxModifier < 0)
+					{
+						msg = msg + " (" + (area.TaxModifier * -100).ToString() + "% tax discount)";
+					}
+					else if (area.TaxModifier > 0)
+					{
+						msg = msg + " (+" + (area.TaxModifier * 100).ToString() + "% extra tax)";
+					}
+					UUtil.SendNotification("Player Markets", msg, player_base.GetIdentity());
+				}
+			}
+			
 			//make the kit invisible, so it can be destroyed from deploy UA when action ends
 			HideAllSelections();
 			

@@ -1,0 +1,186 @@
+<types>
+	<type name="PM_MarketStand">
+        <lifetime>1209600</lifetime>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="1" deloot="0"/>
+    </type>
+	<type name="PM_MarketStandV2">
+        <lifetime>1209600</lifetime>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="1" deloot="0"/>
+    </type>
+	<type name="PM_TraderTable">
+        <lifetime>1209600</lifetime>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="1" deloot="0"/>
+    </type>
+    <type name="PM_MarketKit">
+        <nominal>6</nominal>
+        <lifetime>7200</lifetime>
+        <restock>300</restock>
+        <min>0</min>
+        <quantmin>-1</quantmin>
+        <quantmax>-1</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_MarketV2Kit">
+        <nominal>4</nominal>
+        <lifetime>7200</lifetime>
+        <restock>900</restock>
+        <min>0</min>
+        <quantmin>-1</quantmin>
+        <quantmax>-1</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+    <value name="Tier4" />
+    <value name="Tier5" />
+    </type>
+	<type name="PM_MarketTableKit">
+        <nominal>0</nominal>
+        <lifetime>7200</lifetime>
+        <restock>0</restock>
+        <min>0</min>
+        <quantmin>-1</quantmin>
+        <quantmax>-1</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_CopperCoin">
+        <nominal>96</nominal>
+        <lifetime>7200</lifetime>
+        <restock>30</restock>
+        <min>56</min>
+        <quantmin>1</quantmin>
+        <quantmax>3</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_SilverCoin">
+        <nominal>32</nominal>
+        <lifetime>7200</lifetime>
+        <restock>60</restock>
+        <min>16</min>
+        <quantmin>2</quantmin>
+        <quantmax>2</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier2" />
+		<value name="Tier3" />
+		<value name="Tier4" />
+    </type>
+	<type name="PM_GoldCoin">
+        <nominal>0</nominal>
+        <lifetime>7200</lifetime>
+        <restock>180</restock>
+        <min>0</min>
+        <quantmin>5</quantmin>
+        <quantmax>5</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier4" />
+    </type>
+	<type name="PM_GA_PaperSign">
+        <nominal>30</nominal>
+        <lifetime>7200</lifetime>
+        <restock>60</restock>
+        <min>22</min>
+        <quantmin>0.1</quantmin>
+        <quantmax>0.8</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_BuildingSupplies_PaperSign">
+        <nominal>30</nominal>
+        <lifetime>7200</lifetime>
+        <restock>60</restock>
+        <min>22</min>
+        <quantmin>0.1</quantmin>
+        <quantmax>0.8</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_FoodWater_PaperSign">
+        <nominal>30</nominal>
+        <lifetime>7200</lifetime>
+        <restock>60</restock>
+        <min>22</min>
+        <quantmin>0.1</quantmin>
+        <quantmax>0.8</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_Medical_PaperSign">
+        <nominal>30</nominal>
+        <lifetime>7200</lifetime>
+        <restock>60</restock>
+        <min>22</min>
+        <quantmin>0.1</quantmin>
+        <quantmax>0.8</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+	<type name="PM_Clothing_PaperSign">
+        <nominal>30</nominal>
+        <lifetime>7200</lifetime>
+        <restock>60</restock>
+        <min>22</min>
+        <quantmin>0.1</quantmin>
+        <quantmax>0.8</quantmax>
+        <cost>100</cost>
+        <flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/>
+        <category name="tools"/>
+		<usage name="Town"/>
+		<usage name="Village"/>
+		<value name="Tier1" />
+		<value name="Tier2" />
+		<value name="Tier3" />
+    </type>
+</types>

@@ -53,8 +53,14 @@ class MarketStallItemView  extends ScriptedWidgetEventHandler {
 		m_DisplayName.SetText(item.GetDisplayName());
 		
 		int price = details.GetPrice();
-		if (GetPMConfig().SaleTaxAmount > 0){
-			price+= price * GetPMConfig().SaleTaxAmount;
+		float effectiveTax = 0;
+		if (m_parent && m_parent.GetStand()){
+			effectiveTax = m_parent.GetStand().GetEffectiveSaleTax();
+		} else {
+			effectiveTax = GetPMConfig().SaleTaxAmount;
+		}
+		if (effectiveTax > 0){
+			price+= price * effectiveTax;
 		}
 		m_Price.SetText("$" + UUtil.ConvertIntToNiceString(price));
 		string description = "";

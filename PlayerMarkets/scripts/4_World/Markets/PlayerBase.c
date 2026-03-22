@@ -12,4 +12,9 @@ modded class PlayerBase extends ManBase
 		}
         super.Init();
     }
+	
+	override void SetActions(out TInputActionMap InputActionMap){
+		super.SetActions(InputActionMap);
+		AddAction(ActionOpenConcierge, InputActionMap);
+	}
 }

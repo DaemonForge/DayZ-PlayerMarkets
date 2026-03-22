@@ -23,10 +23,17 @@ class MarketStallSetPriceWidget extends ScriptedWidgetEventHandler {
 		m_Close 	= ButtonWidget.Cast(m_LayoutRoot.FindAnyWidget("Close"));
 		m_Tax 		= TextWidget.Cast(m_LayoutRoot.FindAnyWidget("Tax"));
 		
-		if (GetPMConfig().SaleTaxAmount > 0 && m_Tax){
+		if (m_parent && m_parent.GetStand()){
+			float effectiveTaxRate = m_parent.GetStand().GetEffectiveSaleTax();
+			if (effectiveTaxRate > 0 && m_Tax){
+				m_Tax.Show(true);
+				int tax = Math.Round(effectiveTaxRate * 100);
+				m_Tax.SetText("+" + tax.ToString() + "% Tax");
+			}
+		} else if (GetPMConfig().SaleTaxAmount > 0 && m_Tax){
 			m_Tax.Show(true);
-			int tax = Math.Round(GetPMConfig().SaleTaxAmount * 100);
-			m_Tax.SetText("+" + tax.ToString() + "% Tax");
+			int taxFallback = Math.Round(GetPMConfig().SaleTaxAmount * 100);
+			m_Tax.SetText("+" + taxFallback.ToString() + "% Tax");
 		}
 		
 		if (m_EditDetails && m_Price){

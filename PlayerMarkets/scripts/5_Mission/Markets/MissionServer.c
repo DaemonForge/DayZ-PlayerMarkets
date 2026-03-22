@@ -13,11 +13,52 @@ modded class MissionServer extends MissionBase {
 	override void OnMissionStart()
 	{
 		super.OnMissionStart();
-		//string ModFile = "Crypto_types.xml";
-		//string Path = "Crypto\\xmls\\";
-		//CopyXmlFile(Path + ModFile, ModFile);
 		Print("[PlayerMarkets] OnInit");
 		GetPMConfig();
+		
+		if (GetPMConfig().ManagedTypesFile)
+		{
+			CopyXmlFile("PlayerMarkets/PlayerMarkets_types.xml", "PlayerMarkets_types.xml", "types");
+		}
+		
+		SpawnConcierges();
+	}
+	
+	protected void SpawnConcierges(){
+		if (!GetPMConfig() || !GetPMConfig().MarketAreas) return;
+		
+		for (int i = 0; i < GetPMConfig().MarketAreas.Count(); i++){
+			PMMarketArea area = GetPMConfig().MarketAreas.Get(i);
+			if (area && area.ConciergePosition != vector.Zero){
+				// Check if a concierge NPC already exists near this position
+				array<Object> objects = new array<Object>;
+				array<CargoBase> proxyCargos = new array<CargoBase>;
+				GetGame().GetObjectsAtPosition(area.ConciergePosition, 2.0, objects, proxyCargos);
+				
+				bool found = false;
+				foreach (Object obj : objects){
+					PM_ConciergeNPC existingNPC;
+					if (Class.CastTo(existingNPC, obj)){
+						found = true;
+						break;
+					}
+				}
+				
+				if (!found){
+					Print("[PlayerMarkets] Spawning Concierge NPC (" + area.NPCClassName + ") for area: " + area.Name + " at " + area.ConciergePosition.ToString());
+					PM_ConciergeNPC npc = PM_ConciergeNPC.Cast(GetGame().CreateObject(area.NPCClassName, area.ConciergePosition, false, false, true));
+					if (npc){
+						npc.SetOrientation(Vector(area.ConciergeDirection, 0, 0));
+						// Equip configured gear
+						if (area.NPCGear){
+							for (int g = 0; g < area.NPCGear.Count(); g++){
+								npc.GetInventory().CreateInInventory(area.NPCGear.Get(g));
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	

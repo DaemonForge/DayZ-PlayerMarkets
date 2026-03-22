@@ -48,6 +48,14 @@ class PlayerMarketItemDetailsBase extends Managed {
 		return m_ListerGUID;
 	}
 	
+	string GetItemClass(){
+		return m_ItemClass;
+	}
+	
+	string GetItemName(){
+		return m_ItemName;
+	}
+	
 	EntityAI GetItem(){
 		return NULL;
 	}

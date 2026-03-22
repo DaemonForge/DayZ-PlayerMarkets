@@ -7,6 +7,7 @@ modded class ActionConstructor
 		actions.Insert(ActionDestroyPM_MarketPart);
 		actions.Insert( ActionOpenMarketStallBuy );
 		actions.Insert( ActionOpenMarketStallSell );
+		actions.Insert( ActionOpenConcierge );
 	}
 }
 

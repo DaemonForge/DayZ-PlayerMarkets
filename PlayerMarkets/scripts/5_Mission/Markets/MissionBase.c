@@ -11,6 +11,9 @@ modded class MissionBase extends MissionBaseWorld
                 case PLAYER_MARKET_MENU_SELL:
                     menu = new MarketStallSellerMenu;
                     break;
+                case PLAYER_MARKET_MENU_CONCIERGE:
+                    menu = new ConciergeMenu;
+                    break;
             }
             if (menu) {
                 menu.SetID(id);

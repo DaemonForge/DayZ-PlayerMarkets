@@ -57,6 +57,22 @@ class CfgVehicles
 	class BaseBuildingBase;
 	class MarketStandBase: BaseBuildingBase {};
 	
+	// Forward declarations for NPC survivor models
+	class SurvivorM_Mirek;
+	class SurvivorM_Denis;
+	class SurvivorM_Boris;
+	class SurvivorF_Eva;
+	class SurvivorF_Linda;
+	class SurvivorF_Frida;
+	
+	// Concierge NPC classes - extend vanilla survivors for their appearance
+	class PM_ConciergeM_Mirek: SurvivorM_Mirek { scope = 2; };
+	class PM_ConciergeM_Denis: SurvivorM_Denis { scope = 2; };
+	class PM_ConciergeM_Boris: SurvivorM_Boris { scope = 2; };
+	class PM_ConciergeF_Eva: SurvivorF_Eva { scope = 2; };
+	class PM_ConciergeF_Linda: SurvivorF_Linda { scope = 2; };
+	class PM_ConciergeF_Frida: SurvivorF_Frida { scope = 2; };
+	
 	class PM_MarketKit: Inventory_Base
 	{
 		scope = 2;
@@ -1682,6 +1698,33 @@ class CfgVehicles
 			itemsCargoSize[] = {10,12};
 			openable = 0;
 			allowOwnedCargoManipulation = 1;
+		};
+	};
+	
+	class PM_Concierge: Inventory_Base
+	{
+		scope = 0;
+		displayName = "Market Concierge (Legacy)";
+		descriptionShort = "Legacy concierge object. No longer used.";
+		model = "DZ\gear\camping\Data\oilbarrel.p3d";
+		rotationFlags = 17;
+		weight = 50000;
+		itemBehaviour = 0;
+		handheld = "false";
+		itemSize[] = {5,5};
+		canBeSplit = 0;
+		varQuantityInit = 0;
+		varQuantityMin = 0;
+		varQuantityMax = 0;
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 10000;
+				};
+			};
 		};
 	};
 	

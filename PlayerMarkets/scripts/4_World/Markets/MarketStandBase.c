@@ -147,6 +147,13 @@ class MarketStandBase extends BaseBuildingBase  {
 		return IsBuilt();
 	}
 	
+	// Returns the effective sale tax rate accounting for market area modifiers
+	float GetEffectiveSaleTax(){
+		float baseTax = GetPMConfig().SaleTaxAmount;
+		float areaMod = GetMarketAreaManager().GetTaxModifierForPosition(GetPosition());
+		return Math.Clamp(baseTax + areaMod, 0.0, 1.0);
+	}
+	
 	string GetStandName(){
 		return m_StandName;
 	}
@@ -414,7 +421,12 @@ class MarketStandBase extends BaseBuildingBase  {
 			UUtil.SendNotification("Warning", "Error Getting Item Details from server", player.GetIdentity());
 			return false;
 		}
-		if (player.UGetPlayerBalance(m_CurrencyUsed) < details.GetPrice()){
+		int priceCheck = details.GetPrice();
+		float checkTax = GetEffectiveSaleTax();
+		if (checkTax > 0){
+			priceCheck += priceCheck * checkTax;
+		}
+		if (player.UGetPlayerBalance(m_CurrencyUsed) < priceCheck){
 			
 			UUtil.SendNotification("Warning", "Not Enought Money", player.GetIdentity());
 			return false;
@@ -439,8 +451,9 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (entity.GetHierarchyRoot() == entity || entity.GetHierarchyRoot() == player){
 			int pricewTax = details.GetPrice();
 			int price = details.GetPrice();
-			if (GetPMConfig().SaleTaxAmount > 0){
-				pricewTax+= pricewTax * GetPMConfig().SaleTaxAmount;
+			float effectiveTax = GetEffectiveSaleTax();
+			if (effectiveTax > 0){
+				pricewTax+= pricewTax * effectiveTax;
 			}
 			g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(player.URemoveMoney, 200, false, m_CurrencyUsed, pricewTax);
 			m_ItemsArray.RemoveItem(details);
@@ -455,10 +468,10 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	void OnItemSold(EntityAI item, int price, PlayerBase player){
 		string name =  Widget.TranslateString(item.GetDisplayName());
-		U().ds().UserSend(m_OwnerGUID, "You Successfully Sold " + name + " for $" + price);
+		UF().ds().UserSend(m_OwnerGUID, "You Successfully Sold " + name + " for $" + price);
 		if (GetPMConfig().LoggingChannel != "" && player && player.GetIdentity()){
 			string adminMessage = GetStandName() + "(" + m_OwnerGUID + ") sold " + name + " for $" + price + " to " + player.GetIdentity().GetName() + " (" + player.GetIdentity().GetId() + ")";
-			U().ds().ChannelSend(GetPMConfig().LoggingChannel, adminMessage); 
+			UF().ds().ChannelSend(GetPMConfig().LoggingChannel, adminMessage); 
 		}
 	}
 	
