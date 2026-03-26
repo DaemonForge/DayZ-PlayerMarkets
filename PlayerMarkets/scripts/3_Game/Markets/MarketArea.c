@@ -61,44 +61,57 @@ class PMItemCategoryHelper {
 	static int GetItemCategory(EntityAI item){
 		if (!item) return PMItemCategory.OTHER;
 		
-		if (item.IsWeapon() && !item.IsMeleeWeapon()){
+		// Firearms (Weapon_Base only)
+		if (item.IsWeapon()){
 			return PMItemCategory.WEAPONS;
 		}
-		if (item.IsMeleeWeapon()){
-			return PMItemCategory.MELEE;
-		}
+		
+		// Ammo & magazines
 		if (item.IsAmmoPile() || item.IsKindOf("Magazine_Base")){
 			return PMItemCategory.AMMO;
 		}
-		if (item.IsClothing()){
-			return PMItemCategory.CLOTHING;
-		}
-		if (item.IsKindOf("Edible_Base")){
-			return PMItemCategory.FOOD;
-		}
-		if (item.IsKindOf("Bottle_Base") || item.IsKindOf("Canteen_Base")){
-			return PMItemCategory.FOOD;
-		}
-		// Medical items
-		if (item.IsKindOf("Bandage_Basic") || item.IsKindOf("BandageDressing") || item.IsKindOf("Morphine") || item.IsKindOf("Epinephrine") || item.IsKindOf("BloodBagEmpty") || item.IsKindOf("BloodBagFull") || item.IsKindOf("SalineBag") || item.IsKindOf("Splint") || item.IsKindOf("TetracyclineAntibiotics") || item.IsKindOf("CharcoalTablets") || item.IsKindOf("PainkillerTablets") || item.IsKindOf("VitaminBottle") || item.IsKindOf("DisinfectantSpray") || item.IsKindOf("IodineTincture")){
-			return PMItemCategory.MEDICAL;
-		}
-		// Containers / bags / storage
-		if (item.GetInventory()){
-			if (item.GetInventory().GetCargo()){
-				// Items with cargo capacity that aren't weapons/clothing
-				if (!item.IsWeapon() && !item.IsClothing()){
-					return PMItemCategory.CONTAINERS;
-				}
-			}
-		}
-		// Weapon attachments
+		
+		// Weapon attachments — before clothing (some attachable items could overlap)
 		if (item.IsKindOf("ItemOptics") || item.IsKindOf("ItemSuppressor") || item.IsKindOf("HandGuard_Base") || item.IsKindOf("ButtStock_Base") || item.IsKindOf("Hndgrd_Base")){
 			return PMItemCategory.ATTACHMENTS;
 		}
-		// Tools
-		if (item.IsKindOf("Shovel") || item.IsKindOf("Pickaxe") || item.IsKindOf("Pliers") || item.IsKindOf("Hacksaw") || item.IsKindOf("Hammer") || item.IsKindOf("Wrench") || item.IsKindOf("Crowbar") || item.IsKindOf("SledgeHammer") || item.IsKindOf("Hatchet") || item.IsKindOf("WoodAxe") || item.IsKindOf("FirefighterAxe") || item.IsKindOf("CombinationLock") || item.IsKindOf("Lockpick")){
+		
+		// Clothing — BEFORE melee (shoes/gloves have isMeleeWeapon=1 in config)
+		if (item.IsClothing()){
+			return PMItemCategory.CLOTHING;
+		}
+		
+		// Food & drink
+		if (item.IsKindOf("Edible_Base") || item.IsKindOf("Bottle_Base") || item.IsKindOf("Canteen_Base")){
+			return PMItemCategory.FOOD;
+		}
+		
+		// Medical items
+		if (item.IsKindOf("Bandage_Basic") || item.IsKindOf("BandageDressing") || item.IsKindOf("Morphine") || item.IsKindOf("Epinephrine") || item.IsKindOf("BloodBagEmpty") || item.IsKindOf("BloodBagFull") || item.IsKindOf("SalineBag") || item.IsKindOf("Splint")){
+			return PMItemCategory.MEDICAL;
+		}
+		if (item.IsKindOf("TetracyclineAntibiotics") || item.IsKindOf("CharcoalTablets") || item.IsKindOf("PainkillerTablets") || item.IsKindOf("VitaminBottle") || item.IsKindOf("DisinfectantSpray") || item.IsKindOf("IodineTincture") || item.IsKindOf("DisinfectantAlcohol") || item.IsKindOf("Thermometer") || item.IsKindOf("BloodTestKit")){
+			return PMItemCategory.MEDICAL;
+		}
+		
+		// Tools — BEFORE melee (axes/hammers have isMeleeWeapon=1)
+		if (item.IsKindOf("Shovel") || item.IsKindOf("FarmingHoe") || item.IsKindOf("Pickaxe") || item.IsKindOf("Pliers") || item.IsKindOf("Hacksaw") || item.IsKindOf("HandSaw") || item.IsKindOf("Hammer") || item.IsKindOf("Wrench") || item.IsKindOf("Crowbar") || item.IsKindOf("SledgeHammer")){
 			return PMItemCategory.TOOLS;
+		}
+		if (item.IsKindOf("Hatchet") || item.IsKindOf("WoodAxe") || item.IsKindOf("FirefighterAxe") || item.IsKindOf("CombinationLock") || item.IsKindOf("Lockpick") || item.IsKindOf("Screwdriver") || item.IsKindOf("CanOpener") || item.IsKindOf("SewingKit") || item.IsKindOf("LeatherSewingKit") || item.IsKindOf("Whetstone")){
+			return PMItemCategory.TOOLS;
+		}
+		
+		// Containers — items with cargo that aren't already categorized above
+		if (item.GetInventory()){
+			if (item.GetInventory().GetCargo()){
+				return PMItemCategory.CONTAINERS;
+			}
+		}
+		
+		// Melee weapons — dedicated melee only (reached after clothing/tools/food are ruled out)
+		if (item.IsMeleeWeapon()){
+			return PMItemCategory.MELEE;
 		}
 		
 		return PMItemCategory.OTHER;
@@ -108,23 +121,34 @@ class PMItemCategoryHelper {
 	static int GetItemCategoryByClassName(string className){
 		if (className == "") return PMItemCategory.OTHER;
 		
-		if (GetGame().IsKindOf(className, "Weapon_Base") && !GetGame().IsKindOf(className, "MeleeWeapon")){
+		// Firearms
+		if (GetGame().IsKindOf(className, "Weapon_Base")){
 			return PMItemCategory.WEAPONS;
 		}
-		if (GetGame().IsKindOf(className, "MeleeWeapon")){
-			return PMItemCategory.MELEE;
-		}
+		
+		// Ammo & magazines
 		if (GetGame().IsKindOf(className, "Magazine_Base") || GetGame().IsKindOf(className, "Ammunition_Base")){
 			return PMItemCategory.AMMO;
 		}
+		
+		// Weapon attachments
+		if (GetGame().IsKindOf(className, "ItemOptics") || GetGame().IsKindOf(className, "ItemSuppressor")){
+			return PMItemCategory.ATTACHMENTS;
+		}
+		
+		// Clothing — before melee
 		if (GetGame().IsKindOf(className, "Clothing_Base")){
 			return PMItemCategory.CLOTHING;
 		}
+		
+		// Food & drink
 		if (GetGame().IsKindOf(className, "Edible_Base") || GetGame().IsKindOf(className, "Bottle_Base")){
 			return PMItemCategory.FOOD;
 		}
-		if (GetGame().IsKindOf(className, "ItemOptics") || GetGame().IsKindOf(className, "ItemSuppressor")){
-			return PMItemCategory.ATTACHMENTS;
+		
+		// Melee weapons (class inheritance — only catches dedicated MeleeWeapon subclasses)
+		if (GetGame().IsKindOf(className, "MeleeWeapon")){
+			return PMItemCategory.MELEE;
 		}
 		
 		return PMItemCategory.OTHER;
@@ -148,8 +172,12 @@ class PMConciergeEntry extends Managed {
 	float m_QuantityMax;
 	float m_Weight;
 	int m_LiquidType;
+	int m_ItemNetLow;
+	int m_ItemNetHigh;
+	ref TStringArray m_Attachments;
 	
 	void PMConciergeEntry(){
+		m_Attachments = new TStringArray;
 	}
 	
 	void SetStallInfo(int b1, int b2, int b3, int b4, string stallName, string currency, float taxMod){
@@ -179,6 +207,31 @@ class PMConciergeEntry extends Managed {
 		m_QuantityMax = quantityMax;
 		m_Weight = weight;
 		m_LiquidType = liquidType;
+	}
+	
+	void SetItemNetworkID(int low, int high){
+		m_ItemNetLow = low;
+		m_ItemNetHigh = high;
+	}
+	
+	void SetAttachments(TStringArray attachments){
+		if (attachments){
+			m_Attachments = new TStringArray;
+			for (int i = 0; i < attachments.Count(); i++){
+				m_Attachments.Insert(attachments[i]);
+			}
+		}
+	}
+	
+	string GetHealthName(){
+		switch (m_HealthLevel){
+			case GameConstants.STATE_PRISTINE: return "Pristine";
+			case GameConstants.STATE_WORN: return "Worn";
+			case GameConstants.STATE_DAMAGED: return "Damaged";
+			case GameConstants.STATE_BADLY_DAMAGED: return "Badly Damaged";
+			case GameConstants.STATE_RUINED: return "Ruined";
+		}
+		return "";
 	}
 	
 	int GetPriceWithTax(){

@@ -18,6 +18,8 @@ class ConciergeItemWidget extends ScriptedWidgetEventHandler {
 	protected Widget m_ItemStateFrame;
 	protected Widget m_ItemState;
 	protected Widget m_BG;
+	protected EntityAI m_PreviewItem;
+	protected bool m_OwnsPreviewItem;
 	
 	void ConciergeItemWidget(Widget parent, PMConciergeEntry entry, ConciergeMenu menu){
 		m_LayoutRoot = Widget.Cast(g_Game.GetWorkspace().CreateWidgets(ITEM_LAYOUT_PATH[GetPMConfig().GUIOption], parent));
@@ -86,20 +88,34 @@ class ConciergeItemWidget extends ScriptedWidgetEventHandler {
 		// Quantity display from synced data
 		UpdateQuantityDisplay(entry);
 		
-		// Item preview from class name
+		// Item preview — use actual item from stall if available, fall back to replica
+		m_OwnsPreviewItem = false;
 		if (entry.m_ItemClass != ""){
-			EntityAI previewItem = EntityAI.Cast(GetGame().CreateObjectEx(entry.m_ItemClass, "0 0 0", ECE_LOCAL | ECE_NOLIFETIME));
-			if (previewItem && m_ItemPreview){
-				InventoryItem iItem = InventoryItem.Cast(previewItem);
+			// Try to find the real item on the stall (client-side)
+			m_PreviewItem = GetMarketAreaManager().FindActualItemForEntry(entry);
+			if (!m_PreviewItem){
+				// Fallback: create a replica from class name
+				m_PreviewItem = EntityAI.Cast(GetGame().CreateObjectEx(entry.m_ItemClass, "0 0 0", ECE_LOCAL | ECE_NOLIFETIME));
+				m_OwnsPreviewItem = true;
+				// Spawn attachments on replica
+				if (m_PreviewItem && entry.m_Attachments && entry.m_Attachments.Count() > 0){
+					for (int att = 0; att < entry.m_Attachments.Count(); att++){
+						string attClass = entry.m_Attachments[att];
+						if (attClass == "") continue;
+						m_PreviewItem.GetInventory().CreateInInventory(attClass);
+					}
+				}
+			}
+			if (m_PreviewItem && m_ItemPreview){
+				InventoryItem iItem = InventoryItem.Cast(m_PreviewItem);
 				if (iItem){
 					m_ItemPreview.SetItem(iItem);
 					m_ItemPreview.SetModelPosition(Vector(0,0,0));
 					m_ItemPreview.SetModelOrientation(Vector(0,0,0));
+					m_ItemPreview.SetView(0);
 					m_ItemPreview.SetPos(0, 0);
 					m_ItemPreview.SetSize(1, 1);
-					m_ItemPreview.SetView(0);
 				}
-				GetGame().ObjectDelete(previewItem);
 			}
 		}
 		
@@ -107,6 +123,10 @@ class ConciergeItemWidget extends ScriptedWidgetEventHandler {
 	}
 	
 	void ~ConciergeItemWidget(){
+		if (m_PreviewItem && m_OwnsPreviewItem){
+			GetGame().ObjectDelete(m_PreviewItem);
+		}
+		m_PreviewItem = NULL;
 		if (m_LayoutRoot){
 			m_LayoutRoot.Show(false);
 			delete m_LayoutRoot;
@@ -222,6 +242,12 @@ class ConciergeFilterButton extends ScriptedWidgetEventHandler {
 		
 		m_FilterText = TextWidget.Cast(m_LayoutRoot.FindAnyWidget("FilterText"));
 		m_FilterText.SetText(PMItemCategoryHelper.GetCategoryName(category));
+		
+		// Auto-size button width based on text length
+		string catName = PMItemCategoryHelper.GetCategoryName(category);
+		int btnW = 40 + (catName.Length() * 8);
+		if (btnW < 60) btnW = 60;
+		m_LayoutRoot.SetSize(btnW, 32);
 		
 		m_LayoutRoot.SetHandler(this);
 	}

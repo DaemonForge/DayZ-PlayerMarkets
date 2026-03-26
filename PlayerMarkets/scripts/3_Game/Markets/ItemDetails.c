@@ -16,6 +16,7 @@ class PlayerMarketItemDetailsBase extends Managed {
 	protected int LastEditDate = -1;
 	
 	protected string m_ListerGUID = "";
+	protected int m_ListedAt = 0;
 	
 	bool Is(int b1, int b2, int b3, int b4){
 		return (b1 == m_b1 && b2 == m_b2 && b3 == m_b3 && b4 == m_b4);
@@ -37,7 +38,27 @@ class PlayerMarketItemDetailsBase extends Managed {
 		m_MaxPrice = Math.Max(m_MaxPrice,m_Price);
 	}
 	
+	int GetListedAt(){
+		return m_ListedAt;
+	}
+	
+	void SetListedAt(int timestamp){
+		m_ListedAt = timestamp;
+	}
+	
+	bool IsInGracePeriod(){
+		if (m_ListedAt <= 0) return false;
+		float graceHours = GetPMConfig().DeListGraceHours;
+		if (graceHours <= 0) return false;
+		int graceSeconds = graceHours * 3600;
+		int now = UUtil.GetUnixInt();
+		return (now - m_ListedAt) < graceSeconds;
+	}
+	
 	int GetDeListFee(){
+		if (IsInGracePeriod()){
+			return 0;
+		}
 		if (m_MaxPrice < 0 || m_MaxPrice < GetPMConfig().DeListFeeMin){
 			return 0;
 		}

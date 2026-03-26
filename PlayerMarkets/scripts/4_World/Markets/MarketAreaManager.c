@@ -117,6 +117,27 @@ class MarketAreaManager {
 				}
 				entry.SetItemDetails(healthLevel, qty, qtyMax, weight, liquidType);
 				
+				// Store network ID for client-side entity lookup
+				if (item){
+					int netLow, netHigh;
+					item.GetNetworkID(netLow, netHigh);
+					entry.SetItemNetworkID(netLow, netHigh);
+				}
+				
+				// Collect attachment class names for preview
+				if (item){
+					TStringArray attachNames = new TStringArray;
+					for (int a = 0; a < item.GetInventory().AttachmentCount(); a++){
+						EntityAI att = item.GetInventory().GetAttachmentFromIndex(a);
+						if (att){
+							attachNames.Insert(att.GetType());
+						}
+					}
+					if (attachNames.Count() > 0){
+						entry.SetAttachments(attachNames);
+					}
+				}
+				
 				entries.Insert(entry);
 			}
 		}
@@ -134,6 +155,18 @@ class MarketAreaManager {
 			if (sb1 == b1 && sb2 == b2 && sb3 == b3 && sb4 == b4){
 				return stall;
 			}
+		}
+		return NULL;
+	}
+	
+	// Client-side: find the actual item entity for a concierge entry using network ID
+	EntityAI FindActualItemForEntry(PMConciergeEntry entry){
+		if (!entry) return NULL;
+		if (entry.m_ItemNetLow == 0 && entry.m_ItemNetHigh == 0) return NULL;
+		
+		Object obj = GetGame().GetObjectByNetworkId(entry.m_ItemNetLow, entry.m_ItemNetHigh);
+		if (obj){
+			return EntityAI.Cast(obj);
 		}
 		return NULL;
 	}

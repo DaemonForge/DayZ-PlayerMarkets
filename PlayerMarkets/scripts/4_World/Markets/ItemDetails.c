@@ -3,6 +3,9 @@ class PlayerMarketItemDetails extends PlayerMarketItemDetailsBase {
 	void PlayerMarketItemDetails(EntityAI item, int price, EntityAI stall){
 		AddItem(item);
 		SetPrice(Math.AbsInt(price));
+		if (m_ListedAt <= 0){
+			m_ListedAt = UUtil.GetUnixInt();
+		}
 	}
 	
 	[NonSerialized()]

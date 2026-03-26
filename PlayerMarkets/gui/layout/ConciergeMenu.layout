@@ -264,7 +264,7 @@ FrameWidgetClass rootFrame {
      ignorepointer 0
      color 0.15 0.12 0.1 0.95
      position 0 0
-     size 460 340
+     size 460 380
      halign center_ref
      valign center_ref
      hexactpos 1
@@ -318,9 +318,24 @@ FrameWidgetClass rootFrame {
        "text halign" center
        "text valign" center
       }
+      TextWidgetClass ConfirmItemState {
+       ignorepointer 1
+       position 20 118
+       size 0.9 22
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text ""
+       font "gui/fonts/etelkatextpro"
+       "text color" 0.5 0.8 0.5 1
+       "text halign" center
+       "text valign" center
+      }
       TextWidgetClass ConfirmBasePrice {
        ignorepointer 1
-       position 20 130
+       position 20 152
        size 0.9 22
        halign center_ref
        hexactpos 1
@@ -335,7 +350,7 @@ FrameWidgetClass rootFrame {
       }
       TextWidgetClass ConfirmTax {
        ignorepointer 1
-       position 20 155
+       position 20 177
        size 0.9 22
        halign center_ref
        hexactpos 1
@@ -350,7 +365,7 @@ FrameWidgetClass rootFrame {
       }
       TextWidgetClass ConfirmTotal {
        ignorepointer 1
-       position 20 190
+       position 20 210
        size 0.9 28
        halign center_ref
        hexactpos 1
@@ -365,7 +380,7 @@ FrameWidgetClass rootFrame {
       }
       TextWidgetClass ConfirmCurrency {
        ignorepointer 1
-       position 20 222
+       position 20 244
        size 0.9 22
        halign center_ref
        hexactpos 1
@@ -380,7 +395,7 @@ FrameWidgetClass rootFrame {
       }
       TextWidgetClass ConfirmBalanceInfo {
        ignorepointer 1
-       position 20 248
+       position 20 270
        size 0.9 22
        halign center_ref
        hexactpos 1

@@ -93,6 +93,12 @@ class MarketStandBase extends BaseBuildingBase  {
 	protected bool m_IsInUse = false;
 	protected autoptr map<string, int> m_MerchantSlots = new map<string,int>;
 	
+	// In-memory only — tracks owner proximity for abandonment (resets on restart)
+	[NonSerialized()]
+	protected int m_OwnerLastNearTime = 0;
+	[NonSerialized()]
+	protected bool m_AbandonCheckActive = false;
+	
 	
 	autoptr map<string,string> m_AvailableProxies = new map<string,string>;
 	
@@ -253,25 +259,35 @@ class MarketStandBase extends BaseBuildingBase  {
 		array<EntityAI> items = GetItemsForSale();
 		if (g_Game.IsServer()){
 			DoTaxation();
-			TIntArray ruinedItemIndexes = new TIntArray;
+			TIntArray removeIndexes = new TIntArray;
 			for (int i = 0; i < m_ItemsArray.Count(); i++){ 
 				PlayerMarketItemDetails detail = PlayerMarketItemDetails.Cast(m_ItemsArray.Get(i));
+				bool matched = false;
 				foreach (EntityAI item : items){
 					if (detail.CheckAndSetItem(item)){
 						if (item.IsRuined()){
-							ruinedItemIndexes.Insert(i);
+							removeIndexes.Insert(i);
 						}
-						items.RemoveItem(item);//Remove it from array to improve performance on adding more items
+						items.RemoveItem(item);
+						matched = true;
 						break;
 					}
 				}
-			}
-			if (ruinedItemIndexes.Count() > 0){
-				int max = ruinedItemIndexes.Count() - 1;
-				for (int j = max; j >= 0; j--){
-					m_ItemsArray.RemoveOrdered(ruinedItemIndexes.Get(j));
+				// Safety: remove ghost listings that have no matching physical item
+				if (!matched){
+					removeIndexes.Insert(i);
 				}
 			}
+			if (removeIndexes.Count() > 0){
+				int max = removeIndexes.Count() - 1;
+				for (int j = max; j >= 0; j--){
+					m_ItemsArray.RemoveOrdered(removeIndexes.Get(j));
+				}
+				SyncPMData();
+			}
+			
+			// Start abandonment tracking
+			StartAbandonmentCheck();
 		}
 	}
 	array<EntityAI> GetItemsForSale(){
@@ -308,6 +324,36 @@ class MarketStandBase extends BaseBuildingBase  {
 	}
 	
 	
+	bool IsLargeItemProxy(string proxyType){
+		return (proxyType == "PM_Merchant_Guns" || proxyType == "PM_Merchant_Melee");
+	}
+
+	int GetFreeLargeSlotCount(){
+		int free = 0;
+		for (int i = 1; i <= 7; i++){
+			int slotId = InventorySlots.GetSlotIdFromString("Merchant_SlotLarge" + i.ToString());
+			if (slotId != InventorySlots.INVALID && !GetInventory().FindAttachment(slotId)){
+				free++;
+			}
+		}
+		return free;
+	}
+
+	PM_Merchant_Base TryCreateProxyAtSlot(string itemType, EntityAI item, int slotId){
+		if (GetInventory().FindAttachment(slotId)){
+			return NULL;
+		}
+		PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachmentEx(itemType, slotId));
+		if (attachment){
+			if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER, FindInventoryLocationType.ANY, item)){
+				return attachment;
+			} else {
+				g_Game.ObjectDelete(attachment);
+			}
+		}
+		return NULL;
+	}
+
 	bool FindAndAttachSuitableProxy(EntityAI item){
 		TStringArray slots = new TStringArray;
 		UUtil.GetConfigTStringArray(item.GetType(), "inventorySlot", slots);
@@ -317,12 +363,36 @@ class MarketStandBase extends BaseBuildingBase  {
 			} else {
 				string itemType = "";
 				if (m_AvailableProxies.Find(slotname, itemType)){
-					PM_Merchant_Base attachment = PM_Merchant_Base.Cast(GetInventory().CreateAttachment(itemType));
-					if (attachment){
-						if (attachment.GetInventory().TakeEntityToInventory(InventoryMode.SERVER,FindInventoryLocationType.ANY, item)){
-							return true;
-						} else {
-							g_Game.ObjectDelete(attachment);
+					bool isLarge = IsLargeItemProxy(itemType);
+					
+					if (isLarge){
+						// Large items: only try large slots
+						for (int li = 1; li <= 7; li++){
+							int lSlot = InventorySlots.GetSlotIdFromString("Merchant_SlotLarge" + li.ToString());
+							if (lSlot != InventorySlots.INVALID && TryCreateProxyAtSlot(itemType, item, lSlot)){
+								return true;
+							}
+						}
+					} else {
+						// Small items: try small slots first
+						for (int si = 1; si <= 10; si++){
+							int sSlot = InventorySlots.GetSlotIdFromString("Merchant_SlotSmall" + si.ToString());
+							if (sSlot != InventorySlots.INVALID && TryCreateProxyAtSlot(itemType, item, sSlot)){
+								return true;
+							}
+						}
+						// Overflow to large slots, but always keep 1 free for large items
+						if (GetFreeLargeSlotCount() > 1){
+							for (int oli = 1; oli <= 7; oli++){
+								int olSlot = InventorySlots.GetSlotIdFromString("Merchant_SlotLarge" + oli.ToString());
+								if (olSlot != InventorySlots.INVALID && TryCreateProxyAtSlot(itemType, item, olSlot)){
+									return true;
+								}
+								// Re-check after each attempt in case we're down to 1
+								if (GetFreeLargeSlotCount() <= 1){
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -373,6 +443,15 @@ class MarketStandBase extends BaseBuildingBase  {
 		if (!details){
 			UUtil.SendNotification("Warning", "Error Getting Item Details from server", player.GetIdentity());
 			return false;
+		}
+		int delistFee = details.GetDeListFee();
+		if (delistFee > 0){
+			if (player.UGetPlayerBalance(m_CurrencyUsed) < delistFee){
+				UUtil.SendNotification("Warning", "Not enough money to delist. Fee: $" + UUtil.ConvertIntToNiceString(delistFee), player.GetIdentity());
+				return false;
+			}
+			player.URemoveMoney(m_CurrencyUsed, delistFee);
+			UUtil.SendNotification("Market", "Delist fee charged: $" + UUtil.ConvertIntToNiceString(delistFee), player.GetIdentity());
 		}
 		EntityAI entity = details.GetItem();
 		if (!entity){
@@ -829,8 +908,20 @@ class MarketStandBase extends BaseBuildingBase  {
 	
 	
 	override bool CanDisplayCargo(){
-		if ((!m_IsBuilt || IsInUse()) && g_Game.IsClient() ){
-			return false;
+		if (g_Game.IsClient()){
+			if (!m_IsBuilt || IsInUse()){
+				return false;
+			}
+			// Owner-only storage: if player is within 100m, only owner can see cargo
+			PlayerBase player = PlayerBase.Cast(g_Game.GetPlayer());
+			if (player){
+				float dist = vector.Distance(GetPosition(), player.GetPosition());
+				if (dist < 100.0){
+					if (!IsOwner(player)){
+						return false;
+					}
+				}
+			}
 		}
 		return super.CanDisplayCargo();
 	}
@@ -1146,6 +1237,91 @@ class MarketStandBase extends BaseBuildingBase  {
 		AddAction(ActionFoldBaseBuildingObject);
 		AddAction(ActionOpenMarketStallBuy);
 		AddAction(ActionOpenMarketStallSell);
+	}
+	
+	// --- ABANDONMENT TRACKING (in-memory only, resets on restart) ---
+	
+	void StartAbandonmentCheck(){
+		if (m_AbandonCheckActive) return;
+		float abandonHours = GetPMConfig().StallAbandonmentHours;
+		if (abandonHours <= 0) return;
+		
+		m_AbandonCheckActive = true;
+		m_OwnerLastNearTime = g_Game.GetTime();
+		// Check every 60 seconds
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.CheckOwnerAbandonment, 60000, true);
+	}
+	
+	void CheckOwnerAbandonment(){
+		if (!g_Game.IsServer() || !IsBuilt()) return;
+		
+		float abandonHours = GetPMConfig().StallAbandonmentHours;
+		if (abandonHours <= 0) return;
+		
+		// Check if owner is online and within 100m
+		bool ownerNearby = false;
+		if (m_OwnerGUID != ""){
+			// Find owner player by iterating all players
+			array<Man> players = new array<Man>;
+			GetGame().GetPlayers(players);
+			foreach (Man man : players){
+				PlayerBase pb = PlayerBase.Cast(man);
+				if (pb && pb.GetIdentity() && pb.GetIdentity().GetId() == m_OwnerGUID){
+					float dist = vector.Distance(GetPosition(), pb.GetPosition());
+					if (dist < 100.0){
+						ownerNearby = true;
+					}
+					break;
+				}
+			}
+		}
+		
+		if (ownerNearby){
+			m_OwnerLastNearTime = g_Game.GetTime();
+		} else {
+			int elapsedMs = g_Game.GetTime() - m_OwnerLastNearTime;
+			int abandonMs = abandonHours * 3600 * 1000;
+			if (elapsedMs >= abandonMs){
+				DumpAllItemsToGround();
+			}
+		}
+	}
+	
+	void DumpAllItemsToGround(){
+		if (!g_Game.IsServer()) return;
+		
+		// Drop all items from proxy slots
+		array<EntityAI> saleItems = GetItemsForSale();
+		if (saleItems){
+			foreach (EntityAI saleItem : saleItems){
+				GetInventory().DropEntity(InventoryMode.SERVER, this, saleItem);
+				saleItem.SetPosition(GetPosition());
+				saleItem.PlaceOnSurface();
+			}
+		}
+		
+		// Drop all items from cargo storage
+		PM_Merchant_Base storage = GetMerchantStorage();
+		if (storage){
+			array<EntityAI> cargoItems = new array<EntityAI>;
+			storage.GetInventory().EnumerateInventory(InventoryTraversalType.PREORDER, cargoItems);
+			foreach (EntityAI cargoItem : cargoItems){
+				if (cargoItem != storage){
+					storage.GetInventory().DropEntity(InventoryMode.SERVER, storage, cargoItem);
+					cargoItem.SetPosition(GetPosition());
+					cargoItem.PlaceOnSurface();
+				}
+			}
+		}
+		
+		// Clear listings
+		m_ItemsArray = new array<autoptr PlayerMarketItemDetails>;
+		SyncPMData();
+		
+		// Reset timer so it doesn't trigger again immediately
+		m_OwnerLastNearTime = g_Game.GetTime();
+		
+		Print("[PlayerMarkets] Stall '" + m_StandName + "' abandoned — all items dumped to ground.");
 	}
 }
 

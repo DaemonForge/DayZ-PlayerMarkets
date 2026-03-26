@@ -24,6 +24,7 @@ class ConciergeMenu extends UIScriptedMenu {
 	protected TextWidget m_ConfirmBalanceInfo;
 	protected ButtonWidget m_ConfirmBuyBtn;
 	protected ButtonWidget m_ConfirmCancelBtn;
+	protected TextWidget m_ConfirmItemState;
 	
 	protected ref array<ref ConciergeItemWidget> m_ItemWidgets;
 	protected ref array<ref ConciergeFilterButton> m_FilterButtons;
@@ -80,6 +81,7 @@ class ConciergeMenu extends UIScriptedMenu {
 		m_ConfirmBalanceInfo = TextWidget.Cast(layoutRoot.FindAnyWidget("ConfirmBalanceInfo"));
 		m_ConfirmBuyBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ConfirmBuyBtn"));
 		m_ConfirmCancelBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ConfirmCancelBtn"));
+		m_ConfirmItemState = TextWidget.Cast(layoutRoot.FindAnyWidget("ConfirmItemState"));
 		
 		m_ItemWidgets = new array<ref ConciergeItemWidget>;
 		m_FilterButtons = new array<ref ConciergeFilterButton>;
@@ -173,8 +175,34 @@ class ConciergeMenu extends UIScriptedMenu {
 	protected void ShowConfirmDialog(PMConciergeEntry entry){
 		m_PendingBuyEntry = entry;
 		
+		// Hide item preview so it doesn't render on top of the dialog
+		Widget previewFrame = m_ItemViewFrame.FindAnyWidget("ItemPreviewFrame");
+		if (previewFrame){
+			previewFrame.Show(false);
+		}
+		
 		m_ConfirmItemName.SetText(entry.m_ItemName);
 		m_ConfirmStallName.SetText("From: " + entry.m_StallName);
+		
+		// Item state (health + category)
+		if (m_ConfirmItemState){
+			string stateText = "";
+			string healthName = entry.GetHealthName();
+			if (healthName != ""){
+				stateText = healthName;
+			}
+			string catName = PMItemCategoryHelper.GetCategoryName(entry.m_Category);
+			if (catName != "" && catName != "All" && catName != "Unknown"){
+				if (stateText != "") stateText = stateText + "  |  ";
+				stateText = stateText + catName;
+			}
+			if (entry.m_Quantity > 0 && entry.m_QuantityMax > 0){
+				int q = entry.m_Quantity;
+				int qm = entry.m_QuantityMax;
+				stateText = stateText + "  |  " + q.ToString() + "/" + qm.ToString();
+			}
+			m_ConfirmItemState.SetText(stateText);
+		}
 		
 		int basePrice = entry.m_Price;
 		int totalPrice = entry.GetPriceWithTax();
@@ -211,6 +239,11 @@ class ConciergeMenu extends UIScriptedMenu {
 		m_PendingBuyEntry = NULL;
 		if (m_ConfirmOverlay){
 			m_ConfirmOverlay.Show(false);
+		}
+		// Restore item preview visibility
+		Widget previewFrame = m_ItemViewFrame.FindAnyWidget("ItemPreviewFrame");
+		if (previewFrame){
+			previewFrame.Show(true);
 		}
 	}
 	

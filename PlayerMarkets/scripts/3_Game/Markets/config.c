@@ -20,6 +20,8 @@ class PlayerMarketsConfig extends Managed {
 	float DailyTaxAmount = 0.03;
 	float DeListFee = 0.05;
 	float DeListFeeMin = 100;
+	float DeListGraceHours = 4;
+	float StallAbandonmentHours = 4.0;
 	
 	ref array<ref PMMarketArea> MarketAreas = new array<ref PMMarketArea>;
 	
