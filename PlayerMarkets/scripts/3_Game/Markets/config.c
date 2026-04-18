@@ -1,7 +1,7 @@
 class PlayerMarketsConfig extends Managed {
 	
 	protected static string ConfigDIR = "$profile:PlayerMarkets";
-	protected static string ConfigPATH = ConfigDIR + "\\Config.json";
+	protected static string ConfigPATH = ConfigDIR + "\\config.json";
 	static ref PlayerMarketsConfig m_Config;
 	string ConfigVersion = "0";
 	
